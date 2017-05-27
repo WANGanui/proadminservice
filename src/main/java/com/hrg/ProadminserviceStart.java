@@ -32,7 +32,7 @@ public class ProadminserviceStart {
 
             logger.info("开始启动HRG项目管理系统");
             ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-                    new String[] { "spring-context.xml", "spring-database-write.xml","spring-database-read.xml",
+                    new String[] { "spring-context.xml","spring-redis.xml", "spring-database-write.xml","spring-database-read.xml",
                             "dubbo/dubbo-config.xml","dubbo/dubbo-service-bean.xml"});
             context.start();
             logger.info("HRG项目管理系统启动完成");
