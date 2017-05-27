@@ -81,38 +81,23 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<!-- 配置方式的事物 -->
-<!-- 	<tx:advice id="defaultTransactionAdvice" transaction-manager="transactionManager"> -->
-<!-- 		<tx:attributes> -->
-<!-- 			<tx:method name="insert*" isolation="DEFAULT" propagation="REQUIRED" rollback-for="java.lang.Exception" timeout="100" /> -->
-<!-- 		</tx:attributes> -->
-<!-- 	</tx:advice> -->
-
-<!-- 	<aop:config> -->
-<!-- 		<aop:pointcut id="allServiceMethods" -->
-<!-- 			expression="execution(* com.qpm.module.*.service.impl.*.*(..))" /> -->
-<!-- 		<aop:advisor advice-ref="defaultTransactionAdvice" -->
-<!-- 			pointcut-ref="allServiceMethods" /> -->
-<!-- 	</aop:config> -->
-
-
 	<!-- 配置声明式事务：方法一，在Service实现类或者public实现方法上使用注解@Transactional，则此类或方法就会启用事务机制 -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<!-- 使用mybatis配置sessionFactory -->
-<!--	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="mapperLocations">
-			&lt;!&ndash;<value>classpath:/com/qpm/*/write/*.xml</value>&ndash;&gt;
+			<!--<value>classpath:/com/qpm/*/write/*.xml</value>-->
 			<value>classpath:/com.hrg.xmlmapper/write</value>
 		</property>
 	</bean>
 
-	&lt;!&ndash; 配置sessionTemplate &ndash;&gt;
+	<!-- 配置sessionTemplate -->
 	<bean id="sessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory" />
-		&lt;!&ndash; <constructor-arg index="1" value="BATCH" /> 如果想要进行批量操作可加入这个属性 &ndash;&gt;
-	</bean>-->
+		<!-- <constructor-arg index="1" value="BATCH" /> 如果想要进行批量操作可加入这个属性 -->
+	</bean>
 
 	<!-- mapper扫描器 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
