@@ -26,7 +26,6 @@ public class DateUtil {
 
     /**
      * 获取当前日期时间字符串
-     *
      * @return 返回日期时间字符串(yyyy-MM-dd HH:mm:ss)
      */
     public static String getDateStr() {
@@ -35,7 +34,6 @@ public class DateUtil {
 
     /**
      * 获取当前日期字符串
-     *
      * @return 返回日期字符串(yyyy-MM-dd)
      */
     public static String getShortDateStr() {
@@ -44,7 +42,6 @@ public class DateUtil {
 
     /**
      * 获取当前时间字符串
-     *
      * @return 返回时间字符串(HH:mm:ss)
      */
     public static String getTimeStr() {
@@ -53,7 +50,6 @@ public class DateUtil {
 
     /**
      * 获取指定格式的日期字符串
-     *
      * @param format 日期字符串格式，例如：yyyy-MM-dd HH:mm:ss
      * @return
      */
@@ -65,7 +61,6 @@ public class DateUtil {
 
     /**
      * 转换为日期时间字符串(yyyy-MM-dd HH:mm:ss)
-     *
      * @param date 日期对象
      * @return
      */
@@ -77,7 +72,6 @@ public class DateUtil {
 
     /**
      * 转换为日期时间字符串(依据format)
-     *
      * @param date 日期对象
      * @return
      */
@@ -89,7 +83,6 @@ public class DateUtil {
 
     /**
      * 转换为日期字符串(yyyy-MM-dd)
-     *
      * @param date 日期对象
      * @return
      */
@@ -101,7 +94,6 @@ public class DateUtil {
 
     /**
      * 转换为日期字符串(yyyy年MM月dd日 HH时mm分ss秒)
-     *
      * @param date 日期对象
      * @return
      */
@@ -113,7 +105,6 @@ public class DateUtil {
 
     /**
      * 转换为日期字符串(yyyy年MM月dd日)
-     *
      * @param date 日期对象
      * @return
      */
@@ -125,7 +116,6 @@ public class DateUtil {
 
     /**
      * 转换为日期对象
-     *
      * @param date 长时间格式字符串(yyyy-MM-dd HH:mm:ss)
      * @return
      */
@@ -135,7 +125,6 @@ public class DateUtil {
 
     /**
      * 转换为日期对象
-     *
      * @param date 短时间格式字符串(yyyy-MM-dd)
      * @return
      */
@@ -145,7 +134,6 @@ public class DateUtil {
 
     /**
      * 转换为日期对象
-     *
      * @param date
      * @param format
      * @return
@@ -175,7 +163,6 @@ public class DateUtil {
 
     /**
      * 计算指定分钟间隔的日期字符串
-     *
      * @param dateStr
      * @return
      */
@@ -193,7 +180,6 @@ public class DateUtil {
 
     /**
      * 计算指定分钟间隔的日期
-     *
      * @param date
      * @param minutes
      * @return
@@ -210,7 +196,6 @@ public class DateUtil {
 
     /**
      * 两个时间之间的天数
-     *
      * @param date1
      * @param date2
      * @return
@@ -235,7 +220,6 @@ public class DateUtil {
 
     /**
      * 两个时间之间的月差值
-     *
      * @param dateStr1
      * @param dateStr2
      * @return
@@ -262,7 +246,6 @@ public class DateUtil {
 
     /**
      * 获取指定日期月份的最后一天
-     *
      * @param date 至少包含yyyy-MM-dd
      * @return
      */
@@ -286,7 +269,6 @@ public class DateUtil {
     }
     /**
      * 获取指定日期月份的第一天
-     *
      * @param date yyyy-MM-dd HH:mm:ss
      * @return
      */
@@ -299,7 +281,6 @@ public class DateUtil {
 
     /**
      * 获取指定日期月份的最后一天
-     *
      * @param date 至少包含yyyy-MM-dd
      * @return
      */
@@ -322,7 +303,6 @@ public class DateUtil {
     }
     /**
      * 获取指定日期月份的第一天
-     *
      * @param date yyyy-MM-dd HH:mm:ss
      * @return
      */
@@ -359,7 +339,6 @@ public class DateUtil {
 
     /**
      * 判断二个时间是否在同一个周
-     *
      * @param date1
      * @param date2
      * @return
@@ -386,7 +365,6 @@ public class DateUtil {
 
     /**
      * 校验传入日期字符串格式是否正确
-     *
      * @param date
      */
     public static boolean isDate(String date) {
@@ -408,7 +386,6 @@ public class DateUtil {
 
     /**
      * 判断传入日期是否为同一天
-     *
      * @param date1
      * @param date2
      * @return
@@ -420,7 +397,6 @@ public class DateUtil {
 
     /**
      * 比较两个日期是否相等
-     *
      * @param d1
      * @param d2
      * @return boolean
@@ -435,7 +411,6 @@ public class DateUtil {
 
     /**
      * 比较两个日期是否相等
-     *
      * @param d1
      * @param d2
      * @return boolean
@@ -470,7 +445,6 @@ public class DateUtil {
 
     /**
      * 方法概要:增加日期
-     *
      * @param date
      * @param days
      * @return
@@ -486,7 +460,6 @@ public class DateUtil {
 
     /**
      * 根据所给日期返回两日期相差的秒数
-     *
      * @param d1
      * @param d2
      * @return 返回两个日期间隔的毫秒数
@@ -502,7 +475,6 @@ public class DateUtil {
 
     /**
      * 根据所秒数,计算相差的时间并以**天**时返回
-     *
      * @param
      * @param
      * @return
