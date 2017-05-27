@@ -80,6 +80,19 @@
 	</bean>
 	<!-- 配置声明式事务：方法一，在Service实现类或者public实现方法上使用注解@Transactional，则此类或方法就会启用事务机制 -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
+	<!-- 配置方式的事物 -->
+<!-- 	<tx:advice id="defaultTransactionAdviceRead" transaction-manager="transactionManagerRead"> -->
+<!-- 		<tx:attributes> -->
+<!-- 			<tx:method name="*" read-only="true" rollback-for="java.lang.Exception" /> -->
+<!-- 		</tx:attributes> -->
+<!-- 	</tx:advice> -->
+
+<!-- 	<aop:config> -->
+<!-- 		<aop:pointcut id="allServiceMethodsRead" -->
+<!-- 			expression="execution(* com.qpm.module.*.service.impl.*.*(..))" /> -->
+<!-- 		<aop:advisor advice-ref="defaultTransactionAdviceRead" -->
+<!-- 			pointcut-ref="allServiceMethodsRead" /> -->
+<!-- 	</aop:config> -->
 
 	<!-- 使用mybatis配置sessionFactory-->
 	<bean id="sqlSessionFactoryRead" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -93,7 +106,7 @@
 	<bean id="sessionTemplateRead" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactoryRead" />
 		<!-- <constructor-arg index="1" value="BATCH" /> 如果想要进行批量操作可加入这个属性 -->
-	</bean>-->
+	</bean>
 
 	<!-- mapper扫描器 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
