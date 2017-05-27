@@ -1,4 +1,4 @@
-package hrg.util;
+package com.hrg.util;
 
 import java.text.ParseException;
 import java.text.ParsePosition;
