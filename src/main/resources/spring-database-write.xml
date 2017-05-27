@@ -100,19 +100,19 @@
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<!-- 使用mybatis配置sessionFactory -->
-	<!--<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="mapperLocations">
-			&lt;!&ndash;<value>classpath:/com/qpm/*/write/*.xml</value>&ndash;&gt;
+			<!--<value>classpath:/com/qpm/*/write/*.xml</value>-->
 			<value>classpath:/com.hrg.xmlmapper/write</value>
 		</property>
 	</bean>
 
-	&lt;!&ndash; 配置sessionTemplate &ndash;&gt;
+	<!-- 配置sessionTemplate -->
 	<bean id="sessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory" />
-		&lt;!&ndash; <constructor-arg index="1" value="BATCH" /> 如果想要进行批量操作可加入这个属性 &ndash;&gt;
-	</bean>-->
+		<!-- <constructor-arg index="1" value="BATCH" /> 如果想要进行批量操作可加入这个属性 -->
+	</bean>
 
 	<!-- mapper扫描器 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

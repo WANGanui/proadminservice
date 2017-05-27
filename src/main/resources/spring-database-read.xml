@@ -94,19 +94,19 @@
 <!-- 			pointcut-ref="allServiceMethodsRead" /> -->
 <!-- 	</aop:config> -->
 
-	<!-- 使用mybatis配置sessionFactory -->
-	<!--<bean id="sqlSessionFactoryRead" class="org.mybatis.spring.SqlSessionFactoryBean">
+	 使用mybatis配置sessionFactory
+	<bean id="sqlSessionFactoryRead" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSourceReadAll" />
 		<property name="mapperLocations">
 			<value>classpath:/com.hrg.xmlmapper/read</value>
 		</property>
 	</bean>
 
-	&lt;!&ndash; 配置sessionTemplate &ndash;&gt;
+	<!-- 配置sessionTemplate -->
 	<bean id="sessionTemplateRead" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactoryRead" />
-		&lt;!&ndash; <constructor-arg index="1" value="BATCH" /> 如果想要进行批量操作可加入这个属性 &ndash;&gt;
-	</bean>-->
+		<!-- <constructor-arg index="1" value="BATCH" /> 如果想要进行批量操作可加入这个属性 -->
+	</bean>
 
 	<!-- mapper扫描器 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
