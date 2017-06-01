@@ -98,7 +98,7 @@
 	<bean id="sqlSessionFactoryRead" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSourceReadAll" />
 		<property name="mapperLocations">
-			<value>classpath:/com.hrg.xmlmapper/read</value>
+			<value>classpath:/com/hrg/xmlmapper/read/*.xml</value>
 		</property>
 	</bean>
 

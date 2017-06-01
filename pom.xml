@@ -68,7 +68,7 @@
     </profiles>
 
     <build>
-        <finalName>Proadminservice</finalName>
+        <finalName>proadminservice</finalName>
         <sourceDirectory>src/main/java</sourceDirectory>
         <resources>
             <resource>
