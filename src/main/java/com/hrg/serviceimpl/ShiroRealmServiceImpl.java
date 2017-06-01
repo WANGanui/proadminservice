@@ -5,7 +5,6 @@ import com.hrg.enums.ErrorCode;
 import com.hrg.exception.ValidatorException;
 import com.hrg.javamapper.read.PreSysPermissionReadMapper;
 import com.hrg.javamapper.read.PreSysRoleRelPermissionReadMapper;
-import com.hrg.javamapper.read.WorkerRelWarehouseReadMapper;
 import com.hrg.model.*;
 import com.hrg.util.ValidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +26,7 @@ public class ShiroRealmServiceImpl implements ShiroRealmService {
     @Autowired
     WorkerRoleService workerRoleService;
     @Autowired
-    WarehouseRoleRelPermissionService warehouseRoleRelPermissionService;
-    @Autowired
-    WorkerRelWarehouseReadMapper workerRelWarehouseReadMapper;
-    @Autowired
-    PreSysPermissionService preSysPermissionService;
+    WorkerRolePermissionService workerRolePermissionService;
     @Autowired
     PreSysRoleRelPermissionReadMapper preSysRoleRelPermissionReadMapper;
     @Autowired
@@ -108,31 +103,16 @@ public class ShiroRealmServiceImpl implements ShiroRealmService {
         }
         List<String> rolelist = new ArrayList<String>();
         //获取会员角色
-        List<WorkerRelRole> workerRelRoleList = workerRelRoleService.selectDetail(worker.getDataid());
+        List<WorkerRole> workerRelRoleList = workerRoleService.selectDetail(worker.getDataid());
         if (!ValidUtil.isNullOrEmpty(workerRelRoleList)){
-            for (WorkerRelRole workerRelRole : workerRelRoleList)
-                rolelist.add(workerRelRole.getRoledataid());
+            for (WorkerRole workerRole : workerRelRoleList)
+                rolelist.add(workerRole.getDataid());
         }
         //获取角色权限
-        WorkerRelWarehouseCriteria example = new WorkerRelWarehouseCriteria();
-        example.setWorkerdataid(worker.getDataid());
-        int count = workerRelWarehouseReadMapper.countByExample(example);
-        if (count == 0)
-        {
-            PreSysRoleRelPermissionCriteria permission = new PreSysRoleRelPermissionCriteria();
-            permission.setRoledataidList(rolelist);
-            List<PreSysRoleRelPermission> permissions = preSysRoleRelPermissionReadMapper.selectByExample(permission);
-            List<String> permissionlist = new ArrayList<String>();
-            if (!ValidUtil.isNullOrEmpty(permissions)){
-                for (PreSysRoleRelPermission sysRoleRelPermission : permissions)
-                    permissionlist.add(sysRoleRelPermission.getPermissioncode());
-            }
-            return permissionlist;
-        }
-        List<WarehouseRoleRelPermission> warehouseRoleRelPermissionList = warehouseRoleRelPermissionService.selectRolesPermission(rolelist);
+        List<WorkerRolePermission> workerRolePermissionList = workerRolePermissionService.selectRolesPermission(rolelist);
         List<String> permissionlist = new ArrayList<String>();
-        if (!ValidUtil.isNullOrEmpty(warehouseRoleRelPermissionList)){
-            for (WarehouseRoleRelPermission permission : warehouseRoleRelPermissionList)
+        if (!ValidUtil.isNullOrEmpty(workerRolePermissionList)){
+            for (WorkerRolePermission permission : workerRolePermissionList)
                 permissionlist.add(permission.getPermissioncode());
         }
         return permissionlist;
@@ -160,24 +140,15 @@ public class ShiroRealmServiceImpl implements ShiroRealmService {
         }
         List<String> rolelist = new ArrayList<String>();
         //获取会员角色
-        List<WorkerRelRole> workerRelRoleList = workerRelRoleService.selectDetail(worker.getDataid());
+        List<WorkerRole> workerRelRoleList = workerRoleService.selectDetail(worker.getDataid());
         if (!ValidUtil.isNullOrEmpty(workerRelRoleList)){
-            for (WorkerRelRole workerRelRole : workerRelRoleList)
-                rolelist.add(workerRelRole.getRoledataid());
+            for (WorkerRole workerRelRole : workerRelRoleList)
+                rolelist.add(workerRelRole.getDataid());
         }
         //获取角色权限
-        WorkerRelWarehouseCriteria example = new WorkerRelWarehouseCriteria();
-        example.setWorkerdataid(worker.getDataid());
-//        int count = workerRelWarehouseReadMapper.countByExample(example);
-//        if (count == 0)
-//        {
-//            PreSysRoleRelPermissionCriteria permission = new PreSysRoleRelPermissionCriteria();
-//            permission.setRoledataidList(rolelist);
-//            List<PreSysRoleRelPermission> permissions = preSysRoleRelPermissionReadMapper.selectByExample(permission);
-//            return permissions;
-//        }
-        List<WarehouseRoleRelPermission> warehouseRoleRelPermissionList = warehouseRoleRelPermissionService.selectRolesPermission(rolelist);
-        return warehouseRoleRelPermissionList;
+
+        List<WorkerRolePermission> workerRolePermissionList = workerRolePermissionService.selectRolesPermission(rolelist);
+        return workerRolePermissionList;
     }
 
     /**
@@ -210,9 +181,9 @@ public class ShiroRealmServiceImpl implements ShiroRealmService {
      */
     @Override
     public boolean isLocked(Object principal){
-        Worker worker = (Worker) principal;
+       /* Worker worker = (Worker) principal;
         if (!worker.getState().equals("0"))
-            return false;
+            return false;*/
         return true;
     }
 }
