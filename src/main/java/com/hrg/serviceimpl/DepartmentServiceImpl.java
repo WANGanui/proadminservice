@@ -78,7 +78,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         pageUtil.setCurrentPage(pageUtil.getCurrentPage() == null ? 1 : pageUtil.getCurrentPage());
 
         //设置分页参数
-        example.setOrderByClause(" createtime DESC,modifytime DESC ");
+        example.setOrderByClause(" createtime DESC ");
         example.setPageSize((pageUtil.getPageSize() == null) ? 8 : pageUtil.getPageSize());
         example.setLimitStart((pageUtil.getCurrentPage()  == null) ? 0 : (pageUtil.getCurrentPage()-1) * 8);
         List<Department> departmentList = departmentReadMapper.selectByExample(example);
