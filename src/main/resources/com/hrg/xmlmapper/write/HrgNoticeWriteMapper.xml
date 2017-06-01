@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hrg.javamapper.write.HrgNoticeWriteMapper" >
+  <sql id="Example_Where_Clause" >
+    <where >
+      <if test="example.dataid != null" >
+         and dataid = #{example.dataid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.dataidList != null  and  example.dataidList.size() > 0 " >
+         and dataid in 
+        <foreach collection="example.dataidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.createtime != null" >
+         and createtime = #{example.createtime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="example.context != null" >
+         and context = #{example.context,jdbcType=VARCHAR}
+      </if>
+      <if test="example.contextList != null  and  example.contextList.size() > 0 " >
+         and context in 
+        <foreach collection="example.contextList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.worker != null" >
+         and worker = #{example.worker,jdbcType=VARCHAR}
+      </if>
+      <if test="example.workerList != null  and  example.workerList.size() > 0 " >
+         and worker in 
+        <foreach collection="example.workerList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.department != null" >
+         and department = #{example.department,jdbcType=VARCHAR}
+      </if>
+      <if test="example.departmentList != null  and  example.departmentList.size() > 0 " >
+         and department in 
+        <foreach collection="example.departmentList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.workerdataid != null" >
+         and workerdataid = #{example.workerdataid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.workerdataidList != null  and  example.workerdataidList.size() > 0 " >
+         and workerdataid in 
+        <foreach collection="example.workerdataidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.departmentdataid != null" >
+         and departmentdataid = #{example.departmentdataid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.departmentdataidList != null  and  example.departmentdataidList.size() > 0 " >
+         and departmentdataid in 
+        <foreach collection="example.departmentdataidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.time != null" >
+         and time = #{example.time,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from hrg_notice
+    where dataid = #{dataid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="map" >
+    delete from hrg_notice
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="map" >
+    insert into hrg_notice (dataid, createtime, 
+      context, worker, department, 
+      workerdataid, departmentdataid, 
+      time)
+    values (#{record.dataid,jdbcType=VARCHAR}, #{record.createtime,jdbcType=TIMESTAMP}, 
+      #{record.context,jdbcType=VARCHAR}, #{record.worker,jdbcType=VARCHAR}, #{record.department,jdbcType=VARCHAR}, 
+      #{record.workerdataid,jdbcType=VARCHAR}, #{record.departmentdataid,jdbcType=VARCHAR}, 
+      #{record.time,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="map" >
+    insert into hrg_notice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="record.dataid != null" >
+        dataid,
+      </if>
+      <if test="record.createtime != null" >
+        createtime,
+      </if>
+      <if test="record.context != null" >
+        context,
+      </if>
+      <if test="record.worker != null" >
+        worker,
+      </if>
+      <if test="record.department != null" >
+        department,
+      </if>
+      <if test="record.workerdataid != null" >
+        workerdataid,
+      </if>
+      <if test="record.departmentdataid != null" >
+        departmentdataid,
+      </if>
+      <if test="record.time != null" >
+        time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="record.dataid != null" >
+        #{record.dataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.context != null" >
+        #{record.context,jdbcType=VARCHAR},
+      </if>
+      <if test="record.worker != null" >
+        #{record.worker,jdbcType=VARCHAR},
+      </if>
+      <if test="record.department != null" >
+        #{record.department,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workerdataid != null" >
+        #{record.workerdataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departmentdataid != null" >
+        #{record.departmentdataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.time != null" >
+        #{record.time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update hrg_notice
+    <set >
+      <if test="record.dataid != null" >
+        dataid = #{record.dataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.context != null" >
+        context = #{record.context,jdbcType=VARCHAR},
+      </if>
+      <if test="record.worker != null" >
+        worker = #{record.worker,jdbcType=VARCHAR},
+      </if>
+      <if test="record.department != null" >
+        department = #{record.department,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workerdataid != null" >
+        workerdataid = #{record.workerdataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departmentdataid != null" >
+        departmentdataid = #{record.departmentdataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.time != null" >
+        time = #{record.time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update hrg_notice
+    set dataid = #{record.dataid,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      context = #{record.context,jdbcType=VARCHAR},
+      worker = #{record.worker,jdbcType=VARCHAR},
+      department = #{record.department,jdbcType=VARCHAR},
+      workerdataid = #{record.workerdataid,jdbcType=VARCHAR},
+      departmentdataid = #{record.departmentdataid,jdbcType=VARCHAR},
+      time = #{record.time,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="map" >
+    update hrg_notice
+    <set >
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.context != null" >
+        context = #{record.context,jdbcType=VARCHAR},
+      </if>
+      <if test="record.worker != null" >
+        worker = #{record.worker,jdbcType=VARCHAR},
+      </if>
+      <if test="record.department != null" >
+        department = #{record.department,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workerdataid != null" >
+        workerdataid = #{record.workerdataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departmentdataid != null" >
+        departmentdataid = #{record.departmentdataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.time != null" >
+        time = #{record.time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where dataid = #{record.dataid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="map" >
+    update hrg_notice
+    set createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      context = #{record.context,jdbcType=VARCHAR},
+      worker = #{record.worker,jdbcType=VARCHAR},
+      department = #{record.department,jdbcType=VARCHAR},
+      workerdataid = #{record.workerdataid,jdbcType=VARCHAR},
+      departmentdataid = #{record.departmentdataid,jdbcType=VARCHAR},
+      time = #{record.time,jdbcType=TIMESTAMP}
+    where dataid = #{record.dataid,jdbcType=VARCHAR}
+  </update>
+</mapper>

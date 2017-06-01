@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hrg.javamapper.write.HrgDepartmentWriteMapper" >
+  <sql id="Example_Where_Clause" >
+    <where >
+      <if test="example.dataid != null" >
+         and dataid = #{example.dataid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.dataidList != null  and  example.dataidList.size() > 0 " >
+         and dataid in 
+        <foreach collection="example.dataidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.name != null" >
+         and name = #{example.name,jdbcType=VARCHAR}
+      </if>
+      <if test="example.nameList != null  and  example.nameList.size() > 0 " >
+         and name in 
+        <foreach collection="example.nameList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.leader != null" >
+         and leader = #{example.leader,jdbcType=VARCHAR}
+      </if>
+      <if test="example.leaderList != null  and  example.leaderList.size() > 0 " >
+         and leader in 
+        <foreach collection="example.leaderList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.phone != null" >
+         and phone = #{example.phone,jdbcType=VARCHAR}
+      </if>
+      <if test="example.phoneList != null  and  example.phoneList.size() > 0 " >
+         and phone in 
+        <foreach collection="example.phoneList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.remark != null" >
+         and remark = #{example.remark,jdbcType=VARCHAR}
+      </if>
+      <if test="example.remarkList != null  and  example.remarkList.size() > 0 " >
+         and remark in 
+        <foreach collection="example.remarkList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+    </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from hrg_department
+    where dataid = #{dataid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="map" >
+    delete from hrg_department
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="map" >
+    insert into hrg_department (dataid, name, leader, 
+      phone, remark)
+    values (#{record.dataid,jdbcType=VARCHAR}, #{record.name,jdbcType=VARCHAR}, #{record.leader,jdbcType=VARCHAR}, 
+      #{record.phone,jdbcType=VARCHAR}, #{record.remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="map" >
+    insert into hrg_department
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="record.dataid != null" >
+        dataid,
+      </if>
+      <if test="record.name != null" >
+        name,
+      </if>
+      <if test="record.leader != null" >
+        leader,
+      </if>
+      <if test="record.phone != null" >
+        phone,
+      </if>
+      <if test="record.remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="record.dataid != null" >
+        #{record.dataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.leader != null" >
+        #{record.leader,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update hrg_department
+    <set >
+      <if test="record.dataid != null" >
+        dataid = #{record.dataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.leader != null" >
+        leader = #{record.leader,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update hrg_department
+    set dataid = #{record.dataid,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      leader = #{record.leader,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="map" >
+    update hrg_department
+    <set >
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.leader != null" >
+        leader = #{record.leader,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where dataid = #{record.dataid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="map" >
+    update hrg_department
+    set name = #{record.name,jdbcType=VARCHAR},
+      leader = #{record.leader,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    where dataid = #{record.dataid,jdbcType=VARCHAR}
+  </update>
+</mapper>
