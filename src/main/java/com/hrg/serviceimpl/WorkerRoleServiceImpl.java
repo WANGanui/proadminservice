@@ -8,12 +8,14 @@ import com.hrg.model.WorkerRoleCriteria;
 import com.hrg.service.WorkerRoleService;
 import com.hrg.util.ValidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by 82705 on 2017/6/1.
  */
+@Service("workerRoleService")
 public class WorkerRoleServiceImpl implements WorkerRoleService {
 
     @Autowired

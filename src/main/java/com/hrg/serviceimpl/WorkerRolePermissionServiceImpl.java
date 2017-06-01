@@ -8,12 +8,14 @@ import com.hrg.model.WorkerRolePermissionCriteria;
 import com.hrg.service.WorkerRolePermissionService;
 import com.hrg.util.ValidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by 82705 on 2017/6/1.
  */
+@Service("workerRolePermissionService")
 public class WorkerRolePermissionServiceImpl implements WorkerRolePermissionService {
 
     @Autowired
