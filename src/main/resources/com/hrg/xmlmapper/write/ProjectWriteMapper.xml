@@ -84,6 +84,48 @@
           #{listItem}
         </foreach>
       </if>
+      <if test="example.creator != null" >
+         and creator = #{example.creator,jdbcType=VARCHAR}
+      </if>
+      <if test="example.creatorList != null  and  example.creatorList.size() > 0 " >
+         and creator in 
+        <foreach collection="example.creatorList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.createtime != null" >
+         and createtime = #{example.createtime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="example.modify != null" >
+         and modify = #{example.modify,jdbcType=VARCHAR}
+      </if>
+      <if test="example.modifyList != null  and  example.modifyList.size() > 0 " >
+         and modify in 
+        <foreach collection="example.modifyList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.modifytime != null" >
+         and modifytime = #{example.modifytime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="example.creatordataid != null" >
+         and creatordataid = #{example.creatordataid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.creatordataidList != null  and  example.creatordataidList.size() > 0 " >
+         and creatordataid in 
+        <foreach collection="example.creatordataidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.modifydataid != null" >
+         and modifydataid = #{example.modifydataid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.modifydataidList != null  and  example.modifydataidList.size() > 0 " >
+         and modifydataid in 
+        <foreach collection="example.modifydataidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
     </where>
   </sql>
   <delete id="deleteByPrimaryKey" parameterType="map" >
@@ -100,11 +142,17 @@
     insert into hrg_project (dataid, name, starttime, 
       endtime, days, month, 
       leader, contect, state, 
-      finishtime, remark)
+      finishtime, remark, creator, 
+      createtime, modify, modifytime, 
+      creatordataid, modifydataid
+      )
     values (#{record.dataid,jdbcType=VARCHAR}, #{record.name,jdbcType=VARCHAR}, #{record.starttime,jdbcType=TIMESTAMP}, 
       #{record.endtime,jdbcType=TIMESTAMP}, #{record.days,jdbcType=INTEGER}, #{record.month,jdbcType=INTEGER}, 
       #{record.leader,jdbcType=VARCHAR}, #{record.contect,jdbcType=VARCHAR}, #{record.state,jdbcType=CHAR}, 
-      #{record.finishtime,jdbcType=TIMESTAMP}, #{record.remark,jdbcType=VARCHAR})
+      #{record.finishtime,jdbcType=TIMESTAMP}, #{record.remark,jdbcType=VARCHAR}, #{record.creator,jdbcType=VARCHAR}, 
+      #{record.createtime,jdbcType=TIMESTAMP}, #{record.modify,jdbcType=VARCHAR}, #{record.modifytime,jdbcType=TIMESTAMP}, 
+      #{record.creatordataid,jdbcType=VARCHAR}, #{record.modifydataid,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="map" >
     insert into hrg_project
@@ -142,6 +190,24 @@
       <if test="record.remark != null" >
         remark,
       </if>
+      <if test="record.creator != null" >
+        creator,
+      </if>
+      <if test="record.createtime != null" >
+        createtime,
+      </if>
+      <if test="record.modify != null" >
+        modify,
+      </if>
+      <if test="record.modifytime != null" >
+        modifytime,
+      </if>
+      <if test="record.creatordataid != null" >
+        creatordataid,
+      </if>
+      <if test="record.modifydataid != null" >
+        modifydataid,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="record.dataid != null" >
@@ -176,6 +242,24 @@
       </if>
       <if test="record.remark != null" >
         #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creator != null" >
+        #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modify != null" >
+        #{record.modify,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifytime != null" >
+        #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creatordataid != null" >
+        #{record.creatordataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifydataid != null" >
+        #{record.modifydataid,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -215,6 +299,24 @@
       <if test="record.remark != null" >
         remark = #{record.remark,jdbcType=VARCHAR},
       </if>
+      <if test="record.creator != null" >
+        creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modify != null" >
+        modify = #{record.modify,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifytime != null" >
+        modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creatordataid != null" >
+        creatordataid = #{record.creatordataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifydataid != null" >
+        modifydataid = #{record.modifydataid,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -232,7 +334,13 @@
       contect = #{record.contect,jdbcType=VARCHAR},
       state = #{record.state,jdbcType=CHAR},
       finishtime = #{record.finishtime,jdbcType=TIMESTAMP},
-      remark = #{record.remark,jdbcType=VARCHAR}
+      remark = #{record.remark,jdbcType=VARCHAR},
+      creator = #{record.creator,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      modify = #{record.modify,jdbcType=VARCHAR},
+      modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
+      creatordataid = #{record.creatordataid,jdbcType=VARCHAR},
+      modifydataid = #{record.modifydataid,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -270,6 +378,24 @@
       <if test="record.remark != null" >
         remark = #{record.remark,jdbcType=VARCHAR},
       </if>
+      <if test="record.creator != null" >
+        creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modify != null" >
+        modify = #{record.modify,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifytime != null" >
+        modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creatordataid != null" >
+        creatordataid = #{record.creatordataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifydataid != null" >
+        modifydataid = #{record.modifydataid,jdbcType=VARCHAR},
+      </if>
     </set>
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
@@ -284,7 +410,13 @@
       contect = #{record.contect,jdbcType=VARCHAR},
       state = #{record.state,jdbcType=CHAR},
       finishtime = #{record.finishtime,jdbcType=TIMESTAMP},
-      remark = #{record.remark,jdbcType=VARCHAR}
+      remark = #{record.remark,jdbcType=VARCHAR},
+      creator = #{record.creator,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      modify = #{record.modify,jdbcType=VARCHAR},
+      modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
+      creatordataid = #{record.creatordataid,jdbcType=VARCHAR},
+      modifydataid = #{record.modifydataid,jdbcType=VARCHAR}
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
 </mapper>

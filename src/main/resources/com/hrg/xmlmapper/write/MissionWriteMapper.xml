@@ -93,6 +93,48 @@
           #{listItem}
         </foreach>
       </if>
+      <if test="example.creator != null" >
+         and creator = #{example.creator,jdbcType=VARCHAR}
+      </if>
+      <if test="example.creatorList != null  and  example.creatorList.size() > 0 " >
+         and creator in 
+        <foreach collection="example.creatorList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.creatordataid != null" >
+         and creatordataid = #{example.creatordataid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.creatordataidList != null  and  example.creatordataidList.size() > 0 " >
+         and creatordataid in 
+        <foreach collection="example.creatordataidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.createtime != null" >
+         and createtime = #{example.createtime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="example.modify != null" >
+         and modify = #{example.modify,jdbcType=VARCHAR}
+      </if>
+      <if test="example.modifyList != null  and  example.modifyList.size() > 0 " >
+         and modify in 
+        <foreach collection="example.modifyList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.modifydataid != null" >
+         and modifydataid = #{example.modifydataid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.modifydataidList != null  and  example.modifydataidList.size() > 0 " >
+         and modifydataid in 
+        <foreach collection="example.modifydataidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.modifytime != null" >
+         and modifytime = #{example.modifytime,jdbcType=TIMESTAMP}
+      </if>
     </where>
   </sql>
   <delete id="deleteByPrimaryKey" parameterType="map" >
@@ -109,12 +151,16 @@
     insert into hrg_mission (dataid, name, context, 
       starttime, endtime, finishtime, 
       state, pro_dataid, pro_name, 
-      remark, percentage, proportion
+      remark, percentage, proportion, 
+      creator, creatordataid, createtime, 
+      modify, modifydataid, modifytime
       )
     values (#{record.dataid,jdbcType=VARCHAR}, #{record.name,jdbcType=VARCHAR}, #{record.context,jdbcType=VARCHAR}, 
       #{record.starttime,jdbcType=TIMESTAMP}, #{record.endtime,jdbcType=TIMESTAMP}, #{record.finishtime,jdbcType=TIMESTAMP}, 
       #{record.state,jdbcType=CHAR}, #{record.proDataid,jdbcType=VARCHAR}, #{record.proName,jdbcType=VARCHAR}, 
-      #{record.remark,jdbcType=VARCHAR}, #{record.percentage,jdbcType=VARCHAR}, #{record.proportion,jdbcType=VARCHAR}
+      #{record.remark,jdbcType=VARCHAR}, #{record.percentage,jdbcType=VARCHAR}, #{record.proportion,jdbcType=VARCHAR}, 
+      #{record.creator,jdbcType=VARCHAR}, #{record.creatordataid,jdbcType=VARCHAR}, #{record.createtime,jdbcType=TIMESTAMP}, 
+      #{record.modify,jdbcType=VARCHAR}, #{record.modifydataid,jdbcType=VARCHAR}, #{record.modifytime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="map" >
@@ -156,6 +202,24 @@
       <if test="record.proportion != null" >
         proportion,
       </if>
+      <if test="record.creator != null" >
+        creator,
+      </if>
+      <if test="record.creatordataid != null" >
+        creatordataid,
+      </if>
+      <if test="record.createtime != null" >
+        createtime,
+      </if>
+      <if test="record.modify != null" >
+        modify,
+      </if>
+      <if test="record.modifydataid != null" >
+        modifydataid,
+      </if>
+      <if test="record.modifytime != null" >
+        modifytime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="record.dataid != null" >
@@ -193,6 +257,24 @@
       </if>
       <if test="record.proportion != null" >
         #{record.proportion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creator != null" >
+        #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creatordataid != null" >
+        #{record.creatordataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modify != null" >
+        #{record.modify,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifydataid != null" >
+        #{record.modifydataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifytime != null" >
+        #{record.modifytime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -235,6 +317,24 @@
       <if test="record.proportion != null" >
         proportion = #{record.proportion,jdbcType=VARCHAR},
       </if>
+      <if test="record.creator != null" >
+        creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creatordataid != null" >
+        creatordataid = #{record.creatordataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modify != null" >
+        modify = #{record.modify,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifydataid != null" >
+        modifydataid = #{record.modifydataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifytime != null" >
+        modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -253,7 +353,13 @@
       pro_name = #{record.proName,jdbcType=VARCHAR},
       remark = #{record.remark,jdbcType=VARCHAR},
       percentage = #{record.percentage,jdbcType=VARCHAR},
-      proportion = #{record.proportion,jdbcType=VARCHAR}
+      proportion = #{record.proportion,jdbcType=VARCHAR},
+      creator = #{record.creator,jdbcType=VARCHAR},
+      creatordataid = #{record.creatordataid,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      modify = #{record.modify,jdbcType=VARCHAR},
+      modifydataid = #{record.modifydataid,jdbcType=VARCHAR},
+      modifytime = #{record.modifytime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -294,6 +400,24 @@
       <if test="record.proportion != null" >
         proportion = #{record.proportion,jdbcType=VARCHAR},
       </if>
+      <if test="record.creator != null" >
+        creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creatordataid != null" >
+        creatordataid = #{record.creatordataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modify != null" >
+        modify = #{record.modify,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifydataid != null" >
+        modifydataid = #{record.modifydataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifytime != null" >
+        modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
@@ -309,7 +433,13 @@
       pro_name = #{record.proName,jdbcType=VARCHAR},
       remark = #{record.remark,jdbcType=VARCHAR},
       percentage = #{record.percentage,jdbcType=VARCHAR},
-      proportion = #{record.proportion,jdbcType=VARCHAR}
+      proportion = #{record.proportion,jdbcType=VARCHAR},
+      creator = #{record.creator,jdbcType=VARCHAR},
+      creatordataid = #{record.creatordataid,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      modify = #{record.modify,jdbcType=VARCHAR},
+      modifydataid = #{record.modifydataid,jdbcType=VARCHAR},
+      modifytime = #{record.modifytime,jdbcType=TIMESTAMP}
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
 </mapper>

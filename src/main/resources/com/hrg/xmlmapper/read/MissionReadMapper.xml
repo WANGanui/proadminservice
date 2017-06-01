@@ -14,6 +14,12 @@
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="percentage" property="percentage" jdbcType="VARCHAR" />
     <result column="proportion" property="proportion" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creatordataid" property="creatordataid" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="modify" property="modify" jdbcType="VARCHAR" />
+    <result column="modifydataid" property="modifydataid" jdbcType="VARCHAR" />
+    <result column="modifytime" property="modifytime" jdbcType="TIMESTAMP" />
   </resultMap>
   <resultMap id="HashMapBaseResultMap" type="hashmap" >
     <id column="dataid" property="dataid" jdbcType="VARCHAR" />
@@ -28,6 +34,12 @@
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="percentage" property="percentage" jdbcType="VARCHAR" />
     <result column="proportion" property="proportion" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creatordataid" property="creatordataid" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="modify" property="modify" jdbcType="VARCHAR" />
+    <result column="modifydataid" property="modifydataid" jdbcType="VARCHAR" />
+    <result column="modifytime" property="modifytime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -121,11 +133,54 @@
           #{listItem}
         </foreach>
       </if>
+      <if test="example.creator != null" >
+         and creator = #{example.creator,jdbcType=VARCHAR}
+      </if>
+      <if test="example.creatorList != null  and  example.creatorList.size() > 0 " >
+         and creator in 
+        <foreach collection="example.creatorList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.creatordataid != null" >
+         and creatordataid = #{example.creatordataid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.creatordataidList != null  and  example.creatordataidList.size() > 0 " >
+         and creatordataid in 
+        <foreach collection="example.creatordataidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.createtime != null" >
+         and createtime = #{example.createtime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="example.modify != null" >
+         and modify = #{example.modify,jdbcType=VARCHAR}
+      </if>
+      <if test="example.modifyList != null  and  example.modifyList.size() > 0 " >
+         and modify in 
+        <foreach collection="example.modifyList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.modifydataid != null" >
+         and modifydataid = #{example.modifydataid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.modifydataidList != null  and  example.modifydataidList.size() > 0 " >
+         and modifydataid in 
+        <foreach collection="example.modifydataidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.modifytime != null" >
+         and modifytime = #{example.modifytime,jdbcType=TIMESTAMP}
+      </if>
     </where>
   </sql>
   <sql id="Base_Column_List" >
     dataid, name, context, starttime, endtime, finishtime, state, pro_dataid, pro_name, 
-    remark, percentage, proportion
+    remark, percentage, proportion, creator, creatordataid, createtime, modify, modifydataid, 
+    modifytime
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="map" >
     select
