@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hrg.javamapper.write.WorkdataWriteMapper" >
+  <sql id="Example_Where_Clause" >
+    <where >
+      <if test="example.dataid != null" >
+         and dataid = #{example.dataid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.dataidList != null  and  example.dataidList.size() > 0 " >
+         and dataid in 
+        <foreach collection="example.dataidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.projectdataid != null" >
+         and projectdataid = #{example.projectdataid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.projectdataidList != null  and  example.projectdataidList.size() > 0 " >
+         and projectdataid in 
+        <foreach collection="example.projectdataidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.projectname != null" >
+         and projectname = #{example.projectname,jdbcType=VARCHAR}
+      </if>
+      <if test="example.projectnameList != null  and  example.projectnameList.size() > 0 " >
+         and projectname in 
+        <foreach collection="example.projectnameList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.missiondataid != null" >
+         and missiondataid = #{example.missiondataid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.missiondataidList != null  and  example.missiondataidList.size() > 0 " >
+         and missiondataid in 
+        <foreach collection="example.missiondataidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.missionname != null" >
+         and missionname = #{example.missionname,jdbcType=VARCHAR}
+      </if>
+      <if test="example.missionnameList != null  and  example.missionnameList.size() > 0 " >
+         and missionname in 
+        <foreach collection="example.missionnameList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.workcontext != null" >
+         and workcontext = #{example.workcontext,jdbcType=VARCHAR}
+      </if>
+      <if test="example.workcontextList != null  and  example.workcontextList.size() > 0 " >
+         and workcontext in 
+        <foreach collection="example.workcontextList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.workerdataid != null" >
+         and workerdataid = #{example.workerdataid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.workerdataidList != null  and  example.workerdataidList.size() > 0 " >
+         and workerdataid in 
+        <foreach collection="example.workerdataidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.workername != null" >
+         and workername = #{example.workername,jdbcType=VARCHAR}
+      </if>
+      <if test="example.workernameList != null  and  example.workernameList.size() > 0 " >
+         and workername in 
+        <foreach collection="example.workernameList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.time != null" >
+         and time = #{example.time,jdbcType=TIMESTAMP}
+      </if>
+      <if test="example.projectleader != null" >
+         and projectleader = #{example.projectleader,jdbcType=VARCHAR}
+      </if>
+      <if test="example.projectleaderList != null  and  example.projectleaderList.size() > 0 " >
+         and projectleader in 
+        <foreach collection="example.projectleaderList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+    </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from hrg_workdata
+    where dataid = #{dataid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="map" >
+    delete from hrg_workdata
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="map" >
+    insert into hrg_workdata (dataid, projectdataid, 
+      projectname, missiondataid, 
+      missionname, workcontext, 
+      workerdataid, workername, 
+      time, projectleader)
+    values (#{record.dataid,jdbcType=VARCHAR}, #{record.projectdataid,jdbcType=VARCHAR}, 
+      #{record.projectname,jdbcType=VARCHAR}, #{record.missiondataid,jdbcType=VARCHAR}, 
+      #{record.missionname,jdbcType=VARCHAR}, #{record.workcontext,jdbcType=VARCHAR}, 
+      #{record.workerdataid,jdbcType=VARCHAR}, #{record.workername,jdbcType=VARCHAR}, 
+      #{record.time,jdbcType=TIMESTAMP}, #{record.projectleader,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="map" >
+    insert into hrg_workdata
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="record.dataid != null" >
+        dataid,
+      </if>
+      <if test="record.projectdataid != null" >
+        projectdataid,
+      </if>
+      <if test="record.projectname != null" >
+        projectname,
+      </if>
+      <if test="record.missiondataid != null" >
+        missiondataid,
+      </if>
+      <if test="record.missionname != null" >
+        missionname,
+      </if>
+      <if test="record.workcontext != null" >
+        workcontext,
+      </if>
+      <if test="record.workerdataid != null" >
+        workerdataid,
+      </if>
+      <if test="record.workername != null" >
+        workername,
+      </if>
+      <if test="record.time != null" >
+        time,
+      </if>
+      <if test="record.projectleader != null" >
+        projectleader,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="record.dataid != null" >
+        #{record.dataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectdataid != null" >
+        #{record.projectdataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectname != null" >
+        #{record.projectname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.missiondataid != null" >
+        #{record.missiondataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.missionname != null" >
+        #{record.missionname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workcontext != null" >
+        #{record.workcontext,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workerdataid != null" >
+        #{record.workerdataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workername != null" >
+        #{record.workername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.time != null" >
+        #{record.time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.projectleader != null" >
+        #{record.projectleader,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update hrg_workdata
+    <set >
+      <if test="record.dataid != null" >
+        dataid = #{record.dataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectdataid != null" >
+        projectdataid = #{record.projectdataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectname != null" >
+        projectname = #{record.projectname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.missiondataid != null" >
+        missiondataid = #{record.missiondataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.missionname != null" >
+        missionname = #{record.missionname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workcontext != null" >
+        workcontext = #{record.workcontext,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workerdataid != null" >
+        workerdataid = #{record.workerdataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workername != null" >
+        workername = #{record.workername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.time != null" >
+        time = #{record.time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.projectleader != null" >
+        projectleader = #{record.projectleader,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update hrg_workdata
+    set dataid = #{record.dataid,jdbcType=VARCHAR},
+      projectdataid = #{record.projectdataid,jdbcType=VARCHAR},
+      projectname = #{record.projectname,jdbcType=VARCHAR},
+      missiondataid = #{record.missiondataid,jdbcType=VARCHAR},
+      missionname = #{record.missionname,jdbcType=VARCHAR},
+      workcontext = #{record.workcontext,jdbcType=VARCHAR},
+      workerdataid = #{record.workerdataid,jdbcType=VARCHAR},
+      workername = #{record.workername,jdbcType=VARCHAR},
+      time = #{record.time,jdbcType=TIMESTAMP},
+      projectleader = #{record.projectleader,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="map" >
+    update hrg_workdata
+    <set >
+      <if test="record.projectdataid != null" >
+        projectdataid = #{record.projectdataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectname != null" >
+        projectname = #{record.projectname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.missiondataid != null" >
+        missiondataid = #{record.missiondataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.missionname != null" >
+        missionname = #{record.missionname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workcontext != null" >
+        workcontext = #{record.workcontext,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workerdataid != null" >
+        workerdataid = #{record.workerdataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workername != null" >
+        workername = #{record.workername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.time != null" >
+        time = #{record.time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.projectleader != null" >
+        projectleader = #{record.projectleader,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where dataid = #{record.dataid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="map" >
+    update hrg_workdata
+    set projectdataid = #{record.projectdataid,jdbcType=VARCHAR},
+      projectname = #{record.projectname,jdbcType=VARCHAR},
+      missiondataid = #{record.missiondataid,jdbcType=VARCHAR},
+      missionname = #{record.missionname,jdbcType=VARCHAR},
+      workcontext = #{record.workcontext,jdbcType=VARCHAR},
+      workerdataid = #{record.workerdataid,jdbcType=VARCHAR},
+      workername = #{record.workername,jdbcType=VARCHAR},
+      time = #{record.time,jdbcType=TIMESTAMP},
+      projectleader = #{record.projectleader,jdbcType=VARCHAR}
+    where dataid = #{record.dataid,jdbcType=VARCHAR}
+  </update>
+</mapper>

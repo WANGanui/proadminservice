@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hrg.javamapper.write.WorkerRolePermissionWriteMapper" >
+  <sql id="Example_Where_Clause" >
+    <where >
+      <if test="example.dataid != null" >
+         and dataid = #{example.dataid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.dataidList != null  and  example.dataidList.size() > 0 " >
+         and dataid in 
+        <foreach collection="example.dataidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.roleid != null" >
+         and roleid = #{example.roleid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.roleidList != null  and  example.roleidList.size() > 0 " >
+         and roleid in 
+        <foreach collection="example.roleidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.parentroleid != null" >
+         and parentroleid = #{example.parentroleid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.parentroleidList != null  and  example.parentroleidList.size() > 0 " >
+         and parentroleid in 
+        <foreach collection="example.parentroleidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.permissionid != null" >
+         and permissionid = #{example.permissionid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.permissionidList != null  and  example.permissionidList.size() > 0 " >
+         and permissionid in 
+        <foreach collection="example.permissionidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.permissioncode != null" >
+         and permissioncode = #{example.permissioncode,jdbcType=VARCHAR}
+      </if>
+      <if test="example.permissioncodeList != null  and  example.permissioncodeList.size() > 0 " >
+         and permissioncode in 
+        <foreach collection="example.permissioncodeList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+    </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from hrg_worker_role_permission
+    where dataid = #{dataid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="map" >
+    delete from hrg_worker_role_permission
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="map" >
+    insert into hrg_worker_role_permission (dataid, roleid, parentroleid, 
+      permissionid, permissioncode
+      )
+    values (#{record.dataid,jdbcType=VARCHAR}, #{record.roleid,jdbcType=VARCHAR}, #{record.parentroleid,jdbcType=VARCHAR}, 
+      #{record.permissionid,jdbcType=VARCHAR}, #{record.permissioncode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="map" >
+    insert into hrg_worker_role_permission
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="record.dataid != null" >
+        dataid,
+      </if>
+      <if test="record.roleid != null" >
+        roleid,
+      </if>
+      <if test="record.parentroleid != null" >
+        parentroleid,
+      </if>
+      <if test="record.permissionid != null" >
+        permissionid,
+      </if>
+      <if test="record.permissioncode != null" >
+        permissioncode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="record.dataid != null" >
+        #{record.dataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roleid != null" >
+        #{record.roleid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentroleid != null" >
+        #{record.parentroleid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.permissionid != null" >
+        #{record.permissionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.permissioncode != null" >
+        #{record.permissioncode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update hrg_worker_role_permission
+    <set >
+      <if test="record.dataid != null" >
+        dataid = #{record.dataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roleid != null" >
+        roleid = #{record.roleid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentroleid != null" >
+        parentroleid = #{record.parentroleid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.permissionid != null" >
+        permissionid = #{record.permissionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.permissioncode != null" >
+        permissioncode = #{record.permissioncode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update hrg_worker_role_permission
+    set dataid = #{record.dataid,jdbcType=VARCHAR},
+      roleid = #{record.roleid,jdbcType=VARCHAR},
+      parentroleid = #{record.parentroleid,jdbcType=VARCHAR},
+      permissionid = #{record.permissionid,jdbcType=VARCHAR},
+      permissioncode = #{record.permissioncode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="map" >
+    update hrg_worker_role_permission
+    <set >
+      <if test="record.roleid != null" >
+        roleid = #{record.roleid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentroleid != null" >
+        parentroleid = #{record.parentroleid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.permissionid != null" >
+        permissionid = #{record.permissionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.permissioncode != null" >
+        permissioncode = #{record.permissioncode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where dataid = #{record.dataid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="map" >
+    update hrg_worker_role_permission
+    set roleid = #{record.roleid,jdbcType=VARCHAR},
+      parentroleid = #{record.parentroleid,jdbcType=VARCHAR},
+      permissionid = #{record.permissionid,jdbcType=VARCHAR},
+      permissioncode = #{record.permissioncode,jdbcType=VARCHAR}
+    where dataid = #{record.dataid,jdbcType=VARCHAR}
+  </update>
+</mapper>
