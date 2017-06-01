@@ -8,6 +8,7 @@
     <result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
     <result column="days" property="days" jdbcType="INTEGER" />
     <result column="month" property="month" jdbcType="INTEGER" />
+    <result column="leaderid" property="leaderid" jdbcType="VARCHAR" />
     <result column="leader" property="leader" jdbcType="VARCHAR" />
     <result column="contect" property="contect" jdbcType="VARCHAR" />
     <result column="state" property="state" jdbcType="CHAR" />
@@ -27,6 +28,7 @@
     <result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
     <result column="days" property="days" jdbcType="INTEGER" />
     <result column="month" property="month" jdbcType="INTEGER" />
+    <result column="leaderid" property="leaderid" jdbcType="VARCHAR" />
     <result column="leader" property="leader" jdbcType="VARCHAR" />
     <result column="contect" property="contect" jdbcType="VARCHAR" />
     <result column="state" property="state" jdbcType="CHAR" />
@@ -80,6 +82,15 @@
       <if test="example.monthList != null  and  example.monthList.size() > 0 " >
          and month in 
         <foreach collection="example.monthList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.leaderid != null" >
+         and leaderid = #{example.leaderid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.leaderidList != null  and  example.leaderidList.size() > 0 " >
+         and leaderid in 
+        <foreach collection="example.leaderidList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
@@ -167,8 +178,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    dataid, name, starttime, endtime, days, month, leader, contect, state, finishtime, 
-    remark, creator, createtime, modify, modifytime, creatordataid, modifydataid
+    dataid, name, starttime, endtime, days, month, leaderid, leader, contect, state, 
+    finishtime, remark, creator, createtime, modify, modifytime, creatordataid, modifydataid
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="map" >
     select

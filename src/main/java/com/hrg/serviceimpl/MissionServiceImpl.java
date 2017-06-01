@@ -120,7 +120,7 @@ public class MissionServiceImpl implements MissionService {
         WorkerRelMissionCriteria example = new WorkerRelMissionCriteria();
         example.setMissiondataid(mission.getDataid());
         int x = workerRelMissionWriteMapper.deleteByExample(example);
-       
+
         return x > 0 ? true : false;
     }
 }

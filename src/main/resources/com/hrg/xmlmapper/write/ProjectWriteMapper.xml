@@ -45,6 +45,15 @@
           #{listItem}
         </foreach>
       </if>
+      <if test="example.leaderid != null" >
+         and leaderid = #{example.leaderid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.leaderidList != null  and  example.leaderidList.size() > 0 " >
+         and leaderid in 
+        <foreach collection="example.leaderidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
       <if test="example.leader != null" >
          and leader = #{example.leader,jdbcType=VARCHAR}
       </if>
@@ -141,18 +150,18 @@
   <insert id="insert" parameterType="map" >
     insert into hrg_project (dataid, name, starttime, 
       endtime, days, month, 
-      leader, contect, state, 
-      finishtime, remark, creator, 
-      createtime, modify, modifytime, 
-      creatordataid, modifydataid
-      )
+      leaderid, leader, contect, 
+      state, finishtime, remark, 
+      creator, createtime, modify, 
+      modifytime, creatordataid, 
+      modifydataid)
     values (#{record.dataid,jdbcType=VARCHAR}, #{record.name,jdbcType=VARCHAR}, #{record.starttime,jdbcType=TIMESTAMP}, 
       #{record.endtime,jdbcType=TIMESTAMP}, #{record.days,jdbcType=INTEGER}, #{record.month,jdbcType=INTEGER}, 
-      #{record.leader,jdbcType=VARCHAR}, #{record.contect,jdbcType=VARCHAR}, #{record.state,jdbcType=CHAR}, 
-      #{record.finishtime,jdbcType=TIMESTAMP}, #{record.remark,jdbcType=VARCHAR}, #{record.creator,jdbcType=VARCHAR}, 
-      #{record.createtime,jdbcType=TIMESTAMP}, #{record.modify,jdbcType=VARCHAR}, #{record.modifytime,jdbcType=TIMESTAMP}, 
-      #{record.creatordataid,jdbcType=VARCHAR}, #{record.modifydataid,jdbcType=VARCHAR}
-      )
+      #{record.leaderid,jdbcType=VARCHAR}, #{record.leader,jdbcType=VARCHAR}, #{record.contect,jdbcType=VARCHAR}, 
+      #{record.state,jdbcType=CHAR}, #{record.finishtime,jdbcType=TIMESTAMP}, #{record.remark,jdbcType=VARCHAR}, 
+      #{record.creator,jdbcType=VARCHAR}, #{record.createtime,jdbcType=TIMESTAMP}, #{record.modify,jdbcType=VARCHAR}, 
+      #{record.modifytime,jdbcType=TIMESTAMP}, #{record.creatordataid,jdbcType=VARCHAR}, 
+      #{record.modifydataid,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="map" >
     insert into hrg_project
@@ -174,6 +183,9 @@
       </if>
       <if test="record.month != null" >
         month,
+      </if>
+      <if test="record.leaderid != null" >
+        leaderid,
       </if>
       <if test="record.leader != null" >
         leader,
@@ -227,6 +239,9 @@
       </if>
       <if test="record.month != null" >
         #{record.month,jdbcType=INTEGER},
+      </if>
+      <if test="record.leaderid != null" >
+        #{record.leaderid,jdbcType=VARCHAR},
       </if>
       <if test="record.leader != null" >
         #{record.leader,jdbcType=VARCHAR},
@@ -284,6 +299,9 @@
       <if test="record.month != null" >
         month = #{record.month,jdbcType=INTEGER},
       </if>
+      <if test="record.leaderid != null" >
+        leaderid = #{record.leaderid,jdbcType=VARCHAR},
+      </if>
       <if test="record.leader != null" >
         leader = #{record.leader,jdbcType=VARCHAR},
       </if>
@@ -330,6 +348,7 @@
       endtime = #{record.endtime,jdbcType=TIMESTAMP},
       days = #{record.days,jdbcType=INTEGER},
       month = #{record.month,jdbcType=INTEGER},
+      leaderid = #{record.leaderid,jdbcType=VARCHAR},
       leader = #{record.leader,jdbcType=VARCHAR},
       contect = #{record.contect,jdbcType=VARCHAR},
       state = #{record.state,jdbcType=CHAR},
@@ -362,6 +381,9 @@
       </if>
       <if test="record.month != null" >
         month = #{record.month,jdbcType=INTEGER},
+      </if>
+      <if test="record.leaderid != null" >
+        leaderid = #{record.leaderid,jdbcType=VARCHAR},
       </if>
       <if test="record.leader != null" >
         leader = #{record.leader,jdbcType=VARCHAR},
@@ -406,6 +428,7 @@
       endtime = #{record.endtime,jdbcType=TIMESTAMP},
       days = #{record.days,jdbcType=INTEGER},
       month = #{record.month,jdbcType=INTEGER},
+      leaderid = #{record.leaderid,jdbcType=VARCHAR},
       leader = #{record.leader,jdbcType=VARCHAR},
       contect = #{record.contect,jdbcType=VARCHAR},
       state = #{record.state,jdbcType=CHAR},

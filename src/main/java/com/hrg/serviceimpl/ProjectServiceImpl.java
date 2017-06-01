@@ -1,0 +1,124 @@
+package com.hrg.serviceimpl;
+
+import com.hrg.enums.ErrorCode;
+import com.hrg.exception.ValidatorException;
+import com.hrg.javamapper.read.ProjectReadMapper;
+import com.hrg.javamapper.write.ProjectWriteMapper;
+import com.hrg.model.Project;
+import com.hrg.model.ProjectCriteria;
+import com.hrg.service.ProjectService;
+import com.hrg.util.DateUtil;
+import com.hrg.util.PageUtil;
+import com.hrg.util.UUIDGenerator;
+import com.hrg.util.ValidUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.List;
+
+/**
+ * Created by 82705 on 2017/6/1.
+ */
+@Service("projectService")
+public class ProjectServiceImpl implements ProjectService {
+
+    @Autowired
+    ProjectReadMapper projectReadMapper;
+    @Autowired
+    ProjectWriteMapper projectWriteMapper;
+
+    /**
+     * 添加项目
+     *
+     * @param project 项目实体
+     * @return
+     * @throws Exception
+     */
+    @Override
+    @Transactional(rollbackFor = { Exception.class, RuntimeException.class })
+    public boolean insert(Project project) throws Exception {
+        if (ValidUtil.isNullOrEmpty(project.getName()) || ValidUtil.isNullOrEmpty(project.getStarttime()) ||
+                ValidUtil.isNullOrEmpty(project.getEndtime()) || ValidUtil.isNullOrEmpty(project.getLeader()) ||
+                ValidUtil.isNullOrEmpty(project.getLeaderid()) || ValidUtil.isNullOrEmpty(project.getContect()) ||
+                ValidUtil.isNullOrEmpty(project.getCreator()) || ValidUtil.isNullOrEmpty(project.getCreatordataid()))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+        project.setDataid(UUIDGenerator.getUUID());
+        project.setDays((int) DateUtil.getDays(DateUtil.toDateStr(project.getStarttime()),DateUtil.toDateStr(project.getEndtime())));
+        project.setMonth((int) DateUtil.getMonth(DateUtil.toDateStr(project.getStarttime()),DateUtil.toDateStr(project.getEndtime())));
+        project.setState("0");
+        project.setCreatetime(new Date());
+        int x = projectWriteMapper.insert(project);
+        return x > 0 ? true : false;
+    }
+
+    /**
+     * 修改项目
+     *
+     * @param project 项目实体
+     * @return
+     * @throws Exception
+     */
+    @Override
+    @Transactional(rollbackFor = { Exception.class, RuntimeException.class })
+    public boolean update(Project project) throws Exception {
+        if (ValidUtil.isNullOrEmpty(project.getName()) || ValidUtil.isNullOrEmpty(project.getStarttime()) ||
+                ValidUtil.isNullOrEmpty(project.getEndtime()) || ValidUtil.isNullOrEmpty(project.getLeader()) ||
+                ValidUtil.isNullOrEmpty(project.getLeaderid()) || ValidUtil.isNullOrEmpty(project.getContect()) ||
+                ValidUtil.isNullOrEmpty(project.getCreator()) || ValidUtil.isNullOrEmpty(project.getCreatordataid())||
+                ValidUtil.isNullOrEmpty(project.getDataid()) || ValidUtil.isNullOrEmpty(project.getModify()) ||
+                ValidUtil.isNullOrEmpty(project.getModifydataid()))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+        project.setModifytime(new Date());
+        int x = projectWriteMapper.updateByPrimaryKeySelective(project);
+        return x > 0 ? true : false;
+    }
+
+    /**
+     * 分页条件查询
+     *
+     * @param example 条件实体
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public PageUtil<Project> selectByExample(ProjectCriteria example,PageUtil pageUtil) throws Exception {
+        if (pageUtil.getCurrentPage() !=null && pageUtil.getCurrentPage() <= 0)
+            throw new ValidatorException(ErrorCode.ILLEGALARGUMENT_EXCEPTION.getCode());
+
+        if (pageUtil.getPageSize() !=null && pageUtil.getPageSize() <= 0)
+            throw new ValidatorException(ErrorCode.ILLEGALARGUMENT_EXCEPTION.getCode());
+
+        pageUtil.setCurrentPage(pageUtil.getCurrentPage() == null ? 1 : pageUtil.getCurrentPage());
+
+        if ("".equals(example.getState()))
+            example.setState(null);
+
+        //设置分页参数
+        example.setOrderByClause(" createtime DESC,modifytime DESC ");
+        example.setPageSize((pageUtil.getPageSize() == null) ? 8 : pageUtil.getPageSize());
+        example.setLimitStart((pageUtil.getCurrentPage()  == null) ? 0 : (pageUtil.getCurrentPage()-1) * 8);
+        List<Project> projectList = projectReadMapper.selectByExample(example);
+
+        int count = projectReadMapper.countByExample(example);
+        PageUtil<Project> projectPageUtil = new PageUtil<Project>(pageUtil.getPageSize(),count);
+        projectPageUtil.generate(pageUtil.getCurrentPage());
+        projectPageUtil.setPageResults(projectList);
+        return projectPageUtil;
+    }
+
+    /**
+     * 条件查询列表
+     *
+     * @param example
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<Project> selectList(ProjectCriteria example) throws Exception {
+        if (ValidUtil.isNullOrEmpty(example))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+        return projectReadMapper.selectByExample(example);
+    }
+}
