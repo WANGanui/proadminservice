@@ -9,8 +9,8 @@
     <result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
     <result column="finishtime" property="finishtime" jdbcType="TIMESTAMP" />
     <result column="state" property="state" jdbcType="CHAR" />
-    <result column="pro_dataid" property="proDataid" jdbcType="VARCHAR" />
-    <result column="pro_name" property="proName" jdbcType="VARCHAR" />
+    <result column="prodataid" property="prodataid" jdbcType="VARCHAR" />
+    <result column="proname" property="proname" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="percentage" property="percentage" jdbcType="VARCHAR" />
     <result column="proportion" property="proportion" jdbcType="VARCHAR" />
@@ -29,8 +29,8 @@
     <result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
     <result column="finishtime" property="finishtime" jdbcType="TIMESTAMP" />
     <result column="state" property="state" jdbcType="CHAR" />
-    <result column="pro_dataid" property="proDataid" jdbcType="VARCHAR" />
-    <result column="pro_name" property="proName" jdbcType="VARCHAR" />
+    <result column="prodataid" property="prodataid" jdbcType="VARCHAR" />
+    <result column="proname" property="proname" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="percentage" property="percentage" jdbcType="VARCHAR" />
     <result column="proportion" property="proportion" jdbcType="VARCHAR" />
@@ -88,21 +88,21 @@
           #{listItem}
         </foreach>
       </if>
-      <if test="example.proDataid != null" >
-         and pro_dataid = #{example.proDataid,jdbcType=VARCHAR}
+      <if test="example.prodataid != null" >
+         and prodataid = #{example.prodataid,jdbcType=VARCHAR}
       </if>
-      <if test="example.proDataidList != null  and  example.proDataidList.size() > 0 " >
-         and pro_dataid in 
-        <foreach collection="example.proDataidList" item="listItem" open="(" close=")" separator="," >
+      <if test="example.prodataidList != null  and  example.prodataidList.size() > 0 " >
+         and prodataid in 
+        <foreach collection="example.prodataidList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
-      <if test="example.proName != null" >
-         and pro_name = #{example.proName,jdbcType=VARCHAR}
+      <if test="example.proname != null" >
+         and proname = #{example.proname,jdbcType=VARCHAR}
       </if>
-      <if test="example.proNameList != null  and  example.proNameList.size() > 0 " >
-         and pro_name in 
-        <foreach collection="example.proNameList" item="listItem" open="(" close=")" separator="," >
+      <if test="example.pronameList != null  and  example.pronameList.size() > 0 " >
+         and proname in 
+        <foreach collection="example.pronameList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
@@ -178,7 +178,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    dataid, name, context, starttime, endtime, finishtime, state, pro_dataid, pro_name, 
+    dataid, name, context, starttime, endtime, finishtime, state, prodataid, proname, 
     remark, percentage, proportion, creator, creatordataid, createtime, modify, modifydataid, 
     modifytime
   </sql>

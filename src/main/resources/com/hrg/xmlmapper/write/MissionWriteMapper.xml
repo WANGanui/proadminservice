@@ -48,21 +48,21 @@
           #{listItem}
         </foreach>
       </if>
-      <if test="example.proDataid != null" >
-         and pro_dataid = #{example.proDataid,jdbcType=VARCHAR}
+      <if test="example.prodataid != null" >
+         and prodataid = #{example.prodataid,jdbcType=VARCHAR}
       </if>
-      <if test="example.proDataidList != null  and  example.proDataidList.size() > 0 " >
-         and pro_dataid in 
-        <foreach collection="example.proDataidList" item="listItem" open="(" close=")" separator="," >
+      <if test="example.prodataidList != null  and  example.prodataidList.size() > 0 " >
+         and prodataid in 
+        <foreach collection="example.prodataidList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
-      <if test="example.proName != null" >
-         and pro_name = #{example.proName,jdbcType=VARCHAR}
+      <if test="example.proname != null" >
+         and proname = #{example.proname,jdbcType=VARCHAR}
       </if>
-      <if test="example.proNameList != null  and  example.proNameList.size() > 0 " >
-         and pro_name in 
-        <foreach collection="example.proNameList" item="listItem" open="(" close=")" separator="," >
+      <if test="example.pronameList != null  and  example.pronameList.size() > 0 " >
+         and proname in 
+        <foreach collection="example.pronameList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
@@ -150,14 +150,14 @@
   <insert id="insert" parameterType="map" >
     insert into hrg_mission (dataid, name, context, 
       starttime, endtime, finishtime, 
-      state, pro_dataid, pro_name, 
+      state, prodataid, proname, 
       remark, percentage, proportion, 
       creator, creatordataid, createtime, 
       modify, modifydataid, modifytime
       )
     values (#{record.dataid,jdbcType=VARCHAR}, #{record.name,jdbcType=VARCHAR}, #{record.context,jdbcType=VARCHAR}, 
       #{record.starttime,jdbcType=TIMESTAMP}, #{record.endtime,jdbcType=TIMESTAMP}, #{record.finishtime,jdbcType=TIMESTAMP}, 
-      #{record.state,jdbcType=CHAR}, #{record.proDataid,jdbcType=VARCHAR}, #{record.proName,jdbcType=VARCHAR}, 
+      #{record.state,jdbcType=CHAR}, #{record.prodataid,jdbcType=VARCHAR}, #{record.proname,jdbcType=VARCHAR}, 
       #{record.remark,jdbcType=VARCHAR}, #{record.percentage,jdbcType=VARCHAR}, #{record.proportion,jdbcType=VARCHAR}, 
       #{record.creator,jdbcType=VARCHAR}, #{record.creatordataid,jdbcType=VARCHAR}, #{record.createtime,jdbcType=TIMESTAMP}, 
       #{record.modify,jdbcType=VARCHAR}, #{record.modifydataid,jdbcType=VARCHAR}, #{record.modifytime,jdbcType=TIMESTAMP}
@@ -187,11 +187,11 @@
       <if test="record.state != null" >
         state,
       </if>
-      <if test="record.proDataid != null" >
-        pro_dataid,
+      <if test="record.prodataid != null" >
+        prodataid,
       </if>
-      <if test="record.proName != null" >
-        pro_name,
+      <if test="record.proname != null" >
+        proname,
       </if>
       <if test="record.remark != null" >
         remark,
@@ -243,11 +243,11 @@
       <if test="record.state != null" >
         #{record.state,jdbcType=CHAR},
       </if>
-      <if test="record.proDataid != null" >
-        #{record.proDataid,jdbcType=VARCHAR},
+      <if test="record.prodataid != null" >
+        #{record.prodataid,jdbcType=VARCHAR},
       </if>
-      <if test="record.proName != null" >
-        #{record.proName,jdbcType=VARCHAR},
+      <if test="record.proname != null" >
+        #{record.proname,jdbcType=VARCHAR},
       </if>
       <if test="record.remark != null" >
         #{record.remark,jdbcType=VARCHAR},
@@ -302,11 +302,11 @@
       <if test="record.state != null" >
         state = #{record.state,jdbcType=CHAR},
       </if>
-      <if test="record.proDataid != null" >
-        pro_dataid = #{record.proDataid,jdbcType=VARCHAR},
+      <if test="record.prodataid != null" >
+        prodataid = #{record.prodataid,jdbcType=VARCHAR},
       </if>
-      <if test="record.proName != null" >
-        pro_name = #{record.proName,jdbcType=VARCHAR},
+      <if test="record.proname != null" >
+        proname = #{record.proname,jdbcType=VARCHAR},
       </if>
       <if test="record.remark != null" >
         remark = #{record.remark,jdbcType=VARCHAR},
@@ -349,8 +349,8 @@
       endtime = #{record.endtime,jdbcType=TIMESTAMP},
       finishtime = #{record.finishtime,jdbcType=TIMESTAMP},
       state = #{record.state,jdbcType=CHAR},
-      pro_dataid = #{record.proDataid,jdbcType=VARCHAR},
-      pro_name = #{record.proName,jdbcType=VARCHAR},
+      prodataid = #{record.prodataid,jdbcType=VARCHAR},
+      proname = #{record.proname,jdbcType=VARCHAR},
       remark = #{record.remark,jdbcType=VARCHAR},
       percentage = #{record.percentage,jdbcType=VARCHAR},
       proportion = #{record.proportion,jdbcType=VARCHAR},
@@ -385,11 +385,11 @@
       <if test="record.state != null" >
         state = #{record.state,jdbcType=CHAR},
       </if>
-      <if test="record.proDataid != null" >
-        pro_dataid = #{record.proDataid,jdbcType=VARCHAR},
+      <if test="record.prodataid != null" >
+        prodataid = #{record.prodataid,jdbcType=VARCHAR},
       </if>
-      <if test="record.proName != null" >
-        pro_name = #{record.proName,jdbcType=VARCHAR},
+      <if test="record.proname != null" >
+        proname = #{record.proname,jdbcType=VARCHAR},
       </if>
       <if test="record.remark != null" >
         remark = #{record.remark,jdbcType=VARCHAR},
@@ -429,8 +429,8 @@
       endtime = #{record.endtime,jdbcType=TIMESTAMP},
       finishtime = #{record.finishtime,jdbcType=TIMESTAMP},
       state = #{record.state,jdbcType=CHAR},
-      pro_dataid = #{record.proDataid,jdbcType=VARCHAR},
-      pro_name = #{record.proName,jdbcType=VARCHAR},
+      prodataid = #{record.prodataid,jdbcType=VARCHAR},
+      proname = #{record.proname,jdbcType=VARCHAR},
       remark = #{record.remark,jdbcType=VARCHAR},
       percentage = #{record.percentage,jdbcType=VARCHAR},
       proportion = #{record.proportion,jdbcType=VARCHAR},
