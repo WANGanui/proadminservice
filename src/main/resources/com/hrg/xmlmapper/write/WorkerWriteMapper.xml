@@ -75,6 +75,15 @@
           #{listItem}
         </foreach>
       </if>
+      <if test="example.state != null" >
+         and state = #{example.state,jdbcType=CHAR}
+      </if>
+      <if test="example.stateList != null  and  example.stateList.size() > 0 " >
+         and state in 
+        <foreach collection="example.stateList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
     </where>
   </sql>
   <delete id="deleteByPrimaryKey" parameterType="map" >
@@ -90,12 +99,12 @@
   <insert id="insert" parameterType="map" >
     insert into hrg_worker (dataid, name, phone, 
       department, remark, account, 
-      password, departmentdataid
-      )
+      password, departmentdataid, 
+      state)
     values (#{record.dataid,jdbcType=VARCHAR}, #{record.name,jdbcType=VARCHAR}, #{record.phone,jdbcType=VARCHAR}, 
       #{record.department,jdbcType=VARCHAR}, #{record.remark,jdbcType=VARCHAR}, #{record.account,jdbcType=VARCHAR}, 
-      #{record.password,jdbcType=VARCHAR}, #{record.departmentdataid,jdbcType=VARCHAR}
-      )
+      #{record.password,jdbcType=VARCHAR}, #{record.departmentdataid,jdbcType=VARCHAR}, 
+      #{record.state,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="map" >
     insert into hrg_worker
@@ -124,6 +133,9 @@
       <if test="record.departmentdataid != null" >
         departmentdataid,
       </if>
+      <if test="record.state != null" >
+        state,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="record.dataid != null" >
@@ -149,6 +161,9 @@
       </if>
       <if test="record.departmentdataid != null" >
         #{record.departmentdataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null" >
+        #{record.state,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -179,6 +194,9 @@
       <if test="record.departmentdataid != null" >
         departmentdataid = #{record.departmentdataid,jdbcType=VARCHAR},
       </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=CHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -193,7 +211,8 @@
       remark = #{record.remark,jdbcType=VARCHAR},
       account = #{record.account,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
-      departmentdataid = #{record.departmentdataid,jdbcType=VARCHAR}
+      departmentdataid = #{record.departmentdataid,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=CHAR}
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -222,6 +241,9 @@
       <if test="record.departmentdataid != null" >
         departmentdataid = #{record.departmentdataid,jdbcType=VARCHAR},
       </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=CHAR},
+      </if>
     </set>
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
@@ -233,7 +255,8 @@
       remark = #{record.remark,jdbcType=VARCHAR},
       account = #{record.account,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
-      departmentdataid = #{record.departmentdataid,jdbcType=VARCHAR}
+      departmentdataid = #{record.departmentdataid,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=CHAR}
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
 </mapper>

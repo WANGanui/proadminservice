@@ -48,6 +48,15 @@
           #{listItem}
         </foreach>
       </if>
+      <if test="example.state != null" >
+         and state = #{example.state,jdbcType=VARCHAR}
+      </if>
+      <if test="example.stateList != null  and  example.stateList.size() > 0 " >
+         and state in 
+        <foreach collection="example.stateList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
     </where>
   </sql>
   <delete id="deleteByPrimaryKey" parameterType="map" >
@@ -62,9 +71,11 @@
   </delete>
   <insert id="insert" parameterType="map" >
     insert into hrg_department (dataid, name, leader, 
-      phone, remark)
+      phone, remark, state
+      )
     values (#{record.dataid,jdbcType=VARCHAR}, #{record.name,jdbcType=VARCHAR}, #{record.leader,jdbcType=VARCHAR}, 
-      #{record.phone,jdbcType=VARCHAR}, #{record.remark,jdbcType=VARCHAR})
+      #{record.phone,jdbcType=VARCHAR}, #{record.remark,jdbcType=VARCHAR}, #{record.state,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="map" >
     insert into hrg_department
@@ -84,6 +95,9 @@
       <if test="record.remark != null" >
         remark,
       </if>
+      <if test="record.state != null" >
+        state,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="record.dataid != null" >
@@ -100,6 +114,9 @@
       </if>
       <if test="record.remark != null" >
         #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null" >
+        #{record.state,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -121,6 +138,9 @@
       <if test="record.remark != null" >
         remark = #{record.remark,jdbcType=VARCHAR},
       </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -132,7 +152,8 @@
       name = #{record.name,jdbcType=VARCHAR},
       leader = #{record.leader,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR},
-      remark = #{record.remark,jdbcType=VARCHAR}
+      remark = #{record.remark,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -152,6 +173,9 @@
       <if test="record.remark != null" >
         remark = #{record.remark,jdbcType=VARCHAR},
       </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
     </set>
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
@@ -160,7 +184,8 @@
     set name = #{record.name,jdbcType=VARCHAR},
       leader = #{record.leader,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR},
-      remark = #{record.remark,jdbcType=VARCHAR}
+      remark = #{record.remark,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=VARCHAR}
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
 </mapper>
