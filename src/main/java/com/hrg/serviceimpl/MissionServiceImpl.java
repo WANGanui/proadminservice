@@ -8,6 +8,7 @@ import com.hrg.javamapper.write.MissionWriteMapper;
 import com.hrg.javamapper.write.WorkerRelMissionWriteMapper;
 import com.hrg.model.*;
 import com.hrg.service.MissionService;
+import com.hrg.util.PageUtil;
 import com.hrg.util.UUIDGenerator;
 import com.hrg.util.ValidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,5 +123,39 @@ public class MissionServiceImpl implements MissionService {
         int x = workerRelMissionWriteMapper.deleteByExample(example);
 
         return x > 0 ? true : false;
+    }
+
+    /**
+     * 分页查询任务列表（）
+     *
+     * @param example  条件实体
+     * @param pageUtil 分页实体
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public PageUtil<Mission> selectByExample(MissionCriteria example, PageUtil pageUtil) throws Exception {
+        if (pageUtil.getCurrentPage() !=null && pageUtil.getCurrentPage() <= 0)
+            throw new ValidatorException(ErrorCode.ILLEGALARGUMENT_EXCEPTION.getCode());
+
+        if (pageUtil.getPageSize() !=null && pageUtil.getPageSize() <= 0)
+            throw new ValidatorException(ErrorCode.ILLEGALARGUMENT_EXCEPTION.getCode());
+
+        pageUtil.setCurrentPage(pageUtil.getCurrentPage() == null ? 1 : pageUtil.getCurrentPage());
+
+        if ("".equals(example.getState()))
+            example.setState(null);
+
+        //设置分页参数
+        example.setOrderByClause(" createtime DESC，proportion DESC ");
+        example.setPageSize((pageUtil.getPageSize() == null) ? 8 : pageUtil.getPageSize());
+        example.setLimitStart((pageUtil.getCurrentPage()  == null) ? 0 : (pageUtil.getCurrentPage()-1) * 8);
+        List<Mission> missionList = missionReadMapper.selectByExample(example);
+
+        int count = missionReadMapper.countByExample(example);
+        PageUtil<Mission> missionPageUtil = new PageUtil<Mission>(pageUtil.getPageSize(),count);
+        missionPageUtil.generate(pageUtil.getCurrentPage());
+        missionPageUtil.setPageResults(missionList);
+        return missionPageUtil;
     }
 }

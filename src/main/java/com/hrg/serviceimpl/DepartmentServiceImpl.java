@@ -104,4 +104,19 @@ public class DepartmentServiceImpl implements DepartmentService {
 
         return departmentReadMapper.selectByExample(example);
     }
+
+    /**
+     * 查询部门详情
+     *
+     * @param dataid
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Department selectDetail(String dataid) throws Exception {
+        if (ValidUtil.isNullOrEmpty(dataid))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+
+        return departmentReadMapper.selectByPrimaryKey(dataid);
+    }
 }
