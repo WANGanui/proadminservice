@@ -2,16 +2,21 @@ package com.hrg.serviceimpl;
 
 import com.hrg.enums.ErrorCode;
 import com.hrg.exception.ValidatorException;
+import com.hrg.javamapper.read.WorkdataReadMapper;
 import com.hrg.javamapper.read.WorkerReadMapper;
-import com.hrg.model.Worker;
-import com.hrg.model.WorkerCriteria;
+import com.hrg.javamapper.read.WorkerRelMissionReadMapper;
+import com.hrg.model.*;
 import com.hrg.service.WorkerService;
+import com.hrg.util.DateUtil;
 import com.hrg.util.PageUtil;
 import com.hrg.util.ValidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Observable;
 
 /**
  * Created by 82705 on 2017/6/1.
@@ -21,6 +26,10 @@ public class WorkerServiceImpl implements WorkerService {
 
     @Autowired
     WorkerReadMapper workerReadMapper;
+    @Autowired
+    WorkerRelMissionReadMapper workerRelMissionReadMapper;
+    @Autowired
+    WorkdataReadMapper workdataReadMapper;
 
     /**
      * 方法说明：根据员工账号查询员工对象
@@ -86,5 +95,49 @@ public class WorkerServiceImpl implements WorkerService {
         workerPageUtil.generate(pageUtil.getCurrentPage());
         workerPageUtil.setPageResults(workerList);
         return workerPageUtil;
+    }
+
+    /**
+     * 查询员工详情及未完成任务
+     *
+     * @param workerdataid
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Map<String, Object> selectMissionDetail(String workerdataid) throws Exception {
+        if (ValidUtil.isNullOrEmpty(workerdataid))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+        Worker worker = workerReadMapper.selectByPrimaryKey(workerdataid);
+        WorkerRelMissionCriteria example = new WorkerRelMissionCriteria();
+        example.setWorkerdataid(workerdataid);
+        List<WorkerRelMission> missionList = workerRelMissionReadMapper.selectByExample(example);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("worker",worker);
+        map.put("missionList",missionList);
+        return map;
+    }
+
+    /**
+     * 查询员工工作日志详情
+     *
+     * @param workdataid
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Map<String, Object> selectWorkdataDetail(String workdataid) throws Exception {
+        if (ValidUtil.isNullOrEmpty(workdataid))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+        Worker worker = workerReadMapper.selectByPrimaryKey(workdataid);
+        WorkdataCriteria example = new WorkdataCriteria();
+        example.setWorkerdataid(workdataid);
+        example.setTimeMin(DateUtil.getWeekBegin());
+        example.setTimeMax(DateUtil.getWeekEnd());
+        List<Workdata> workdataList = workdataReadMapper.selectByExample(example);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("worker",worker);
+        map.put("workdataList",workdataList);
+        return map;
     }
 }
