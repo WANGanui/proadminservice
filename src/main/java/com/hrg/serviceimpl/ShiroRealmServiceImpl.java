@@ -181,9 +181,9 @@ public class ShiroRealmServiceImpl implements ShiroRealmService {
      */
     @Override
     public boolean isLocked(Object principal){
-       /* Worker worker = (Worker) principal;
+        Worker worker = (Worker) principal;
         if (!worker.getState().equals("0"))
-            return false;*/
+            return false;
         return true;
     }
 }
