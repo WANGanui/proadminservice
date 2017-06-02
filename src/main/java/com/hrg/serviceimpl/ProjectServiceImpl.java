@@ -2,8 +2,11 @@ package com.hrg.serviceimpl;
 
 import com.hrg.enums.ErrorCode;
 import com.hrg.exception.ValidatorException;
+import com.hrg.javamapper.read.MissionReadMapper;
 import com.hrg.javamapper.read.ProjectReadMapper;
 import com.hrg.javamapper.write.ProjectWriteMapper;
+import com.hrg.model.Mission;
+import com.hrg.model.MissionCriteria;
 import com.hrg.model.Project;
 import com.hrg.model.ProjectCriteria;
 import com.hrg.service.ProjectService;
@@ -16,7 +19,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 82705 on 2017/6/1.
@@ -28,6 +33,8 @@ public class ProjectServiceImpl implements ProjectService {
     ProjectReadMapper projectReadMapper;
     @Autowired
     ProjectWriteMapper projectWriteMapper;
+    @Autowired
+    MissionReadMapper missionReadMapper;
 
     /**
      * 添加项目
@@ -120,5 +127,41 @@ public class ProjectServiceImpl implements ProjectService {
         if (ValidUtil.isNullOrEmpty(example))
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
         return projectReadMapper.selectByExample(example);
+    }
+
+    /**
+     * 查询项目详情
+     *
+     * @param datatid
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Project selectDetail(String datatid) throws Exception {
+        if (ValidUtil.isNullOrEmpty(datatid))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+
+        return projectReadMapper.selectByPrimaryKey(datatid);
+    }
+
+    /**
+     * 项目详情及以下任务
+     *
+     * @param dataid
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Map<String, Object> selectProjectDetail(String dataid) throws Exception {
+        if (ValidUtil.isNullOrEmpty(dataid))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+        Project project = projectReadMapper.selectByPrimaryKey(dataid);
+        MissionCriteria example = new MissionCriteria();
+        example.setProdataid(project.getDataid());
+        List<Mission> missionList = missionReadMapper.selectByExample(example);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("project",project);
+        map.put("missionList",missionList);
+        return map;
     }
 }
