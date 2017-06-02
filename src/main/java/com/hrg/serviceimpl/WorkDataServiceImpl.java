@@ -1,12 +1,15 @@
 package com.hrg.serviceimpl;
 
+import com.ctc.wstx.util.DataUtil;
 import com.hrg.enums.ErrorCode;
 import com.hrg.exception.ValidatorException;
 import com.hrg.javamapper.read.WorkdataReadMapper;
+import com.hrg.javamapper.read.WorkerReadMapper;
+import com.hrg.javamapper.read.WorkerRelMissionReadMapper;
 import com.hrg.javamapper.write.WorkdataWriteMapper;
-import com.hrg.model.Workdata;
-import com.hrg.model.WorkdataCriteria;
+import com.hrg.model.*;
 import com.hrg.service.WorkDataService;
+import com.hrg.util.DateUtil;
 import com.hrg.util.PageUtil;
 import com.hrg.util.UUIDGenerator;
 import com.hrg.util.ValidUtil;
@@ -14,8 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by 82705 on 2017/6/2.
@@ -27,6 +29,10 @@ public class WorkDataServiceImpl implements WorkDataService {
     WorkdataReadMapper workdataReadMapper;
     @Autowired
     WorkdataWriteMapper workdataWriteMapper;
+    @Autowired
+    WorkerReadMapper workerReadMapper;
+    @Autowired
+    WorkerRelMissionReadMapper workerRelMissionReadMapper;
 
     /**
      * 添加工作日志
@@ -78,5 +84,43 @@ public class WorkDataServiceImpl implements WorkDataService {
         workdataPageUtil.generate(pageUtil.getCurrentPage());
         workdataPageUtil.setPageResults(workdatas);
         return workdataPageUtil;
+    }
+
+    /**
+     * 员工工作详情(单周)
+     *
+     * @param example
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<Map<String, Object>> selectdetail(WorkdataCriteria example,String dapartmentdataid) throws Exception {
+        WorkerCriteria workerCriteria = new WorkerCriteria();
+        if (!ValidUtil.isNullOrEmpty(dapartmentdataid))
+            workerCriteria.setDepartmentdataid(dapartmentdataid);
+        //查询员工
+        List<Worker> workerList = workerReadMapper.selectByExample(workerCriteria);
+        Map<String, Object> map;
+        List<Map<String, Object>> objectList = new ArrayList<Map<String, Object>>();
+        //根据员工id查询每个员工本周工作日志与任务
+        for (Worker worker : workerList){
+            map = new HashMap<String, Object>();
+            //设置周一时间
+            example.setTimeMin(DateUtil.getWeekBegin());
+            //设置周五时间
+            example.setTimeMax(DateUtil.getWeekEnd());
+            example.setWorkerdataid(worker.getDataid());
+            //查询周一到周五的工作日志
+            List<Workdata> workdataList = workdataReadMapper.selectByExample(example);
+            map.put("workdataList",workdataList);
+            //查询当前任务
+            WorkerRelMissionCriteria missionCriteria = new WorkerRelMissionCriteria();
+            missionCriteria.setWorkerdataid(worker.getDataid());
+            List<WorkerRelMission> missionList = workerRelMissionReadMapper.selectByExample(missionCriteria);
+            map.put("missionList",missionList);
+            map.put("worker",worker);
+            objectList.add(map);
+        }
+        return objectList;
     }
 }
