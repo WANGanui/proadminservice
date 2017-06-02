@@ -5,10 +5,13 @@ import com.hrg.exception.ValidatorException;
 import com.hrg.javamapper.read.WorkdataReadMapper;
 import com.hrg.javamapper.read.WorkerReadMapper;
 import com.hrg.javamapper.read.WorkerRelMissionReadMapper;
+import com.hrg.javamapper.write.WorkerRoleWriteMapper;
+import com.hrg.javamapper.write.WorkerWriteMapper;
 import com.hrg.model.*;
 import com.hrg.service.WorkerService;
 import com.hrg.util.DateUtil;
 import com.hrg.util.PageUtil;
+import com.hrg.util.UUIDGenerator;
 import com.hrg.util.ValidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +19,6 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
 
 /**
  * Created by 82705 on 2017/6/1.
@@ -30,6 +32,10 @@ public class WorkerServiceImpl implements WorkerService {
     WorkerRelMissionReadMapper workerRelMissionReadMapper;
     @Autowired
     WorkdataReadMapper workdataReadMapper;
+    @Autowired
+    WorkerWriteMapper workerWriteMapper;
+    @Autowired
+    WorkerRoleWriteMapper workerRoleWriteMapper;
 
     /**
      * 方法说明：根据员工账号查询员工对象
@@ -139,5 +145,32 @@ public class WorkerServiceImpl implements WorkerService {
         map.put("worker",worker);
         map.put("workdataList",workdataList);
         return map;
+    }
+
+    /**
+     * 添加员工
+     *
+     * @param worker
+     * @param roleList
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public boolean insert(Worker worker, List<WorkerRole> roleList) throws Exception {
+        if (ValidUtil.isNullOrEmpty(worker.getName())||ValidUtil.isNullOrEmpty(worker.getAccount())||
+                ValidUtil.isNullOrEmpty(worker.getDepartment())||ValidUtil.isNullOrEmpty(worker.getDepartmentdataid())||
+                ValidUtil.isNullOrEmpty(worker.getPassword())||ValidUtil.isNullOrEmpty(worker.getPhone())||
+                ValidUtil.isNullOrEmpty(worker.getState())||ValidUtil.isNullOrEmpty(roleList))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+        worker.setDataid(UUIDGenerator.getUUID());
+        int x = workerWriteMapper.insert(worker);
+        for (WorkerRole workerRole : roleList){
+            workerRole.setDataid(UUIDGenerator.getUUID());
+            workerRole.setWorkerdataid(worker.getDataid());
+            int y = workerRoleWriteMapper.insert(workerRole);
+            if (y <= 0)
+                return false;
+        }
+        return x > 0 ? true : false;
     }
 }
