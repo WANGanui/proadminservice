@@ -6,7 +6,7 @@
 
     <groupId>hrg</groupId>
     <artifactId>proadminservice</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <properties>
         <project.version>1.0</project.version>
@@ -108,7 +108,7 @@
                                 </transformer>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.qpm.ProadminserviceStart</mainClass>
+                                    <mainClass>com.hrg.ProadminserviceStart</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
@@ -131,7 +131,7 @@
         <dependency>
             <groupId>hrg</groupId>
             <artifactId>procommon</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0.0</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>

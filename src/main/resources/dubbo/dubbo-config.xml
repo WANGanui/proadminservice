@@ -17,7 +17,7 @@
 	<dubbo:registry address="${registryaddress}" />
 
 	<!-- 用dubbo协议在20880端口暴露服务 -->
-	<dubbo:protocol name="dubbo" port="20880" />
+	<dubbo:protocol name="dubbo" port="20888" />
 
 	<!-- 超时时间20秒 默认为1000毫秒 -->
 	<dubbo:provider timeout="20000"/>
