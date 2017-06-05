@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by 82705 on 2017/6/1.
  */
-@Service("workerRolePermissionService")
+@Service("workerRolePermissionServiceImpl")
 public class WorkerRolePermissionServiceImpl implements WorkerRolePermissionService {
 
     @Autowired

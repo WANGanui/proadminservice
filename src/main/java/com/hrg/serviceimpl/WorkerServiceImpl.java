@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * Created by 82705 on 2017/6/1.
  */
-@Service("workerService")
+@Service("workerServiceImpl")
 public class WorkerServiceImpl implements WorkerService {
 
     @Autowired

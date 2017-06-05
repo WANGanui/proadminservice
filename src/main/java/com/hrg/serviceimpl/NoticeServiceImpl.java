@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Created by 82705 on 2017/6/1.
  */
-@Service("noticeService")
+@Service("noticeServiceImpl")
 public class NoticeServiceImpl implements NoticeService {
 
     @Autowired

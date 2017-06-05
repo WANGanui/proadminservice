@@ -26,7 +26,7 @@ import java.util.Map;
 /**
  * Created by 82705 on 2017/6/1.
  */
-@Service("projectService")
+@Service("projectServiceImpl")
 public class ProjectServiceImpl implements ProjectService {
 
     @Autowired

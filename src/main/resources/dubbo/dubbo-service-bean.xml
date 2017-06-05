@@ -7,13 +7,14 @@
         http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
 
-	<dubbo:service interface="com.hrg.service.DepartmentService" ref="departmentServiceImpl"/>
-	<dubbo:service interface="com.hrg.service.MissionService" ref="missionServiceImpl"/>
+
+	<!--<dubbo:service interface="com.hrg.service.MissionService" ref="missionServiceImpl"/>
 	<dubbo:service interface="com.hrg.service.NoticeService" ref="noticeServiceImpl"/>
 	<dubbo:service interface="com.hrg.service.ProjectService" ref="projectServiceImpl"/>
-	<dubbo:service interface="com.hrg.service.ShiroRealmService" ref="shiroRealmServiceImpl"/>
+	<dubbo:service interface="com.hrg.service.ShiroRealmService" ref="whiroRealmServiceImpl"/>
 	<dubbo:service interface="com.hrg.service.WorkDataService" ref="workdataServiceImpl"/>
-	<dubbo:service interface="com.hrg.service.WorkerRolePermissionService" ref="WorkerRolePermissionServiceImpl"/>
+	<dubbo:service interface="com.hrg.service.WorkerRolePermissionService" ref="workerRolePermissionServiceImpl"/>
 	<dubbo:service interface="com.hrg.service.WorkerRoleService" ref="workerRoleServiceImpl"/>
 	<dubbo:service interface="com.hrg.service.WorkerService" ref="workerServiceImpl"/>
+	<dubbo:service interface="com.hrg.service.DepartmentService" ref="departmentServiceImpl"/>-->
 </beans>

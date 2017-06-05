@@ -22,7 +22,7 @@ import java.util.*;
 /**
  * Created by 82705 on 2017/6/2.
  */
-@Service("workDataService")
+@Service("workDataServiceImpl")
 public class WorkDataServiceImpl implements WorkDataService {
 
     @Autowired
