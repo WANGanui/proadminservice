@@ -57,6 +57,15 @@
           #{listItem}
         </foreach>
       </if>
+      <if test="example.contropermission != null" >
+         and contropermission = #{example.contropermission,jdbcType=VARCHAR}
+      </if>
+      <if test="example.contropermissionList != null  and  example.contropermissionList.size() > 0 " >
+         and contropermission in 
+        <foreach collection="example.contropermissionList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
     </where>
   </sql>
   <delete id="deleteByPrimaryKey" parameterType="map" >
@@ -72,12 +81,12 @@
   <insert id="insert" parameterType="map" >
     insert into hrg_pre_sys_permission (dataid, groupcode, 
       groupname, permissioncode, 
-      permissionname, permissionurl
-      )
+      permissionname, permissionurl, 
+      contropermission)
     values (#{record.dataid,jdbcType=VARCHAR}, #{record.groupcode,jdbcType=VARCHAR}, 
       #{record.groupname,jdbcType=VARCHAR}, #{record.permissioncode,jdbcType=VARCHAR}, 
-      #{record.permissionname,jdbcType=VARCHAR}, #{record.permissionurl,jdbcType=VARCHAR}
-      )
+      #{record.permissionname,jdbcType=VARCHAR}, #{record.permissionurl,jdbcType=VARCHAR}, 
+      #{record.contropermission,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="map" >
     insert into hrg_pre_sys_permission
@@ -100,6 +109,9 @@
       <if test="record.permissionurl != null" >
         permissionurl,
       </if>
+      <if test="record.contropermission != null" >
+        contropermission,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="record.dataid != null" >
@@ -119,6 +131,9 @@
       </if>
       <if test="record.permissionurl != null" >
         #{record.permissionurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contropermission != null" >
+        #{record.contropermission,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -143,6 +158,9 @@
       <if test="record.permissionurl != null" >
         permissionurl = #{record.permissionurl,jdbcType=VARCHAR},
       </if>
+      <if test="record.contropermission != null" >
+        contropermission = #{record.contropermission,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -155,7 +173,8 @@
       groupname = #{record.groupname,jdbcType=VARCHAR},
       permissioncode = #{record.permissioncode,jdbcType=VARCHAR},
       permissionname = #{record.permissionname,jdbcType=VARCHAR},
-      permissionurl = #{record.permissionurl,jdbcType=VARCHAR}
+      permissionurl = #{record.permissionurl,jdbcType=VARCHAR},
+      contropermission = #{record.contropermission,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -178,6 +197,9 @@
       <if test="record.permissionurl != null" >
         permissionurl = #{record.permissionurl,jdbcType=VARCHAR},
       </if>
+      <if test="record.contropermission != null" >
+        contropermission = #{record.contropermission,jdbcType=VARCHAR},
+      </if>
     </set>
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
@@ -187,7 +209,8 @@
       groupname = #{record.groupname,jdbcType=VARCHAR},
       permissioncode = #{record.permissioncode,jdbcType=VARCHAR},
       permissionname = #{record.permissionname,jdbcType=VARCHAR},
-      permissionurl = #{record.permissionurl,jdbcType=VARCHAR}
+      permissionurl = #{record.permissionurl,jdbcType=VARCHAR},
+      contropermission = #{record.contropermission,jdbcType=VARCHAR}
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
 </mapper>

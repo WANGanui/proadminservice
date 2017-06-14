@@ -173,4 +173,33 @@ public class WorkerServiceImpl implements WorkerService {
         }
         return x > 0 ? true : false;
     }
+
+    /**
+     * 根据id查询对象
+     *
+     * @param dataid
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Worker selectDetail(String dataid) throws Exception {
+        if (ValidUtil.isNullOrEmpty(dataid))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+        return workerReadMapper.selectByPrimaryKey(dataid);
+    }
+
+    /**
+     * 修改员工信息
+     *
+     * @param worker
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public boolean update(Worker worker) throws Exception {
+        if (ValidUtil.isNullOrEmpty(worker.getDataid()))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+        int x = workerWriteMapper.updateByPrimaryKeySelective(worker);
+        return x > 0 ? true : false;
+    }
 }

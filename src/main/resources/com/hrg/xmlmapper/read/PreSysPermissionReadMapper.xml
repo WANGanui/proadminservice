@@ -8,6 +8,7 @@
     <result column="permissioncode" property="permissioncode" jdbcType="VARCHAR" />
     <result column="permissionname" property="permissionname" jdbcType="VARCHAR" />
     <result column="permissionurl" property="permissionurl" jdbcType="VARCHAR" />
+    <result column="contropermission" property="contropermission" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="HashMapBaseResultMap" type="hashmap" >
     <id column="dataid" property="dataid" jdbcType="VARCHAR" />
@@ -16,6 +17,7 @@
     <result column="permissioncode" property="permissioncode" jdbcType="VARCHAR" />
     <result column="permissionname" property="permissionname" jdbcType="VARCHAR" />
     <result column="permissionurl" property="permissionurl" jdbcType="VARCHAR" />
+    <result column="contropermission" property="contropermission" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -73,10 +75,19 @@
           #{listItem}
         </foreach>
       </if>
+      <if test="example.contropermission != null" >
+         and contropermission = #{example.contropermission,jdbcType=VARCHAR}
+      </if>
+      <if test="example.contropermissionList != null  and  example.contropermissionList.size() > 0 " >
+         and contropermission in 
+        <foreach collection="example.contropermissionList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    dataid, groupcode, groupname, permissioncode, permissionname, permissionurl
+    dataid, groupcode, groupname, permissioncode, permissionname, permissionurl, contropermission
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="map" >
     select

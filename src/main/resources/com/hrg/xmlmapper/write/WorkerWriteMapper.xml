@@ -76,13 +76,16 @@
         </foreach>
       </if>
       <if test="example.state != null" >
-         and state = #{example.state,jdbcType=CHAR}
+         and state = #{example.state,jdbcType=VARCHAR}
       </if>
       <if test="example.stateList != null  and  example.stateList.size() > 0 " >
          and state in 
         <foreach collection="example.stateList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
+      </if>
+      <if test="example.createtime != null" >
+         and createtime = #{example.createtime,jdbcType=TIMESTAMP}
       </if>
     </where>
   </sql>
@@ -100,11 +103,11 @@
     insert into hrg_worker (dataid, name, phone, 
       department, remark, account, 
       password, departmentdataid, 
-      state)
+      state, createtime)
     values (#{record.dataid,jdbcType=VARCHAR}, #{record.name,jdbcType=VARCHAR}, #{record.phone,jdbcType=VARCHAR}, 
       #{record.department,jdbcType=VARCHAR}, #{record.remark,jdbcType=VARCHAR}, #{record.account,jdbcType=VARCHAR}, 
       #{record.password,jdbcType=VARCHAR}, #{record.departmentdataid,jdbcType=VARCHAR}, 
-      #{record.state,jdbcType=CHAR})
+      #{record.state,jdbcType=VARCHAR}, #{record.createtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="map" >
     insert into hrg_worker
@@ -136,6 +139,9 @@
       <if test="record.state != null" >
         state,
       </if>
+      <if test="record.createtime != null" >
+        createtime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="record.dataid != null" >
@@ -163,7 +169,10 @@
         #{record.departmentdataid,jdbcType=VARCHAR},
       </if>
       <if test="record.state != null" >
-        #{record.state,jdbcType=CHAR},
+        #{record.state,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        #{record.createtime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -195,7 +204,10 @@
         departmentdataid = #{record.departmentdataid,jdbcType=VARCHAR},
       </if>
       <if test="record.state != null" >
-        state = #{record.state,jdbcType=CHAR},
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -212,7 +224,8 @@
       account = #{record.account,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
       departmentdataid = #{record.departmentdataid,jdbcType=VARCHAR},
-      state = #{record.state,jdbcType=CHAR}
+      state = #{record.state,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -242,7 +255,10 @@
         departmentdataid = #{record.departmentdataid,jdbcType=VARCHAR},
       </if>
       <if test="record.state != null" >
-        state = #{record.state,jdbcType=CHAR},
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where dataid = #{record.dataid,jdbcType=VARCHAR}
@@ -256,7 +272,8 @@
       account = #{record.account,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
       departmentdataid = #{record.departmentdataid,jdbcType=VARCHAR},
-      state = #{record.state,jdbcType=CHAR}
+      state = #{record.state,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP}
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
 </mapper>
