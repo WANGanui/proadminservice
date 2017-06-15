@@ -7,6 +7,7 @@
     <result column="parentroleid" property="parentroleid" jdbcType="VARCHAR" />
     <result column="permissionid" property="permissionid" jdbcType="VARCHAR" />
     <result column="permissioncode" property="permissioncode" jdbcType="VARCHAR" />
+    <result column="permissionurl" property="permissionurl" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="HashMapBaseResultMap" type="hashmap" >
     <id column="dataid" property="dataid" jdbcType="VARCHAR" />
@@ -14,6 +15,7 @@
     <result column="parentroleid" property="parentroleid" jdbcType="VARCHAR" />
     <result column="permissionid" property="permissionid" jdbcType="VARCHAR" />
     <result column="permissioncode" property="permissioncode" jdbcType="VARCHAR" />
+    <result column="permissionurl" property="permissionurl" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -62,10 +64,19 @@
           #{listItem}
         </foreach>
       </if>
+      <if test="example.permissionurl != null" >
+         and permissionurl = #{example.permissionurl,jdbcType=VARCHAR}
+      </if>
+      <if test="example.permissionurlList != null  and  example.permissionurlList.size() > 0 " >
+         and permissionurl in 
+        <foreach collection="example.permissionurlList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    dataid, roleid, parentroleid, permissionid, permissioncode
+    dataid, roleid, parentroleid, permissionid, permissioncode, permissionurl
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="map" >
     select

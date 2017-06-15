@@ -113,7 +113,7 @@ public class ShiroRealmServiceImpl implements ShiroRealmService {
         List<String> permissionlist = new ArrayList<String>();
         if (!ValidUtil.isNullOrEmpty(workerRolePermissionList)){
             for (WorkerRolePermission permission : workerRolePermissionList)
-                permissionlist.add(permission.getPermissioncode());
+                permissionlist.add(permission.getPermissionurl());
         }
         return permissionlist;
     }
@@ -133,7 +133,7 @@ public class ShiroRealmServiceImpl implements ShiroRealmService {
             for (PreSysPermission permission : permissions){
                 PreSysRoleRelPermission relPermission = new PreSysRoleRelPermission();
                 relPermission.setPermissiondataid(permission.getDataid());
-                relPermission.setPermissioncode(permission.getPermissioncode());
+                //relPermission.setPermissioncode(permission.getPermissioncode());
                 permissionList.add(relPermission);
             }
             return permissionList;

@@ -48,6 +48,15 @@
           #{listItem}
         </foreach>
       </if>
+      <if test="example.permissionurl != null" >
+         and permissionurl = #{example.permissionurl,jdbcType=VARCHAR}
+      </if>
+      <if test="example.permissionurlList != null  and  example.permissionurlList.size() > 0 " >
+         and permissionurl in 
+        <foreach collection="example.permissionurlList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
     </where>
   </sql>
   <delete id="deleteByPrimaryKey" parameterType="map" >
@@ -62,11 +71,11 @@
   </delete>
   <insert id="insert" parameterType="map" >
     insert into hrg_worker_role_permission (dataid, roleid, parentroleid, 
-      permissionid, permissioncode
-      )
+      permissionid, permissioncode, 
+      permissionurl)
     values (#{record.dataid,jdbcType=VARCHAR}, #{record.roleid,jdbcType=VARCHAR}, #{record.parentroleid,jdbcType=VARCHAR}, 
-      #{record.permissionid,jdbcType=VARCHAR}, #{record.permissioncode,jdbcType=VARCHAR}
-      )
+      #{record.permissionid,jdbcType=VARCHAR}, #{record.permissioncode,jdbcType=VARCHAR}, 
+      #{record.permissionurl,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="map" >
     insert into hrg_worker_role_permission
@@ -86,6 +95,9 @@
       <if test="record.permissioncode != null" >
         permissioncode,
       </if>
+      <if test="record.permissionurl != null" >
+        permissionurl,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="record.dataid != null" >
@@ -102,6 +114,9 @@
       </if>
       <if test="record.permissioncode != null" >
         #{record.permissioncode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.permissionurl != null" >
+        #{record.permissionurl,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -123,6 +138,9 @@
       <if test="record.permissioncode != null" >
         permissioncode = #{record.permissioncode,jdbcType=VARCHAR},
       </if>
+      <if test="record.permissionurl != null" >
+        permissionurl = #{record.permissionurl,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -134,7 +152,8 @@
       roleid = #{record.roleid,jdbcType=VARCHAR},
       parentroleid = #{record.parentroleid,jdbcType=VARCHAR},
       permissionid = #{record.permissionid,jdbcType=VARCHAR},
-      permissioncode = #{record.permissioncode,jdbcType=VARCHAR}
+      permissioncode = #{record.permissioncode,jdbcType=VARCHAR},
+      permissionurl = #{record.permissionurl,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -154,6 +173,9 @@
       <if test="record.permissioncode != null" >
         permissioncode = #{record.permissioncode,jdbcType=VARCHAR},
       </if>
+      <if test="record.permissionurl != null" >
+        permissionurl = #{record.permissionurl,jdbcType=VARCHAR},
+      </if>
     </set>
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
@@ -162,7 +184,8 @@
     set roleid = #{record.roleid,jdbcType=VARCHAR},
       parentroleid = #{record.parentroleid,jdbcType=VARCHAR},
       permissionid = #{record.permissionid,jdbcType=VARCHAR},
-      permissioncode = #{record.permissioncode,jdbcType=VARCHAR}
+      permissioncode = #{record.permissioncode,jdbcType=VARCHAR},
+      permissionurl = #{record.permissionurl,jdbcType=VARCHAR}
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
 </mapper>
