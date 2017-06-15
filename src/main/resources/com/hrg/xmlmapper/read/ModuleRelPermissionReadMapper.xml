@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hrg.javamapper.read.PreSysRoleReadMapper" >
-  <resultMap id="BaseResultMap" type="com.hrg.model.PreSysRole" >
+<mapper namespace="com.hrg.javamapper.read.ModuleRelPermissionReadMapper" >
+  <resultMap id="BaseResultMap" type="com.hrg.model.ModuleRelPermission" >
     <id column="dataid" property="dataid" jdbcType="VARCHAR" />
-    <result column="rolename" property="rolename" jdbcType="VARCHAR" />
-    <result column="parentroledataid" property="parentroledataid" jdbcType="VARCHAR" />
+    <result column="moduleid" property="moduleid" jdbcType="VARCHAR" />
+    <result column="permissionid" property="permissionid" jdbcType="VARCHAR" />
+    <result column="options" property="options" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="HashMapBaseResultMap" type="hashmap" >
     <id column="dataid" property="dataid" jdbcType="VARCHAR" />
-    <result column="rolename" property="rolename" jdbcType="VARCHAR" />
-    <result column="parentroledataid" property="parentroledataid" jdbcType="VARCHAR" />
+    <result column="moduleid" property="moduleid" jdbcType="VARCHAR" />
+    <result column="permissionid" property="permissionid" jdbcType="VARCHAR" />
+    <result column="options" property="options" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -22,28 +24,37 @@
           #{listItem}
         </foreach>
       </if>
-      <if test="example.rolename != null" >
-         and rolename = #{example.rolename,jdbcType=VARCHAR}
+      <if test="example.moduleid != null" >
+         and moduleid = #{example.moduleid,jdbcType=VARCHAR}
       </if>
-      <if test="example.rolenameList != null  and  example.rolenameList.size() > 0 " >
-         and rolename in 
-        <foreach collection="example.rolenameList" item="listItem" open="(" close=")" separator="," >
+      <if test="example.moduleidList != null  and  example.moduleidList.size() > 0 " >
+         and moduleid in 
+        <foreach collection="example.moduleidList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
-      <if test="example.parentroledataid != null" >
-         and parentroledataid = #{example.parentroledataid,jdbcType=VARCHAR}
+      <if test="example.permissionid != null" >
+         and permissionid = #{example.permissionid,jdbcType=VARCHAR}
       </if>
-      <if test="example.parentroledataidList != null  and  example.parentroledataidList.size() > 0 " >
-         and parentroledataid in 
-        <foreach collection="example.parentroledataidList" item="listItem" open="(" close=")" separator="," >
+      <if test="example.permissionidList != null  and  example.permissionidList.size() > 0 " >
+         and permissionid in 
+        <foreach collection="example.permissionidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.options != null" >
+         and options = #{example.options,jdbcType=VARCHAR}
+      </if>
+      <if test="example.optionsList != null  and  example.optionsList.size() > 0 " >
+         and options in 
+        <foreach collection="example.optionsList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    dataid, rolename, parentroledataid
+    dataid, moduleid, permissionid, options
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="map" >
     select
@@ -51,7 +62,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from hrg_pre_sys_role
+    from hrg_module_rel_permission
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -65,11 +76,11 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
     select 
     <include refid="Base_Column_List" />
-    from hrg_pre_sys_role
+    from hrg_module_rel_permission
     where dataid = #{dataid,jdbcType=VARCHAR}
   </select>
   <select id="countByExample" parameterType="map" resultType="java.lang.Integer" >
-    select count(*) from hrg_pre_sys_role
+    select count(*) from hrg_module_rel_permission
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -80,7 +91,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from hrg_pre_sys_role
+    from hrg_module_rel_permission
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -92,7 +103,7 @@
   <select id="selectMapByPrimaryKey" resultMap="HashMapBaseResultMap" parameterType="map" >
     select
     <include refid="Base_Column_List" />
-    from hrg_pre_sys_role
+    from hrg_module_rel_permission
     <where >
        and dataid=#{dataid,jdbcType=VARCHAR}
     </where>
@@ -103,7 +114,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from hrg_pre_sys_role
+    from hrg_module_rel_permission
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -118,7 +129,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from hrg_pre_sys_role
+    from hrg_module_rel_permission
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>

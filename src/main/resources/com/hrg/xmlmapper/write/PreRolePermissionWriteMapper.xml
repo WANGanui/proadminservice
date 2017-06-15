@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hrg.javamapper.write.PreSysRoleWriteMapper" >
+<mapper namespace="com.hrg.javamapper.write.PreRolePermissionWriteMapper" >
   <sql id="Example_Where_Clause" >
     <where >
       <if test="example.dataid != null" >
@@ -12,78 +12,78 @@
           #{listItem}
         </foreach>
       </if>
-      <if test="example.rolename != null" >
-         and rolename = #{example.rolename,jdbcType=VARCHAR}
+      <if test="example.roleid != null" >
+         and roleid = #{example.roleid,jdbcType=VARCHAR}
       </if>
-      <if test="example.rolenameList != null  and  example.rolenameList.size() > 0 " >
-         and rolename in 
-        <foreach collection="example.rolenameList" item="listItem" open="(" close=")" separator="," >
+      <if test="example.roleidList != null  and  example.roleidList.size() > 0 " >
+         and roleid in 
+        <foreach collection="example.roleidList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
-      <if test="example.parentroledataid != null" >
-         and parentroledataid = #{example.parentroledataid,jdbcType=VARCHAR}
+      <if test="example.permissionid != null" >
+         and permissionid = #{example.permissionid,jdbcType=VARCHAR}
       </if>
-      <if test="example.parentroledataidList != null  and  example.parentroledataidList.size() > 0 " >
-         and parentroledataid in 
-        <foreach collection="example.parentroledataidList" item="listItem" open="(" close=")" separator="," >
+      <if test="example.permissionidList != null  and  example.permissionidList.size() > 0 " >
+         and permissionid in 
+        <foreach collection="example.permissionidList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
     </where>
   </sql>
   <delete id="deleteByPrimaryKey" parameterType="map" >
-    delete from hrg_pre_sys_role
+    delete from hrg_pre_role_permission
     where dataid = #{dataid,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="map" >
-    delete from hrg_pre_sys_role
+    delete from hrg_pre_role_permission
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="map" >
-    insert into hrg_pre_sys_role (dataid, rolename, parentroledataid
+    insert into hrg_pre_role_permission (dataid, roleid, permissionid
       )
-    values (#{record.dataid,jdbcType=VARCHAR}, #{record.rolename,jdbcType=VARCHAR}, #{record.parentroledataid,jdbcType=VARCHAR}
+    values (#{record.dataid,jdbcType=VARCHAR}, #{record.roleid,jdbcType=VARCHAR}, #{record.permissionid,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="map" >
-    insert into hrg_pre_sys_role
+    insert into hrg_pre_role_permission
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="record.dataid != null" >
         dataid,
       </if>
-      <if test="record.rolename != null" >
-        rolename,
+      <if test="record.roleid != null" >
+        roleid,
       </if>
-      <if test="record.parentroledataid != null" >
-        parentroledataid,
+      <if test="record.permissionid != null" >
+        permissionid,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="record.dataid != null" >
         #{record.dataid,jdbcType=VARCHAR},
       </if>
-      <if test="record.rolename != null" >
-        #{record.rolename,jdbcType=VARCHAR},
+      <if test="record.roleid != null" >
+        #{record.roleid,jdbcType=VARCHAR},
       </if>
-      <if test="record.parentroledataid != null" >
-        #{record.parentroledataid,jdbcType=VARCHAR},
+      <if test="record.permissionid != null" >
+        #{record.permissionid,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
   <update id="updateByExampleSelective" parameterType="map" >
-    update hrg_pre_sys_role
+    update hrg_pre_role_permission
     <set >
       <if test="record.dataid != null" >
         dataid = #{record.dataid,jdbcType=VARCHAR},
       </if>
-      <if test="record.rolename != null" >
-        rolename = #{record.rolename,jdbcType=VARCHAR},
+      <if test="record.roleid != null" >
+        roleid = #{record.roleid,jdbcType=VARCHAR},
       </if>
-      <if test="record.parentroledataid != null" >
-        parentroledataid = #{record.parentroledataid,jdbcType=VARCHAR},
+      <if test="record.permissionid != null" >
+        permissionid = #{record.permissionid,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -91,30 +91,30 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update hrg_pre_sys_role
+    update hrg_pre_role_permission
     set dataid = #{record.dataid,jdbcType=VARCHAR},
-      rolename = #{record.rolename,jdbcType=VARCHAR},
-      parentroledataid = #{record.parentroledataid,jdbcType=VARCHAR}
+      roleid = #{record.roleid,jdbcType=VARCHAR},
+      permissionid = #{record.permissionid,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="map" >
-    update hrg_pre_sys_role
+    update hrg_pre_role_permission
     <set >
-      <if test="record.rolename != null" >
-        rolename = #{record.rolename,jdbcType=VARCHAR},
+      <if test="record.roleid != null" >
+        roleid = #{record.roleid,jdbcType=VARCHAR},
       </if>
-      <if test="record.parentroledataid != null" >
-        parentroledataid = #{record.parentroledataid,jdbcType=VARCHAR},
+      <if test="record.permissionid != null" >
+        permissionid = #{record.permissionid,jdbcType=VARCHAR},
       </if>
     </set>
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="map" >
-    update hrg_pre_sys_role
-    set rolename = #{record.rolename,jdbcType=VARCHAR},
-      parentroledataid = #{record.parentroledataid,jdbcType=VARCHAR}
+    update hrg_pre_role_permission
+    set roleid = #{record.roleid,jdbcType=VARCHAR},
+      permissionid = #{record.permissionid,jdbcType=VARCHAR}
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
 </mapper>

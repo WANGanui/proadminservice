@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hrg.javamapper.read.PreSysRoleRelPermissionReadMapper" >
-  <resultMap id="BaseResultMap" type="com.hrg.model.PreSysRoleRelPermission" >
+<mapper namespace="com.hrg.javamapper.read.PreRolePermissionReadMapper" >
+  <resultMap id="BaseResultMap" type="com.hrg.model.PreRolePermission" >
     <id column="dataid" property="dataid" jdbcType="VARCHAR" />
-    <result column="parentroledataid" property="parentroledataid" jdbcType="VARCHAR" />
-    <result column="roledataid" property="roledataid" jdbcType="VARCHAR" />
-    <result column="rolename" property="rolename" jdbcType="VARCHAR" />
-    <result column="permissiondataid" property="permissiondataid" jdbcType="VARCHAR" />
+    <result column="roleid" property="roleid" jdbcType="VARCHAR" />
+    <result column="permissionid" property="permissionid" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="HashMapBaseResultMap" type="hashmap" >
     <id column="dataid" property="dataid" jdbcType="VARCHAR" />
-    <result column="parentroledataid" property="parentroledataid" jdbcType="VARCHAR" />
-    <result column="roledataid" property="roledataid" jdbcType="VARCHAR" />
-    <result column="rolename" property="rolename" jdbcType="VARCHAR" />
-    <result column="permissiondataid" property="permissiondataid" jdbcType="VARCHAR" />
+    <result column="roleid" property="roleid" jdbcType="VARCHAR" />
+    <result column="permissionid" property="permissionid" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -26,46 +22,28 @@
           #{listItem}
         </foreach>
       </if>
-      <if test="example.parentroledataid != null" >
-         and parentroledataid = #{example.parentroledataid,jdbcType=VARCHAR}
+      <if test="example.roleid != null" >
+         and roleid = #{example.roleid,jdbcType=VARCHAR}
       </if>
-      <if test="example.parentroledataidList != null  and  example.parentroledataidList.size() > 0 " >
-         and parentroledataid in 
-        <foreach collection="example.parentroledataidList" item="listItem" open="(" close=")" separator="," >
+      <if test="example.roleidList != null  and  example.roleidList.size() > 0 " >
+         and roleid in 
+        <foreach collection="example.roleidList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
-      <if test="example.roledataid != null" >
-         and roledataid = #{example.roledataid,jdbcType=VARCHAR}
+      <if test="example.permissionid != null" >
+         and permissionid = #{example.permissionid,jdbcType=VARCHAR}
       </if>
-      <if test="example.roledataidList != null  and  example.roledataidList.size() > 0 " >
-         and roledataid in 
-        <foreach collection="example.roledataidList" item="listItem" open="(" close=")" separator="," >
-          #{listItem}
-        </foreach>
-      </if>
-      <if test="example.rolename != null" >
-         and rolename = #{example.rolename,jdbcType=VARCHAR}
-      </if>
-      <if test="example.rolenameList != null  and  example.rolenameList.size() > 0 " >
-         and rolename in 
-        <foreach collection="example.rolenameList" item="listItem" open="(" close=")" separator="," >
-          #{listItem}
-        </foreach>
-      </if>
-      <if test="example.permissiondataid != null" >
-         and permissiondataid = #{example.permissiondataid,jdbcType=VARCHAR}
-      </if>
-      <if test="example.permissiondataidList != null  and  example.permissiondataidList.size() > 0 " >
-         and permissiondataid in 
-        <foreach collection="example.permissiondataidList" item="listItem" open="(" close=")" separator="," >
+      <if test="example.permissionidList != null  and  example.permissionidList.size() > 0 " >
+         and permissionid in 
+        <foreach collection="example.permissionidList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    dataid, parentroledataid, roledataid, rolename, permissiondataid
+    dataid, roleid, permissionid
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="map" >
     select
@@ -73,7 +51,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from hrg_pre_sys_role_rel_permission
+    from hrg_pre_role_permission
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,11 +65,11 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
     select 
     <include refid="Base_Column_List" />
-    from hrg_pre_sys_role_rel_permission
+    from hrg_pre_role_permission
     where dataid = #{dataid,jdbcType=VARCHAR}
   </select>
   <select id="countByExample" parameterType="map" resultType="java.lang.Integer" >
-    select count(*) from hrg_pre_sys_role_rel_permission
+    select count(*) from hrg_pre_role_permission
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -102,7 +80,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from hrg_pre_sys_role_rel_permission
+    from hrg_pre_role_permission
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -114,7 +92,7 @@
   <select id="selectMapByPrimaryKey" resultMap="HashMapBaseResultMap" parameterType="map" >
     select
     <include refid="Base_Column_List" />
-    from hrg_pre_sys_role_rel_permission
+    from hrg_pre_role_permission
     <where >
        and dataid=#{dataid,jdbcType=VARCHAR}
     </where>
@@ -125,7 +103,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from hrg_pre_sys_role_rel_permission
+    from hrg_pre_role_permission
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -140,7 +118,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from hrg_pre_sys_role_rel_permission
+    from hrg_pre_role_permission
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>

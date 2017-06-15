@@ -21,15 +21,6 @@
           #{listItem}
         </foreach>
       </if>
-      <if test="example.parentroleid != null" >
-         and parentroleid = #{example.parentroleid,jdbcType=VARCHAR}
-      </if>
-      <if test="example.parentroleidList != null  and  example.parentroleidList.size() > 0 " >
-         and parentroleid in 
-        <foreach collection="example.parentroleidList" item="listItem" open="(" close=")" separator="," >
-          #{listItem}
-        </foreach>
-      </if>
       <if test="example.permissionid != null" >
          and permissionid = #{example.permissionid,jdbcType=VARCHAR}
       </if>
@@ -39,21 +30,39 @@
           #{listItem}
         </foreach>
       </if>
-      <if test="example.permissioncode != null" >
-         and permissioncode = #{example.permissioncode,jdbcType=VARCHAR}
+      <if test="example.moduleurl != null" >
+         and moduleurl = #{example.moduleurl,jdbcType=VARCHAR}
       </if>
-      <if test="example.permissioncodeList != null  and  example.permissioncodeList.size() > 0 " >
-         and permissioncode in 
-        <foreach collection="example.permissioncodeList" item="listItem" open="(" close=")" separator="," >
+      <if test="example.moduleurlList != null  and  example.moduleurlList.size() > 0 " >
+         and moduleurl in 
+        <foreach collection="example.moduleurlList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
-      <if test="example.permissionurl != null" >
-         and permissionurl = #{example.permissionurl,jdbcType=VARCHAR}
+      <if test="example.options != null" >
+         and options = #{example.options,jdbcType=VARCHAR}
       </if>
-      <if test="example.permissionurlList != null  and  example.permissionurlList.size() > 0 " >
-         and permissionurl in 
-        <foreach collection="example.permissionurlList" item="listItem" open="(" close=")" separator="," >
+      <if test="example.optionsList != null  and  example.optionsList.size() > 0 " >
+         and options in 
+        <foreach collection="example.optionsList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.modulename != null" >
+         and modulename = #{example.modulename,jdbcType=VARCHAR}
+      </if>
+      <if test="example.modulenameList != null  and  example.modulenameList.size() > 0 " >
+         and modulename in 
+        <foreach collection="example.modulenameList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.modulepid != null" >
+         and modulepid = #{example.modulepid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.modulepidList != null  and  example.modulepidList.size() > 0 " >
+         and modulepid in 
+        <foreach collection="example.modulepidList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
@@ -70,12 +79,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="map" >
-    insert into hrg_worker_role_permission (dataid, roleid, parentroleid, 
-      permissionid, permissioncode, 
-      permissionurl)
-    values (#{record.dataid,jdbcType=VARCHAR}, #{record.roleid,jdbcType=VARCHAR}, #{record.parentroleid,jdbcType=VARCHAR}, 
-      #{record.permissionid,jdbcType=VARCHAR}, #{record.permissioncode,jdbcType=VARCHAR}, 
-      #{record.permissionurl,jdbcType=VARCHAR})
+    insert into hrg_worker_role_permission (dataid, roleid, permissionid, 
+      moduleurl, options, modulename, 
+      modulepid)
+    values (#{record.dataid,jdbcType=VARCHAR}, #{record.roleid,jdbcType=VARCHAR}, #{record.permissionid,jdbcType=VARCHAR}, 
+      #{record.moduleurl,jdbcType=VARCHAR}, #{record.options,jdbcType=VARCHAR}, #{record.modulename,jdbcType=VARCHAR}, 
+      #{record.modulepid,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="map" >
     insert into hrg_worker_role_permission
@@ -86,17 +95,20 @@
       <if test="record.roleid != null" >
         roleid,
       </if>
-      <if test="record.parentroleid != null" >
-        parentroleid,
-      </if>
       <if test="record.permissionid != null" >
         permissionid,
       </if>
-      <if test="record.permissioncode != null" >
-        permissioncode,
+      <if test="record.moduleurl != null" >
+        moduleurl,
       </if>
-      <if test="record.permissionurl != null" >
-        permissionurl,
+      <if test="record.options != null" >
+        options,
+      </if>
+      <if test="record.modulename != null" >
+        modulename,
+      </if>
+      <if test="record.modulepid != null" >
+        modulepid,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -106,17 +118,20 @@
       <if test="record.roleid != null" >
         #{record.roleid,jdbcType=VARCHAR},
       </if>
-      <if test="record.parentroleid != null" >
-        #{record.parentroleid,jdbcType=VARCHAR},
-      </if>
       <if test="record.permissionid != null" >
         #{record.permissionid,jdbcType=VARCHAR},
       </if>
-      <if test="record.permissioncode != null" >
-        #{record.permissioncode,jdbcType=VARCHAR},
+      <if test="record.moduleurl != null" >
+        #{record.moduleurl,jdbcType=VARCHAR},
       </if>
-      <if test="record.permissionurl != null" >
-        #{record.permissionurl,jdbcType=VARCHAR},
+      <if test="record.options != null" >
+        #{record.options,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modulename != null" >
+        #{record.modulename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modulepid != null" >
+        #{record.modulepid,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -129,17 +144,20 @@
       <if test="record.roleid != null" >
         roleid = #{record.roleid,jdbcType=VARCHAR},
       </if>
-      <if test="record.parentroleid != null" >
-        parentroleid = #{record.parentroleid,jdbcType=VARCHAR},
-      </if>
       <if test="record.permissionid != null" >
         permissionid = #{record.permissionid,jdbcType=VARCHAR},
       </if>
-      <if test="record.permissioncode != null" >
-        permissioncode = #{record.permissioncode,jdbcType=VARCHAR},
+      <if test="record.moduleurl != null" >
+        moduleurl = #{record.moduleurl,jdbcType=VARCHAR},
       </if>
-      <if test="record.permissionurl != null" >
-        permissionurl = #{record.permissionurl,jdbcType=VARCHAR},
+      <if test="record.options != null" >
+        options = #{record.options,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modulename != null" >
+        modulename = #{record.modulename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modulepid != null" >
+        modulepid = #{record.modulepid,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -150,10 +168,11 @@
     update hrg_worker_role_permission
     set dataid = #{record.dataid,jdbcType=VARCHAR},
       roleid = #{record.roleid,jdbcType=VARCHAR},
-      parentroleid = #{record.parentroleid,jdbcType=VARCHAR},
       permissionid = #{record.permissionid,jdbcType=VARCHAR},
-      permissioncode = #{record.permissioncode,jdbcType=VARCHAR},
-      permissionurl = #{record.permissionurl,jdbcType=VARCHAR}
+      moduleurl = #{record.moduleurl,jdbcType=VARCHAR},
+      options = #{record.options,jdbcType=VARCHAR},
+      modulename = #{record.modulename,jdbcType=VARCHAR},
+      modulepid = #{record.modulepid,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -164,17 +183,20 @@
       <if test="record.roleid != null" >
         roleid = #{record.roleid,jdbcType=VARCHAR},
       </if>
-      <if test="record.parentroleid != null" >
-        parentroleid = #{record.parentroleid,jdbcType=VARCHAR},
-      </if>
       <if test="record.permissionid != null" >
         permissionid = #{record.permissionid,jdbcType=VARCHAR},
       </if>
-      <if test="record.permissioncode != null" >
-        permissioncode = #{record.permissioncode,jdbcType=VARCHAR},
+      <if test="record.moduleurl != null" >
+        moduleurl = #{record.moduleurl,jdbcType=VARCHAR},
       </if>
-      <if test="record.permissionurl != null" >
-        permissionurl = #{record.permissionurl,jdbcType=VARCHAR},
+      <if test="record.options != null" >
+        options = #{record.options,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modulename != null" >
+        modulename = #{record.modulename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modulepid != null" >
+        modulepid = #{record.modulepid,jdbcType=VARCHAR},
       </if>
     </set>
     where dataid = #{record.dataid,jdbcType=VARCHAR}
@@ -182,10 +204,11 @@
   <update id="updateByPrimaryKey" parameterType="map" >
     update hrg_worker_role_permission
     set roleid = #{record.roleid,jdbcType=VARCHAR},
-      parentroleid = #{record.parentroleid,jdbcType=VARCHAR},
       permissionid = #{record.permissionid,jdbcType=VARCHAR},
-      permissioncode = #{record.permissioncode,jdbcType=VARCHAR},
-      permissionurl = #{record.permissionurl,jdbcType=VARCHAR}
+      moduleurl = #{record.moduleurl,jdbcType=VARCHAR},
+      options = #{record.options,jdbcType=VARCHAR},
+      modulename = #{record.modulename,jdbcType=VARCHAR},
+      modulepid = #{record.modulepid,jdbcType=VARCHAR}
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
 </mapper>

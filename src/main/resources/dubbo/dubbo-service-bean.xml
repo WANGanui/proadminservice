@@ -15,4 +15,5 @@
 	<dubbo:service interface="com.hrg.service.WorkerRoleService" ref="workerRoleServiceImpl"/>
 	<dubbo:service interface="com.hrg.service.WorkerService" ref="workerServiceImpl"/>
 	<dubbo:service interface="com.hrg.service.DepartmentService" ref="departmentServiceImpl"/>
+	<dubbo:service interface="com.hrg.service.ModuleService" ref="moduleServiceImpl"/>
 </beans>

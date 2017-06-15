@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hrg.javamapper.write.ModuleWriteMapper" >
+  <sql id="Example_Where_Clause" >
+    <where >
+      <if test="example.datatid != null" >
+         and datatid = #{example.datatid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.datatidList != null  and  example.datatidList.size() > 0 " >
+         and datatid in 
+        <foreach collection="example.datatidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.modulename != null" >
+         and modulename = #{example.modulename,jdbcType=VARCHAR}
+      </if>
+      <if test="example.modulenameList != null  and  example.modulenameList.size() > 0 " >
+         and modulename in 
+        <foreach collection="example.modulenameList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.moduleurl != null" >
+         and moduleurl = #{example.moduleurl,jdbcType=VARCHAR}
+      </if>
+      <if test="example.moduleurlList != null  and  example.moduleurlList.size() > 0 " >
+         and moduleurl in 
+        <foreach collection="example.moduleurlList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.modulepid != null" >
+         and modulepid = #{example.modulepid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.modulepidList != null  and  example.modulepidList.size() > 0 " >
+         and modulepid in 
+        <foreach collection="example.modulepidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+    </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from hrg_module
+    where datatid = #{datatid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="map" >
+    delete from hrg_module
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="map" >
+    insert into hrg_module (datatid, modulename, 
+      moduleurl, modulepid)
+    values (#{record.datatid,jdbcType=VARCHAR}, #{record.modulename,jdbcType=VARCHAR}, 
+      #{record.moduleurl,jdbcType=VARCHAR}, #{record.modulepid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="map" >
+    insert into hrg_module
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="record.datatid != null" >
+        datatid,
+      </if>
+      <if test="record.modulename != null" >
+        modulename,
+      </if>
+      <if test="record.moduleurl != null" >
+        moduleurl,
+      </if>
+      <if test="record.modulepid != null" >
+        modulepid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="record.datatid != null" >
+        #{record.datatid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modulename != null" >
+        #{record.modulename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.moduleurl != null" >
+        #{record.moduleurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modulepid != null" >
+        #{record.modulepid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update hrg_module
+    <set >
+      <if test="record.datatid != null" >
+        datatid = #{record.datatid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modulename != null" >
+        modulename = #{record.modulename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.moduleurl != null" >
+        moduleurl = #{record.moduleurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modulepid != null" >
+        modulepid = #{record.modulepid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update hrg_module
+    set datatid = #{record.datatid,jdbcType=VARCHAR},
+      modulename = #{record.modulename,jdbcType=VARCHAR},
+      moduleurl = #{record.moduleurl,jdbcType=VARCHAR},
+      modulepid = #{record.modulepid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="map" >
+    update hrg_module
+    <set >
+      <if test="record.modulename != null" >
+        modulename = #{record.modulename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.moduleurl != null" >
+        moduleurl = #{record.moduleurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modulepid != null" >
+        modulepid = #{record.modulepid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where datatid = #{record.datatid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="map" >
+    update hrg_module
+    set modulename = #{record.modulename,jdbcType=VARCHAR},
+      moduleurl = #{record.moduleurl,jdbcType=VARCHAR},
+      modulepid = #{record.modulepid,jdbcType=VARCHAR}
+    where datatid = #{record.datatid,jdbcType=VARCHAR}
+  </update>
+</mapper>

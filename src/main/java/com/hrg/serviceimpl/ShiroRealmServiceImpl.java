@@ -1,10 +1,11 @@
 package com.hrg.serviceimpl;
 
+import com.hrg.javamapper.read.ModuleReadMapper;
+import com.hrg.javamapper.read.PermissionReadMapper;
+import com.hrg.javamapper.read.PreRolePermissionReadMapper;
 import com.hrg.service.*;
 import com.hrg.enums.ErrorCode;
 import com.hrg.exception.ValidatorException;
-import com.hrg.javamapper.read.PreSysPermissionReadMapper;
-import com.hrg.javamapper.read.PreSysRoleRelPermissionReadMapper;
 import com.hrg.model.*;
 import com.hrg.util.ValidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,11 @@ public class ShiroRealmServiceImpl implements ShiroRealmService {
     @Autowired
     WorkerRolePermissionService workerRolePermissionService;
     @Autowired
-    PreSysRoleRelPermissionReadMapper preSysRoleRelPermissionReadMapper;
+    PreRolePermissionReadMapper preRolePermissionReadMapper;
     @Autowired
-    PreSysPermissionReadMapper preSysPermissionReadMapper;
+    PermissionReadMapper permissionReadMapper;
+    @Autowired
+    ModuleReadMapper moduleReadMapper;
     /**
      * 获取完整的身份信息对象<br>
      * @param principal:用户输入的身份信息<br>
@@ -90,14 +93,15 @@ public class ShiroRealmServiceImpl implements ShiroRealmService {
      */
     @Override
     public List<String> getPermissionStringByUser(Object principal) throws Exception {
-        Worker worker = (Worker) principal;
+        /*Worker worker = (Worker) principal;
         if (worker.getDataid()=="1"||worker.getDataid().equals("1"))
         {
-            List<PreSysPermission> syspermissionList = preSysPermissionReadMapper.selectByExample(new PreSysPermissionCriteria());
+            List<Module> syspermissionList = moduleReadMapper.selectByExample(new ModuleCriteria());
             List<String> permissionlist = new ArrayList<String>();
             if (!ValidUtil.isNullOrEmpty(syspermissionList)){
-                for (PreSysPermission preSysPermission : syspermissionList)
-                    permissionlist.add(preSysPermission.getPermissioncode());
+                for (Module preSysPermission : syspermissionList) {
+                    permissionlist.add(preSysPermission.getModulename());
+                }
             }
             return permissionlist;
         }
@@ -114,8 +118,8 @@ public class ShiroRealmServiceImpl implements ShiroRealmService {
         if (!ValidUtil.isNullOrEmpty(workerRolePermissionList)){
             for (WorkerRolePermission permission : workerRolePermissionList)
                 permissionlist.add(permission.getPermissionurl());
-        }
-        return permissionlist;
+        }*/
+        return null;
     }
 
     /**
@@ -125,7 +129,7 @@ public class ShiroRealmServiceImpl implements ShiroRealmService {
      */
     @Override
     public List<? extends Object> getPermissionByUser(Object principal) throws Exception {
-        Worker worker = (Worker) principal;
+        /*Worker worker = (Worker) principal;
         if (!ValidUtil.isNullOrEmpty(worker.getDataid())&&worker.getDataid().equals("1")){
             //超级管理员所有权限
             List<PreSysPermission> permissions = preSysPermissionReadMapper.selectByExample(new PreSysPermissionCriteria());
@@ -147,8 +151,8 @@ public class ShiroRealmServiceImpl implements ShiroRealmService {
         }
         //获取角色权限
 
-        List<WorkerRolePermission> workerRolePermissionList = workerRolePermissionService.selectRolesPermission(rolelist);
-        return workerRolePermissionList;
+        List<WorkerRolePermission> workerRolePermissionList = workerRolePermissionService.selectRolesPermission(rolelist);*/
+        return null;
     }
 
     /**
