@@ -11,9 +11,13 @@ public interface WorkerRoleReadMapper {
 
     List<WorkerRole> selectByExample(@Param("example") WorkerRoleCriteria example);
 
+    WorkerRole selectByPrimaryKey(@Param("dataid") String dataid);
+
     WorkerRole selectByExampleForOne(@Param("example") WorkerRoleCriteria example);
 
     List<Map<String, Object>> selectMapByExample(@Param("example") WorkerRoleCriteria example);
+
+    Map<String, Object> selectMapByPrimaryKey(@Param("dataid") String dataid);
 
     Map<String, Object> selectMapByExampleForOne(@Param("example") WorkerRoleCriteria example);
 }

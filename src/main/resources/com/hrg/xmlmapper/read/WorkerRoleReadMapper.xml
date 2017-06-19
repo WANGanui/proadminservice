@@ -2,18 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hrg.javamapper.read.WorkerRoleReadMapper" >
   <resultMap id="BaseResultMap" type="com.hrg.model.WorkerRole" >
-    <result column="dataid" property="dataid" jdbcType="VARCHAR" />
+    <id column="dataid" property="dataid" jdbcType="VARCHAR" />
     <result column="workerdataid" property="workerdataid" jdbcType="VARCHAR" />
-    <result column="preroleid" property="preroleid" jdbcType="VARCHAR" />
-    <result column="parentroleid" property="parentroleid" jdbcType="VARCHAR" />
-    <result column="rolename" property="rolename" jdbcType="VARCHAR" />
+    <result column="roleid" property="roleid" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="HashMapBaseResultMap" type="hashmap" >
-    <result column="dataid" property="dataid" jdbcType="VARCHAR" />
+    <id column="dataid" property="dataid" jdbcType="VARCHAR" />
     <result column="workerdataid" property="workerdataid" jdbcType="VARCHAR" />
-    <result column="preroleid" property="preroleid" jdbcType="VARCHAR" />
-    <result column="parentroleid" property="parentroleid" jdbcType="VARCHAR" />
-    <result column="rolename" property="rolename" jdbcType="VARCHAR" />
+    <result column="roleid" property="roleid" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -35,37 +31,19 @@
           #{listItem}
         </foreach>
       </if>
-      <if test="example.preroleid != null" >
-         and preroleid = #{example.preroleid,jdbcType=VARCHAR}
+      <if test="example.roleid != null" >
+         and roleid = #{example.roleid,jdbcType=VARCHAR}
       </if>
-      <if test="example.preroleidList != null  and  example.preroleidList.size() > 0 " >
-         and preroleid in 
-        <foreach collection="example.preroleidList" item="listItem" open="(" close=")" separator="," >
-          #{listItem}
-        </foreach>
-      </if>
-      <if test="example.parentroleid != null" >
-         and parentroleid = #{example.parentroleid,jdbcType=VARCHAR}
-      </if>
-      <if test="example.parentroleidList != null  and  example.parentroleidList.size() > 0 " >
-         and parentroleid in 
-        <foreach collection="example.parentroleidList" item="listItem" open="(" close=")" separator="," >
-          #{listItem}
-        </foreach>
-      </if>
-      <if test="example.rolename != null" >
-         and rolename = #{example.rolename,jdbcType=VARCHAR}
-      </if>
-      <if test="example.rolenameList != null  and  example.rolenameList.size() > 0 " >
-         and rolename in 
-        <foreach collection="example.rolenameList" item="listItem" open="(" close=")" separator="," >
+      <if test="example.roleidList != null  and  example.roleidList.size() > 0 " >
+         and roleid in 
+        <foreach collection="example.roleidList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    dataid, workerdataid, preroleid, parentroleid, rolename
+    dataid, workerdataid, roleid
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="map" >
     select
@@ -83,6 +61,12 @@
     <if test="example.limitStart >= 0 and example.pageSize > 0 " >
       limit #{example.limitStart} , #{example.pageSize}
     </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from hrg_worker_role
+    where dataid = #{dataid,jdbcType=VARCHAR}
   </select>
   <select id="countByExample" parameterType="map" resultType="java.lang.Integer" >
     select count(*) from hrg_worker_role
@@ -104,6 +88,14 @@
       order by ${example.orderByClause}
     </if>
      limit 0 , 1 
+  </select>
+  <select id="selectMapByPrimaryKey" resultMap="HashMapBaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from hrg_worker_role
+    <where >
+       and dataid=#{dataid,jdbcType=VARCHAR}
+    </where>
   </select>
   <select id="selectMapByExampleForOne" resultMap="HashMapBaseResultMap" parameterType="map" >
     select

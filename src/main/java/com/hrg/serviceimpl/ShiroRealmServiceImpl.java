@@ -26,8 +26,7 @@ public class ShiroRealmServiceImpl implements ShiroRealmService {
     WorkerService workerService;
     @Autowired
     WorkerRoleService workerRoleService;
-    @Autowired
-    WorkerRolePermissionService workerRolePermissionService;
+
     @Autowired
     PreRolePermissionReadMapper preRolePermissionReadMapper;
     @Autowired
@@ -62,17 +61,18 @@ public class ShiroRealmServiceImpl implements ShiroRealmService {
      * 方法说明：获取用户拥有的角色<br>
      * @param principal:用户<br>
      * @return 角色集合<br>
-     */
+     /**/
     @Override
     public List<String> getHaveRoleStringByUser(Object principal) throws Exception {
-        Worker worker = (Worker) principal;
+        /*Worker worker = (Worker) principal;
         List<String> list = new ArrayList<String>();
         List<WorkerRole> workerRoleList = workerRoleService.selectDetail(worker.getDataid());
         if (!ValidUtil.isNullOrEmpty(workerRoleList)){
             for (WorkerRole workerRole : workerRoleList)
                 list.add(workerRole.getRolename());
         }
-        return list;
+        return list;*/
+        return null;
     }
 
     /**

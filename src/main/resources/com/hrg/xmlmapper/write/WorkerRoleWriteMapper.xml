@@ -21,35 +21,21 @@
           #{listItem}
         </foreach>
       </if>
-      <if test="example.preroleid != null" >
-         and preroleid = #{example.preroleid,jdbcType=VARCHAR}
+      <if test="example.roleid != null" >
+         and roleid = #{example.roleid,jdbcType=VARCHAR}
       </if>
-      <if test="example.preroleidList != null  and  example.preroleidList.size() > 0 " >
-         and preroleid in 
-        <foreach collection="example.preroleidList" item="listItem" open="(" close=")" separator="," >
-          #{listItem}
-        </foreach>
-      </if>
-      <if test="example.parentroleid != null" >
-         and parentroleid = #{example.parentroleid,jdbcType=VARCHAR}
-      </if>
-      <if test="example.parentroleidList != null  and  example.parentroleidList.size() > 0 " >
-         and parentroleid in 
-        <foreach collection="example.parentroleidList" item="listItem" open="(" close=")" separator="," >
-          #{listItem}
-        </foreach>
-      </if>
-      <if test="example.rolename != null" >
-         and rolename = #{example.rolename,jdbcType=VARCHAR}
-      </if>
-      <if test="example.rolenameList != null  and  example.rolenameList.size() > 0 " >
-         and rolename in 
-        <foreach collection="example.rolenameList" item="listItem" open="(" close=")" separator="," >
+      <if test="example.roleidList != null  and  example.roleidList.size() > 0 " >
+         and roleid in 
+        <foreach collection="example.roleidList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
     </where>
   </sql>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from hrg_worker_role
+    where dataid = #{dataid,jdbcType=VARCHAR}
+  </delete>
   <delete id="deleteByExample" parameterType="map" >
     delete from hrg_worker_role
     <if test="_parameter != null" >
@@ -58,11 +44,9 @@
   </delete>
   <insert id="insert" parameterType="map" >
     insert into hrg_worker_role (dataid, workerdataid, 
-      preroleid, parentroleid, 
-      rolename)
+      roleid)
     values (#{record.dataid,jdbcType=VARCHAR}, #{record.workerdataid,jdbcType=VARCHAR}, 
-      #{record.preroleid,jdbcType=VARCHAR}, #{record.parentroleid,jdbcType=VARCHAR}, 
-      #{record.rolename,jdbcType=VARCHAR})
+      #{record.roleid,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="map" >
     insert into hrg_worker_role
@@ -73,14 +57,8 @@
       <if test="record.workerdataid != null" >
         workerdataid,
       </if>
-      <if test="record.preroleid != null" >
-        preroleid,
-      </if>
-      <if test="record.parentroleid != null" >
-        parentroleid,
-      </if>
-      <if test="record.rolename != null" >
-        rolename,
+      <if test="record.roleid != null" >
+        roleid,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -90,14 +68,8 @@
       <if test="record.workerdataid != null" >
         #{record.workerdataid,jdbcType=VARCHAR},
       </if>
-      <if test="record.preroleid != null" >
-        #{record.preroleid,jdbcType=VARCHAR},
-      </if>
-      <if test="record.parentroleid != null" >
-        #{record.parentroleid,jdbcType=VARCHAR},
-      </if>
-      <if test="record.rolename != null" >
-        #{record.rolename,jdbcType=VARCHAR},
+      <if test="record.roleid != null" >
+        #{record.roleid,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -110,14 +82,8 @@
       <if test="record.workerdataid != null" >
         workerdataid = #{record.workerdataid,jdbcType=VARCHAR},
       </if>
-      <if test="record.preroleid != null" >
-        preroleid = #{record.preroleid,jdbcType=VARCHAR},
-      </if>
-      <if test="record.parentroleid != null" >
-        parentroleid = #{record.parentroleid,jdbcType=VARCHAR},
-      </if>
-      <if test="record.rolename != null" >
-        rolename = #{record.rolename,jdbcType=VARCHAR},
+      <if test="record.roleid != null" >
+        roleid = #{record.roleid,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -128,11 +94,27 @@
     update hrg_worker_role
     set dataid = #{record.dataid,jdbcType=VARCHAR},
       workerdataid = #{record.workerdataid,jdbcType=VARCHAR},
-      preroleid = #{record.preroleid,jdbcType=VARCHAR},
-      parentroleid = #{record.parentroleid,jdbcType=VARCHAR},
-      rolename = #{record.rolename,jdbcType=VARCHAR}
+      roleid = #{record.roleid,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="map" >
+    update hrg_worker_role
+    <set >
+      <if test="record.workerdataid != null" >
+        workerdataid = #{record.workerdataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roleid != null" >
+        roleid = #{record.roleid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where dataid = #{record.dataid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="map" >
+    update hrg_worker_role
+    set workerdataid = #{record.workerdataid,jdbcType=VARCHAR},
+      roleid = #{record.roleid,jdbcType=VARCHAR}
+    where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
 </mapper>

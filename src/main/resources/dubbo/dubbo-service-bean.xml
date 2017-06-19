@@ -11,7 +11,6 @@
 	<dubbo:service interface="com.hrg.service.ProjectService" ref="projectServiceImpl"/>
 	<dubbo:service interface="com.hrg.service.ShiroRealmService" ref="shiroRealmServiceImpl"/>
 	<dubbo:service interface="com.hrg.service.WorkDataService" ref="workDataServiceImpl"/>
-	<dubbo:service interface="com.hrg.service.WorkerRolePermissionService" ref="workerRolePermissionServiceImpl"/>
 	<dubbo:service interface="com.hrg.service.WorkerRoleService" ref="workerRoleServiceImpl"/>
 	<dubbo:service interface="com.hrg.service.WorkerService" ref="workerServiceImpl"/>
 	<dubbo:service interface="com.hrg.service.DepartmentService" ref="departmentServiceImpl"/>
