@@ -2,9 +2,7 @@ package com.hrg.serviceimpl;
 
 import com.hrg.enums.ErrorCode;
 import com.hrg.exception.ValidatorException;
-import com.hrg.javamapper.read.WorkdataReadMapper;
-import com.hrg.javamapper.read.WorkerReadMapper;
-import com.hrg.javamapper.read.WorkerRelMissionReadMapper;
+import com.hrg.javamapper.read.*;
 import com.hrg.javamapper.write.WorkerRoleWriteMapper;
 import com.hrg.javamapper.write.WorkerWriteMapper;
 import com.hrg.model.*;
@@ -16,6 +14,7 @@ import com.hrg.util.ValidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +35,14 @@ public class WorkerServiceImpl implements WorkerService {
     WorkerWriteMapper workerWriteMapper;
     @Autowired
     WorkerRoleWriteMapper workerRoleWriteMapper;
+    @Autowired
+    WorkerRoleReadMapper workerRoleReadMapper;
+    @Autowired
+    ModuleReadMapper moduleReadMapper;
+    @Autowired
+    ModuleRelPermissionReadMapper moduleRelPermissionReadMapper;
+    @Autowired
+    PreRolePermissionReadMapper preRolePermissionReadMapper;
 
     /**
      * 方法说明：根据员工账号查询员工对象
@@ -201,5 +208,51 @@ public class WorkerServiceImpl implements WorkerService {
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
         int x = workerWriteMapper.updateByPrimaryKeySelective(worker);
         return x > 0 ? true : false;
+    }
+
+    /**
+     * 查询员工模块和权限
+     *
+     * @param workerdataid
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Map<String, Object> selectModuleAndPermission(String workerdataid) throws Exception {
+        if (ValidUtil.isNullOrEmpty(workerdataid))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+        WorkerRoleCriteria workerRoleCriteria = new WorkerRoleCriteria();
+        workerRoleCriteria.setWorkerdataid(workerdataid);
+        List<WorkerRole> workerRoles = workerRoleReadMapper.selectByExample(workerRoleCriteria);
+        List<String> roleids = new ArrayList<String>();
+        for (WorkerRole role : workerRoles){
+            roleids.add(role.getDataid());
+        }
+        PreRolePermissionCriteria preRolePermissionCriteria = new PreRolePermissionCriteria();
+        preRolePermissionCriteria.setRoleidList(roleids);
+        List<PreRolePermission> preRolePermissions = preRolePermissionReadMapper.selectByExample(preRolePermissionCriteria);
+        List<String> permissionids = new ArrayList<String>();
+
+        for (PreRolePermission preRolePermission: preRolePermissions){
+            permissionids.add(preRolePermission.getPermissionid());
+        }
+
+        ModuleRelPermissionCriteria moduleRelPermissionCriteria = new ModuleRelPermissionCriteria();
+        moduleRelPermissionCriteria.setPermissionidList(permissionids);
+
+        List<ModuleRelPermission> permissionList = moduleRelPermissionReadMapper.selectByExample(moduleRelPermissionCriteria);
+        List<String> moduleid = new ArrayList<String>();
+        for (ModuleRelPermission permission : permissionList){
+            moduleid.add(permission.getModuleid());
+        }
+
+        ModuleCriteria moduleCriteria = new ModuleCriteria();
+        moduleCriteria.setDatatidList(moduleid);
+        List<Module> moduleList = moduleReadMapper.selectByExample(moduleCriteria);
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("menus",moduleList);
+        map.put("permissions",permissionList);
+        return map;
     }
 }
