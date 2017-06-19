@@ -20,6 +20,7 @@
     <result column="modifytime" property="modifytime" jdbcType="TIMESTAMP" />
     <result column="creatordataid" property="creatordataid" jdbcType="VARCHAR" />
     <result column="modifydataid" property="modifydataid" jdbcType="VARCHAR" />
+    <result column="progress" property="progress" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="HashMapBaseResultMap" type="hashmap" >
     <id column="dataid" property="dataid" jdbcType="VARCHAR" />
@@ -40,6 +41,7 @@
     <result column="modifytime" property="modifytime" jdbcType="TIMESTAMP" />
     <result column="creatordataid" property="creatordataid" jdbcType="VARCHAR" />
     <result column="modifydataid" property="modifydataid" jdbcType="VARCHAR" />
+    <result column="progress" property="progress" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -175,11 +177,21 @@
           #{listItem}
         </foreach>
       </if>
+      <if test="example.progress != null" >
+         and progress = #{example.progress,jdbcType=VARCHAR}
+      </if>
+      <if test="example.progressList != null  and  example.progressList.size() > 0 " >
+         and progress in 
+        <foreach collection="example.progressList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
     </where>
   </sql>
   <sql id="Base_Column_List" >
     dataid, name, starttime, endtime, days, month, leaderid, leader, contect, state, 
-    finishtime, remark, creator, createtime, modify, modifytime, creatordataid, modifydataid
+    finishtime, remark, creator, createtime, modify, modifytime, creatordataid, modifydataid, 
+    progress
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="map" >
     select

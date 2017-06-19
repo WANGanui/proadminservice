@@ -135,6 +135,15 @@
           #{listItem}
         </foreach>
       </if>
+      <if test="example.progress != null" >
+         and progress = #{example.progress,jdbcType=VARCHAR}
+      </if>
+      <if test="example.progressList != null  and  example.progressList.size() > 0 " >
+         and progress in 
+        <foreach collection="example.progressList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
     </where>
   </sql>
   <delete id="deleteByPrimaryKey" parameterType="map" >
@@ -154,14 +163,14 @@
       state, finishtime, remark, 
       creator, createtime, modify, 
       modifytime, creatordataid, 
-      modifydataid)
+      modifydataid, progress)
     values (#{record.dataid,jdbcType=VARCHAR}, #{record.name,jdbcType=VARCHAR}, #{record.starttime,jdbcType=TIMESTAMP}, 
       #{record.endtime,jdbcType=TIMESTAMP}, #{record.days,jdbcType=INTEGER}, #{record.month,jdbcType=INTEGER}, 
       #{record.leaderid,jdbcType=VARCHAR}, #{record.leader,jdbcType=VARCHAR}, #{record.contect,jdbcType=VARCHAR}, 
       #{record.state,jdbcType=CHAR}, #{record.finishtime,jdbcType=TIMESTAMP}, #{record.remark,jdbcType=VARCHAR}, 
       #{record.creator,jdbcType=VARCHAR}, #{record.createtime,jdbcType=TIMESTAMP}, #{record.modify,jdbcType=VARCHAR}, 
       #{record.modifytime,jdbcType=TIMESTAMP}, #{record.creatordataid,jdbcType=VARCHAR}, 
-      #{record.modifydataid,jdbcType=VARCHAR})
+      #{record.modifydataid,jdbcType=VARCHAR}, #{record.progress,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="map" >
     insert into hrg_project
@@ -220,6 +229,9 @@
       <if test="record.modifydataid != null" >
         modifydataid,
       </if>
+      <if test="record.progress != null" >
+        progress,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="record.dataid != null" >
@@ -275,6 +287,9 @@
       </if>
       <if test="record.modifydataid != null" >
         #{record.modifydataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.progress != null" >
+        #{record.progress,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -335,6 +350,9 @@
       <if test="record.modifydataid != null" >
         modifydataid = #{record.modifydataid,jdbcType=VARCHAR},
       </if>
+      <if test="record.progress != null" >
+        progress = #{record.progress,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -359,7 +377,8 @@
       modify = #{record.modify,jdbcType=VARCHAR},
       modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
       creatordataid = #{record.creatordataid,jdbcType=VARCHAR},
-      modifydataid = #{record.modifydataid,jdbcType=VARCHAR}
+      modifydataid = #{record.modifydataid,jdbcType=VARCHAR},
+      progress = #{record.progress,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -418,6 +437,9 @@
       <if test="record.modifydataid != null" >
         modifydataid = #{record.modifydataid,jdbcType=VARCHAR},
       </if>
+      <if test="record.progress != null" >
+        progress = #{record.progress,jdbcType=VARCHAR},
+      </if>
     </set>
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
@@ -439,7 +461,8 @@
       modify = #{record.modify,jdbcType=VARCHAR},
       modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
       creatordataid = #{record.creatordataid,jdbcType=VARCHAR},
-      modifydataid = #{record.modifydataid,jdbcType=VARCHAR}
+      modifydataid = #{record.modifydataid,jdbcType=VARCHAR},
+      progress = #{record.progress,jdbcType=VARCHAR}
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
 </mapper>

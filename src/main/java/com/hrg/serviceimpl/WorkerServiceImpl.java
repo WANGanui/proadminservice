@@ -255,4 +255,17 @@ public class WorkerServiceImpl implements WorkerService {
         map.put("permissions",permissionList);
         return map;
     }
+
+    /**
+     * 查询列表
+     *
+     * @param example
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<Worker> selectList(WorkerCriteria example) throws Exception {
+
+        return workerReadMapper.selectByExample(example);
+    }
 }
