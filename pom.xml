@@ -29,7 +29,6 @@
                 <filters>
                     <filter>src/main/resources/jdbc/dev.properties</filter>
                     <filter>src/main/resources/dubbo/dubboconfig/dubbo-dev.properties</filter>
-                    <filter>src/main/resources/redis/redis-dev.properties</filter>
                 </filters>
             </build>
         </profile>
@@ -45,7 +44,6 @@
                 <filters>
                     <filter>src/main/resources/jdbc/release.properties</filter>
                     <filter>src/main/resources/dubbo/dubboconfig/dubbo-release.properties</filter>
-                    <filter>src/main/resources/redis/redis-release.properties</filter>
                 </filters>
             </build>
         </profile>
@@ -61,7 +59,6 @@
                 <filters>
                     <filter>src/main/resources/jdbc/test.properties</filter>
                     <filter>src/main/resources/dubbo/dubboconfig/dubbo-test.properties</filter>
-                    <filter>src/main/resources/redis/redis-test.properties</filter>
                 </filters>
             </build>
         </profile>
