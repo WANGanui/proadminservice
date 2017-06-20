@@ -20,6 +20,9 @@
     <result column="modify" property="modify" jdbcType="VARCHAR" />
     <result column="modifydataid" property="modifydataid" jdbcType="VARCHAR" />
     <result column="modifytime" property="modifytime" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="CHAR" />
+    <result column="headerid" property="headerid" jdbcType="VARCHAR" />
+    <result column="headername" property="headername" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="HashMapBaseResultMap" type="hashmap" >
     <id column="dataid" property="dataid" jdbcType="VARCHAR" />
@@ -40,6 +43,9 @@
     <result column="modify" property="modify" jdbcType="VARCHAR" />
     <result column="modifydataid" property="modifydataid" jdbcType="VARCHAR" />
     <result column="modifytime" property="modifytime" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="CHAR" />
+    <result column="headerid" property="headerid" jdbcType="VARCHAR" />
+    <result column="headername" property="headername" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -175,12 +181,39 @@
       <if test="example.modifytime != null" >
          and modifytime = #{example.modifytime,jdbcType=TIMESTAMP}
       </if>
+      <if test="example.type != null" >
+         and type = #{example.type,jdbcType=CHAR}
+      </if>
+      <if test="example.typeList != null  and  example.typeList.size() > 0 " >
+         and type in 
+        <foreach collection="example.typeList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.headerid != null" >
+         and headerid = #{example.headerid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.headeridList != null  and  example.headeridList.size() > 0 " >
+         and headerid in 
+        <foreach collection="example.headeridList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.headername != null" >
+         and headername = #{example.headername,jdbcType=VARCHAR}
+      </if>
+      <if test="example.headernameList != null  and  example.headernameList.size() > 0 " >
+         and headername in 
+        <foreach collection="example.headernameList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
     </where>
   </sql>
   <sql id="Base_Column_List" >
     dataid, name, context, starttime, endtime, finishtime, state, prodataid, proname, 
     remark, percentage, proportion, creator, creatordataid, createtime, modify, modifydataid, 
-    modifytime
+    modifytime, type, headerid, headername
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="map" >
     select

@@ -135,6 +135,33 @@
       <if test="example.modifytime != null" >
          and modifytime = #{example.modifytime,jdbcType=TIMESTAMP}
       </if>
+      <if test="example.type != null" >
+         and type = #{example.type,jdbcType=CHAR}
+      </if>
+      <if test="example.typeList != null  and  example.typeList.size() > 0 " >
+         and type in 
+        <foreach collection="example.typeList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.headerid != null" >
+         and headerid = #{example.headerid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.headeridList != null  and  example.headeridList.size() > 0 " >
+         and headerid in 
+        <foreach collection="example.headeridList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.headername != null" >
+         and headername = #{example.headername,jdbcType=VARCHAR}
+      </if>
+      <if test="example.headernameList != null  and  example.headernameList.size() > 0 " >
+         and headername in 
+        <foreach collection="example.headernameList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
     </where>
   </sql>
   <delete id="deleteByPrimaryKey" parameterType="map" >
@@ -153,14 +180,16 @@
       state, prodataid, proname, 
       remark, percentage, proportion, 
       creator, creatordataid, createtime, 
-      modify, modifydataid, modifytime
+      modify, modifydataid, modifytime, 
+      type, headerid, headername
       )
     values (#{record.dataid,jdbcType=VARCHAR}, #{record.name,jdbcType=VARCHAR}, #{record.context,jdbcType=VARCHAR}, 
       #{record.starttime,jdbcType=TIMESTAMP}, #{record.endtime,jdbcType=TIMESTAMP}, #{record.finishtime,jdbcType=TIMESTAMP}, 
       #{record.state,jdbcType=CHAR}, #{record.prodataid,jdbcType=VARCHAR}, #{record.proname,jdbcType=VARCHAR}, 
       #{record.remark,jdbcType=VARCHAR}, #{record.percentage,jdbcType=VARCHAR}, #{record.proportion,jdbcType=VARCHAR}, 
       #{record.creator,jdbcType=VARCHAR}, #{record.creatordataid,jdbcType=VARCHAR}, #{record.createtime,jdbcType=TIMESTAMP}, 
-      #{record.modify,jdbcType=VARCHAR}, #{record.modifydataid,jdbcType=VARCHAR}, #{record.modifytime,jdbcType=TIMESTAMP}
+      #{record.modify,jdbcType=VARCHAR}, #{record.modifydataid,jdbcType=VARCHAR}, #{record.modifytime,jdbcType=TIMESTAMP}, 
+      #{record.type,jdbcType=CHAR}, #{record.headerid,jdbcType=VARCHAR}, #{record.headername,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="map" >
@@ -220,6 +249,15 @@
       <if test="record.modifytime != null" >
         modifytime,
       </if>
+      <if test="record.type != null" >
+        type,
+      </if>
+      <if test="record.headerid != null" >
+        headerid,
+      </if>
+      <if test="record.headername != null" >
+        headername,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="record.dataid != null" >
@@ -275,6 +313,15 @@
       </if>
       <if test="record.modifytime != null" >
         #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.type != null" >
+        #{record.type,jdbcType=CHAR},
+      </if>
+      <if test="record.headerid != null" >
+        #{record.headerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headername != null" >
+        #{record.headername,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -335,6 +382,15 @@
       <if test="record.modifytime != null" >
         modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=CHAR},
+      </if>
+      <if test="record.headerid != null" >
+        headerid = #{record.headerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headername != null" >
+        headername = #{record.headername,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -359,7 +415,10 @@
       createtime = #{record.createtime,jdbcType=TIMESTAMP},
       modify = #{record.modify,jdbcType=VARCHAR},
       modifydataid = #{record.modifydataid,jdbcType=VARCHAR},
-      modifytime = #{record.modifytime,jdbcType=TIMESTAMP}
+      modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
+      type = #{record.type,jdbcType=CHAR},
+      headerid = #{record.headerid,jdbcType=VARCHAR},
+      headername = #{record.headername,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -418,6 +477,15 @@
       <if test="record.modifytime != null" >
         modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=CHAR},
+      </if>
+      <if test="record.headerid != null" >
+        headerid = #{record.headerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headername != null" >
+        headername = #{record.headername,jdbcType=VARCHAR},
+      </if>
     </set>
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
@@ -439,7 +507,10 @@
       createtime = #{record.createtime,jdbcType=TIMESTAMP},
       modify = #{record.modify,jdbcType=VARCHAR},
       modifydataid = #{record.modifydataid,jdbcType=VARCHAR},
-      modifytime = #{record.modifytime,jdbcType=TIMESTAMP}
+      modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
+      type = #{record.type,jdbcType=CHAR},
+      headerid = #{record.headerid,jdbcType=VARCHAR},
+      headername = #{record.headername,jdbcType=VARCHAR}
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
 </mapper>
