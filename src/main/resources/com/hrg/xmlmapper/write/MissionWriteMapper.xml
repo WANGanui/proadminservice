@@ -162,6 +162,24 @@
           #{listItem}
         </foreach>
       </if>
+      <if test="example.auditorid != null" >
+         and auditorid = #{example.auditorid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.auditoridList != null  and  example.auditoridList.size() > 0 " >
+         and auditorid in 
+        <foreach collection="example.auditoridList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.auditorname != null" >
+         and auditorname = #{example.auditorname,jdbcType=VARCHAR}
+      </if>
+      <if test="example.auditornameList != null  and  example.auditornameList.size() > 0 " >
+         and auditorname in 
+        <foreach collection="example.auditornameList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
     </where>
   </sql>
   <delete id="deleteByPrimaryKey" parameterType="map" >
@@ -181,16 +199,16 @@
       remark, percentage, proportion, 
       creator, creatordataid, createtime, 
       modify, modifydataid, modifytime, 
-      type, headerid, headername
-      )
+      type, headerid, headername, 
+      auditorid, auditorname)
     values (#{record.dataid,jdbcType=VARCHAR}, #{record.name,jdbcType=VARCHAR}, #{record.context,jdbcType=VARCHAR}, 
       #{record.starttime,jdbcType=TIMESTAMP}, #{record.endtime,jdbcType=TIMESTAMP}, #{record.finishtime,jdbcType=TIMESTAMP}, 
       #{record.state,jdbcType=CHAR}, #{record.prodataid,jdbcType=VARCHAR}, #{record.proname,jdbcType=VARCHAR}, 
       #{record.remark,jdbcType=VARCHAR}, #{record.percentage,jdbcType=VARCHAR}, #{record.proportion,jdbcType=VARCHAR}, 
       #{record.creator,jdbcType=VARCHAR}, #{record.creatordataid,jdbcType=VARCHAR}, #{record.createtime,jdbcType=TIMESTAMP}, 
       #{record.modify,jdbcType=VARCHAR}, #{record.modifydataid,jdbcType=VARCHAR}, #{record.modifytime,jdbcType=TIMESTAMP}, 
-      #{record.type,jdbcType=CHAR}, #{record.headerid,jdbcType=VARCHAR}, #{record.headername,jdbcType=VARCHAR}
-      )
+      #{record.type,jdbcType=CHAR}, #{record.headerid,jdbcType=VARCHAR}, #{record.headername,jdbcType=VARCHAR}, 
+      #{record.auditorid,jdbcType=VARCHAR}, #{record.auditorname,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="map" >
     insert into hrg_mission
@@ -258,6 +276,12 @@
       <if test="record.headername != null" >
         headername,
       </if>
+      <if test="record.auditorid != null" >
+        auditorid,
+      </if>
+      <if test="record.auditorname != null" >
+        auditorname,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="record.dataid != null" >
@@ -322,6 +346,12 @@
       </if>
       <if test="record.headername != null" >
         #{record.headername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditorid != null" >
+        #{record.auditorid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditorname != null" >
+        #{record.auditorname,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -391,6 +421,12 @@
       <if test="record.headername != null" >
         headername = #{record.headername,jdbcType=VARCHAR},
       </if>
+      <if test="record.auditorid != null" >
+        auditorid = #{record.auditorid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditorname != null" >
+        auditorname = #{record.auditorname,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -418,7 +454,9 @@
       modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
       type = #{record.type,jdbcType=CHAR},
       headerid = #{record.headerid,jdbcType=VARCHAR},
-      headername = #{record.headername,jdbcType=VARCHAR}
+      headername = #{record.headername,jdbcType=VARCHAR},
+      auditorid = #{record.auditorid,jdbcType=VARCHAR},
+      auditorname = #{record.auditorname,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -486,6 +524,12 @@
       <if test="record.headername != null" >
         headername = #{record.headername,jdbcType=VARCHAR},
       </if>
+      <if test="record.auditorid != null" >
+        auditorid = #{record.auditorid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditorname != null" >
+        auditorname = #{record.auditorname,jdbcType=VARCHAR},
+      </if>
     </set>
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
@@ -510,7 +554,9 @@
       modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
       type = #{record.type,jdbcType=CHAR},
       headerid = #{record.headerid,jdbcType=VARCHAR},
-      headername = #{record.headername,jdbcType=VARCHAR}
+      headername = #{record.headername,jdbcType=VARCHAR},
+      auditorid = #{record.auditorid,jdbcType=VARCHAR},
+      auditorname = #{record.auditorname,jdbcType=VARCHAR}
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
 </mapper>
