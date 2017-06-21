@@ -63,6 +63,15 @@
           #{listItem}
         </foreach>
       </if>
+      <if test="example.contect != null" >
+         and contect = #{example.contect,jdbcType=VARCHAR}
+      </if>
+      <if test="example.contectList != null  and  example.contectList.size() > 0 " >
+         and contect in 
+        <foreach collection="example.contectList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
       <if test="example.state != null" >
          and state = #{example.state,jdbcType=CHAR}
       </if>
@@ -135,17 +144,8 @@
           #{listItem}
         </foreach>
       </if>
-      <if test="example.contect != null" >
-         and contect = #{example.contect,jdbcType=LONGVARCHAR}
-      </if>
-      <if test="example.contectList != null  and  example.contectList.size() > 0 " >
-         and contect in 
-        <foreach collection="example.contectList" item="listItem" open="(" close=")" separator="," >
-          #{listItem}
-        </foreach>
-      </if>
       <if test="example.member != null" >
-         and member = #{example.member,jdbcType=LONGVARCHAR}
+         and member = #{example.member,jdbcType=VARCHAR}
       </if>
       <if test="example.memberList != null  and  example.memberList.size() > 0 " >
          and member in 
@@ -168,19 +168,19 @@
   <insert id="insert" parameterType="map" >
     insert into hrg_project (dataid, name, starttime, 
       endtime, days, month, 
-      leaderid, leader, state, 
-      finishtime, remark, creator, 
-      createtime, modify, modifytime, 
-      creatordataid, modifydataid, 
-      progress, contect, member
+      leaderid, leader, contect, 
+      state, finishtime, remark, 
+      creator, createtime, modify, 
+      modifytime, creatordataid, 
+      modifydataid, progress, member
       )
     values (#{record.dataid,jdbcType=VARCHAR}, #{record.name,jdbcType=VARCHAR}, #{record.starttime,jdbcType=TIMESTAMP}, 
       #{record.endtime,jdbcType=TIMESTAMP}, #{record.days,jdbcType=INTEGER}, #{record.month,jdbcType=INTEGER}, 
-      #{record.leaderid,jdbcType=VARCHAR}, #{record.leader,jdbcType=VARCHAR}, #{record.state,jdbcType=CHAR}, 
-      #{record.finishtime,jdbcType=TIMESTAMP}, #{record.remark,jdbcType=VARCHAR}, #{record.creator,jdbcType=VARCHAR}, 
-      #{record.createtime,jdbcType=TIMESTAMP}, #{record.modify,jdbcType=VARCHAR}, #{record.modifytime,jdbcType=TIMESTAMP}, 
-      #{record.creatordataid,jdbcType=VARCHAR}, #{record.modifydataid,jdbcType=VARCHAR}, 
-      #{record.progress,jdbcType=VARCHAR}, #{record.contect,jdbcType=LONGVARCHAR}, #{record.member,jdbcType=LONGVARCHAR}
+      #{record.leaderid,jdbcType=VARCHAR}, #{record.leader,jdbcType=VARCHAR}, #{record.contect,jdbcType=VARCHAR}, 
+      #{record.state,jdbcType=CHAR}, #{record.finishtime,jdbcType=TIMESTAMP}, #{record.remark,jdbcType=VARCHAR}, 
+      #{record.creator,jdbcType=VARCHAR}, #{record.createtime,jdbcType=TIMESTAMP}, #{record.modify,jdbcType=VARCHAR}, 
+      #{record.modifytime,jdbcType=TIMESTAMP}, #{record.creatordataid,jdbcType=VARCHAR}, 
+      #{record.modifydataid,jdbcType=VARCHAR}, #{record.progress,jdbcType=VARCHAR}, #{record.member,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="map" >
@@ -209,6 +209,9 @@
       </if>
       <if test="record.leader != null" >
         leader,
+      </if>
+      <if test="record.contect != null" >
+        contect,
       </if>
       <if test="record.state != null" >
         state,
@@ -240,9 +243,6 @@
       <if test="record.progress != null" >
         progress,
       </if>
-      <if test="record.contect != null" >
-        contect,
-      </if>
       <if test="record.member != null" >
         member,
       </if>
@@ -271,6 +271,9 @@
       </if>
       <if test="record.leader != null" >
         #{record.leader,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contect != null" >
+        #{record.contect,jdbcType=VARCHAR},
       </if>
       <if test="record.state != null" >
         #{record.state,jdbcType=CHAR},
@@ -302,11 +305,8 @@
       <if test="record.progress != null" >
         #{record.progress,jdbcType=VARCHAR},
       </if>
-      <if test="record.contect != null" >
-        #{record.contect,jdbcType=LONGVARCHAR},
-      </if>
       <if test="record.member != null" >
-        #{record.member,jdbcType=LONGVARCHAR},
+        #{record.member,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -337,6 +337,9 @@
       <if test="record.leader != null" >
         leader = #{record.leader,jdbcType=VARCHAR},
       </if>
+      <if test="record.contect != null" >
+        contect = #{record.contect,jdbcType=VARCHAR},
+      </if>
       <if test="record.state != null" >
         state = #{record.state,jdbcType=CHAR},
       </if>
@@ -367,39 +370,10 @@
       <if test="record.progress != null" >
         progress = #{record.progress,jdbcType=VARCHAR},
       </if>
-      <if test="record.contect != null" >
-        contect = #{record.contect,jdbcType=LONGVARCHAR},
-      </if>
       <if test="record.member != null" >
-        member = #{record.member,jdbcType=LONGVARCHAR},
+        member = #{record.member,jdbcType=VARCHAR},
       </if>
     </set>
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update hrg_project
-    set dataid = #{record.dataid,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR},
-      starttime = #{record.starttime,jdbcType=TIMESTAMP},
-      endtime = #{record.endtime,jdbcType=TIMESTAMP},
-      days = #{record.days,jdbcType=INTEGER},
-      month = #{record.month,jdbcType=INTEGER},
-      leaderid = #{record.leaderid,jdbcType=VARCHAR},
-      leader = #{record.leader,jdbcType=VARCHAR},
-      state = #{record.state,jdbcType=CHAR},
-      finishtime = #{record.finishtime,jdbcType=TIMESTAMP},
-      remark = #{record.remark,jdbcType=VARCHAR},
-      creator = #{record.creator,jdbcType=VARCHAR},
-      createtime = #{record.createtime,jdbcType=TIMESTAMP},
-      modify = #{record.modify,jdbcType=VARCHAR},
-      modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
-      creatordataid = #{record.creatordataid,jdbcType=VARCHAR},
-      modifydataid = #{record.modifydataid,jdbcType=VARCHAR},
-      progress = #{record.progress,jdbcType=VARCHAR},
-      contect = #{record.contect,jdbcType=LONGVARCHAR},
-      member = #{record.member,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -414,6 +388,7 @@
       month = #{record.month,jdbcType=INTEGER},
       leaderid = #{record.leaderid,jdbcType=VARCHAR},
       leader = #{record.leader,jdbcType=VARCHAR},
+      contect = #{record.contect,jdbcType=VARCHAR},
       state = #{record.state,jdbcType=CHAR},
       finishtime = #{record.finishtime,jdbcType=TIMESTAMP},
       remark = #{record.remark,jdbcType=VARCHAR},
@@ -423,7 +398,8 @@
       modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
       creatordataid = #{record.creatordataid,jdbcType=VARCHAR},
       modifydataid = #{record.modifydataid,jdbcType=VARCHAR},
-      progress = #{record.progress,jdbcType=VARCHAR}
+      progress = #{record.progress,jdbcType=VARCHAR},
+      member = #{record.member,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -452,6 +428,9 @@
       <if test="record.leader != null" >
         leader = #{record.leader,jdbcType=VARCHAR},
       </if>
+      <if test="record.contect != null" >
+        contect = #{record.contect,jdbcType=VARCHAR},
+      </if>
       <if test="record.state != null" >
         state = #{record.state,jdbcType=CHAR},
       </if>
@@ -482,36 +461,10 @@
       <if test="record.progress != null" >
         progress = #{record.progress,jdbcType=VARCHAR},
       </if>
-      <if test="record.contect != null" >
-        contect = #{record.contect,jdbcType=LONGVARCHAR},
-      </if>
       <if test="record.member != null" >
-        member = #{record.member,jdbcType=LONGVARCHAR},
+        member = #{record.member,jdbcType=VARCHAR},
       </if>
     </set>
-    where dataid = #{record.dataid,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="map" >
-    update hrg_project
-    set name = #{record.name,jdbcType=VARCHAR},
-      starttime = #{record.starttime,jdbcType=TIMESTAMP},
-      endtime = #{record.endtime,jdbcType=TIMESTAMP},
-      days = #{record.days,jdbcType=INTEGER},
-      month = #{record.month,jdbcType=INTEGER},
-      leaderid = #{record.leaderid,jdbcType=VARCHAR},
-      leader = #{record.leader,jdbcType=VARCHAR},
-      state = #{record.state,jdbcType=CHAR},
-      finishtime = #{record.finishtime,jdbcType=TIMESTAMP},
-      remark = #{record.remark,jdbcType=VARCHAR},
-      creator = #{record.creator,jdbcType=VARCHAR},
-      createtime = #{record.createtime,jdbcType=TIMESTAMP},
-      modify = #{record.modify,jdbcType=VARCHAR},
-      modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
-      creatordataid = #{record.creatordataid,jdbcType=VARCHAR},
-      modifydataid = #{record.modifydataid,jdbcType=VARCHAR},
-      progress = #{record.progress,jdbcType=VARCHAR},
-      contect = #{record.contect,jdbcType=LONGVARCHAR},
-      member = #{record.member,jdbcType=LONGVARCHAR}
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="map" >
@@ -523,6 +476,7 @@
       month = #{record.month,jdbcType=INTEGER},
       leaderid = #{record.leaderid,jdbcType=VARCHAR},
       leader = #{record.leader,jdbcType=VARCHAR},
+      contect = #{record.contect,jdbcType=VARCHAR},
       state = #{record.state,jdbcType=CHAR},
       finishtime = #{record.finishtime,jdbcType=TIMESTAMP},
       remark = #{record.remark,jdbcType=VARCHAR},
@@ -532,7 +486,8 @@
       modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
       creatordataid = #{record.creatordataid,jdbcType=VARCHAR},
       modifydataid = #{record.modifydataid,jdbcType=VARCHAR},
-      progress = #{record.progress,jdbcType=VARCHAR}
+      progress = #{record.progress,jdbcType=VARCHAR},
+      member = #{record.member,jdbcType=VARCHAR}
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
 </mapper>
