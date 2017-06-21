@@ -112,4 +112,15 @@ public class NoticeServiceImpl implements NoticeService {
         noticePageUtil.setPageResults(noticeList);
         return noticePageUtil;
     }
+
+    /**
+     * 公告列表
+     *
+     * @param example
+     * @return
+     */
+    @Override
+    public List<Notice> selectList(NoticeCriteria example) throws Exception {
+        return noticeReadMapper.selectByExample(example);
+    }
 }
