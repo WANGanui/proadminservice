@@ -94,33 +94,28 @@ public class WorkDataServiceImpl implements WorkDataService {
      * @throws Exception
      */
     @Override
-    public List<Map<String, Object>> selectdetail(WorkdataCriteria example,String dapartmentdataid) throws Exception {
-        WorkerCriteria workerCriteria = new WorkerCriteria();
-        if (!ValidUtil.isNullOrEmpty(dapartmentdataid))
+    public List<Workdata> selectList(WorkdataCriteria example,String dapartmentdataid) throws Exception {
+        if (!ValidUtil.isNullOrEmpty(dapartmentdataid)){
+            WorkerCriteria workerCriteria = new WorkerCriteria();
             workerCriteria.setDepartmentdataid(dapartmentdataid);
-        //查询员工
-        List<Worker> workerList = workerReadMapper.selectByExample(workerCriteria);
-        Map<String, Object> map;
-        List<Map<String, Object>> objectList = new ArrayList<Map<String, Object>>();
-        //根据员工id查询每个员工本周工作日志与任务
-        for (Worker worker : workerList){
-            map = new HashMap<String, Object>();
-            //设置周一时间
+            List<Worker> workerList = workerReadMapper.selectByExample(workerCriteria);
+            List<String> idList = new ArrayList<String>();
+            for (Worker worker : workerList){
+                idList.add(worker.getDataid());
+            }
+            example.setWorkerdataidList(idList);
+        }if (ValidUtil.isNullOrEmpty(example.getTimeMin())){
             example.setTimeMin(DateUtil.getWeekBegin());
-            //设置周五时间
+            example.setOrderByClause("time desc");
+        }if (ValidUtil.isNullOrEmpty(example.getTimeMax())){
             example.setTimeMax(DateUtil.getWeekEnd());
-            example.setWorkerdataid(worker.getDataid());
-            //查询周一到周五的工作日志
-            List<Workdata> workdataList = workdataReadMapper.selectByExample(example);
-            map.put("workdataList",workdataList);
-            //查询当前任务
-            WorkerRelMissionCriteria missionCriteria = new WorkerRelMissionCriteria();
-            missionCriteria.setWorkerdataid(worker.getDataid());
-            List<WorkerRelMission> missionList = workerRelMissionReadMapper.selectByExample(missionCriteria);
-            map.put("missionList",missionList);
-            map.put("worker",worker);
-            objectList.add(map);
+            example.setOrderByClause("time desc");
         }
-        return objectList;
+
+        //设置周五时间
+
+        //根据员工id查询每个员工本周工作日志与任务
+
+        return workdataReadMapper.selectByExample(example);
     }
 }

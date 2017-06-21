@@ -5,10 +5,8 @@ import com.hrg.exception.ValidatorException;
 import com.hrg.javamapper.read.MissionReadMapper;
 import com.hrg.javamapper.read.ProjectReadMapper;
 import com.hrg.javamapper.write.ProjectWriteMapper;
-import com.hrg.model.Mission;
-import com.hrg.model.MissionCriteria;
-import com.hrg.model.Project;
-import com.hrg.model.ProjectCriteria;
+import com.hrg.javamapper.write.WorkerRelProjectWriteMapper;
+import com.hrg.model.*;
 import com.hrg.service.ProjectService;
 import com.hrg.util.DateUtil;
 import com.hrg.util.PageUtil;
@@ -35,6 +33,8 @@ public class ProjectServiceImpl implements ProjectService {
     ProjectWriteMapper projectWriteMapper;
     @Autowired
     MissionReadMapper missionReadMapper;
+    @Autowired
+    WorkerRelProjectWriteMapper workerRelProjectWriteMapper;
 
     /**
      * 添加项目
@@ -45,7 +45,7 @@ public class ProjectServiceImpl implements ProjectService {
      */
     @Override
     @Transactional(rollbackFor = { Exception.class, RuntimeException.class })
-    public boolean insert(Project project) throws Exception {
+    public boolean insert(Project project, List<WorkerRelProject> projectList) throws Exception {
         if (ValidUtil.isNullOrEmpty(project.getName()) || ValidUtil.isNullOrEmpty(project.getStarttime()) ||
                 ValidUtil.isNullOrEmpty(project.getEndtime()) || ValidUtil.isNullOrEmpty(project.getLeader()) ||
                 ValidUtil.isNullOrEmpty(project.getLeaderid()) || ValidUtil.isNullOrEmpty(project.getContect()) ||
@@ -57,6 +57,14 @@ public class ProjectServiceImpl implements ProjectService {
         project.setState("0");
         project.setCreatetime(new Date());
         int x = projectWriteMapper.insert(project);
+        for (WorkerRelProject relProject : projectList){
+            relProject.setDataid(UUIDGenerator.getUUID());
+            relProject.setProjectdataid(project.getDataid());
+            relProject.setProjectname(project.getName());
+            int y = workerRelProjectWriteMapper.insert(relProject);
+            if (y<=0)
+                return false;
+        }
         return x > 0 ? true : false;
     }
 

@@ -505,7 +505,7 @@ public class DateUtil {
      * 获取当前日期所在周一
      * @return
      */
-    public static Date getWeekBegin(){
+    public static Date getWeekBegin() throws Exception{
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN_CN_SHORT);
         cal.setTime(new Date());
@@ -517,7 +517,7 @@ public class DateUtil {
         }
         cal.add(Calendar.DAY_OF_WEEK, d);
         //所在周开始日期(周一)
-        return cal.getTime();
+        return sdf.parse(sdf.format(cal.getTime()));
     }
 
     /**
@@ -538,7 +538,8 @@ public class DateUtil {
         cal.add(Calendar.DAY_OF_WEEK, d);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(cal.getTime());
-        calendar.set(Calendar.DAY_OF_MONTH,calendar.get(Calendar.DAY_OF_MONTH) + 4);
-        return calendar.getTime();
+        calendar.set(Calendar.DAY_OF_MONTH,calendar.get(Calendar.DAY_OF_MONTH) + 5);
+
+        return sdf.parse(sdf.format(calendar.getTime()));
     }
 }

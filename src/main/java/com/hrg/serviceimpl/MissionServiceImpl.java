@@ -15,8 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by 82705 on 2017/6/1.
@@ -157,5 +156,36 @@ public class MissionServiceImpl implements MissionService {
         missionPageUtil.generate(pageUtil.getCurrentPage());
         missionPageUtil.setPageResults(missionList);
         return missionPageUtil;
+    }
+
+    /**
+     * 查询员工任务列表
+     *
+     * @param example
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Map<String,Object> slectWorkerMission(MissionCriteria example,String wokerdataid) throws Exception {
+        if (ValidUtil.isNullOrEmpty(wokerdataid))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+        WorkerRelMissionCriteria relMissionCriteria = new WorkerRelMissionCriteria();
+        relMissionCriteria.setWorkerdataid(wokerdataid);
+        List<WorkerRelMission> relMissionList = workerRelMissionReadMapper.selectByExample(relMissionCriteria);
+        List<String> idList = new ArrayList<String>();
+        for (WorkerRelMission relMission : relMissionList){
+            idList.add(relMission.getMissiondataid());
+        }
+        example.setDataidList(idList);
+        example.setType("1");
+        //个人任务
+        List<Mission> missionList1 = missionReadMapper.selectByExample(example);
+        example.setType("0");
+        //项目任务
+        List<Mission> missionList2 = missionReadMapper.selectByExample(example);
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("list1",missionList1);
+        map.put("list2",missionList2);
+        return map;
     }
 }

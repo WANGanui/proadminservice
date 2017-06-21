@@ -102,6 +102,12 @@
       <if test="example.time != null" >
          and time = #{example.time,jdbcType=TIMESTAMP}
       </if>
+      <if test="example.timeMin != null" >
+        and time &gt;= #{example.timeMin,jdbcType=TIMESTAMP}
+      </if>
+      <if test="example.timeMax != null" >
+        and time &lt;= #{example.timeMax,jdbcType=TIMESTAMP}
+      </if>
       <if test="example.projectleader != null" >
          and projectleader = #{example.projectleader,jdbcType=VARCHAR}
       </if>
