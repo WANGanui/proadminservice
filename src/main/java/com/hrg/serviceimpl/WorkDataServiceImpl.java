@@ -118,4 +118,17 @@ public class WorkDataServiceImpl implements WorkDataService {
 
         return workdataReadMapper.selectByExample(example);
     }
+
+    /**
+     * 工作日志列表
+     *
+     * @param example
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<Workdata> queryList(WorkdataCriteria example) throws Exception {
+
+        return workdataReadMapper.selectByExample(example);
+    }
 }
