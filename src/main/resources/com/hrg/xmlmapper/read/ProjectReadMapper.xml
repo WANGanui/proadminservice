@@ -10,7 +10,6 @@
     <result column="month" property="month" jdbcType="INTEGER" />
     <result column="leaderid" property="leaderid" jdbcType="VARCHAR" />
     <result column="leader" property="leader" jdbcType="VARCHAR" />
-    <result column="contect" property="contect" jdbcType="VARCHAR" />
     <result column="state" property="state" jdbcType="CHAR" />
     <result column="finishtime" property="finishtime" jdbcType="TIMESTAMP" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
@@ -21,6 +20,8 @@
     <result column="creatordataid" property="creatordataid" jdbcType="VARCHAR" />
     <result column="modifydataid" property="modifydataid" jdbcType="VARCHAR" />
     <result column="progress" property="progress" jdbcType="VARCHAR" />
+    <result column="contect" property="contect" jdbcType="LONGVARCHAR" />
+    <collection property="member" column="{projectdataid=dataid}" javaType="LONGVARCHAR" ofType="String" select="selectMembers"></collection>
   </resultMap>
   <resultMap id="HashMapBaseResultMap" type="hashmap" >
     <id column="dataid" property="dataid" jdbcType="VARCHAR" />
@@ -31,7 +32,6 @@
     <result column="month" property="month" jdbcType="INTEGER" />
     <result column="leaderid" property="leaderid" jdbcType="VARCHAR" />
     <result column="leader" property="leader" jdbcType="VARCHAR" />
-    <result column="contect" property="contect" jdbcType="VARCHAR" />
     <result column="state" property="state" jdbcType="CHAR" />
     <result column="finishtime" property="finishtime" jdbcType="TIMESTAMP" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
@@ -42,6 +42,12 @@
     <result column="creatordataid" property="creatordataid" jdbcType="VARCHAR" />
     <result column="modifydataid" property="modifydataid" jdbcType="VARCHAR" />
     <result column="progress" property="progress" jdbcType="VARCHAR" />
+    <result column="contect" property="contect" jdbcType="LONGVARCHAR" />
+    <result column="member" property="member" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.hrg.model.ProjectWithBLOBs" extends="BaseResultMap" >
+    <result column="contect" property="contect" jdbcType="LONGVARCHAR" />
+    <result column="member" property="member" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -102,15 +108,6 @@
       <if test="example.leaderList != null  and  example.leaderList.size() > 0 " >
          and leader in 
         <foreach collection="example.leaderList" item="listItem" open="(" close=")" separator="," >
-          #{listItem}
-        </foreach>
-      </if>
-      <if test="example.contect != null" >
-         and contect = #{example.contect,jdbcType=VARCHAR}
-      </if>
-      <if test="example.contectList != null  and  example.contectList.size() > 0 " >
-         and contect in 
-        <foreach collection="example.contectList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
@@ -186,13 +183,52 @@
           #{listItem}
         </foreach>
       </if>
+      <if test="example.contect != null" >
+         and contect = #{example.contect,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="example.contectList != null  and  example.contectList.size() > 0 " >
+         and contect in 
+        <foreach collection="example.contectList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.member != null" >
+         and member = #{example.member,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="example.memberList != null  and  example.memberList.size() > 0 " >
+         and member in 
+        <foreach collection="example.memberList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    dataid, name, starttime, endtime, days, month, leaderid, leader, contect, state, 
-    finishtime, remark, creator, createtime, modify, modifytime, creatordataid, modifydataid, 
-    progress
+    dataid, name, starttime, endtime, days, month, leaderid, leader, state, finishtime, 
+    remark, creator, createtime, modify, modifytime, creatordataid, modifydataid, progress
   </sql>
+  <sql id="Blob_Column_List" >
+    contect, member
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="map" >
+    select
+    <if test="example.distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from hrg_project
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null" >
+      order by ${example.orderByClause}
+    </if>
+    <if test="example.limitStart >= 0 and example.pageSize > 0 " >
+      limit #{example.limitStart} , #{example.pageSize}
+    </if>
+  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="map" >
     select
     <if test="example.distinct" >
@@ -210,9 +246,11 @@
       limit #{example.limitStart} , #{example.pageSize}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="map" >
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from hrg_project
     where dataid = #{dataid,jdbcType=VARCHAR}
   </select>
@@ -222,12 +260,14 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <select id="selectByExampleForOne" resultMap="BaseResultMap" parameterType="map" >
+  <select id="selectByExampleForOne" resultMap="ResultMapWithBLOBs" parameterType="map" >
     select
     <if test="example.distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from hrg_project
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -240,6 +280,8 @@
   <select id="selectMapByPrimaryKey" resultMap="HashMapBaseResultMap" parameterType="map" >
     select
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from hrg_project
     <where >
        and dataid=#{dataid,jdbcType=VARCHAR}
@@ -251,6 +293,8 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from hrg_project
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -266,6 +310,8 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from hrg_project
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -276,5 +322,9 @@
     <if test="example.limitStart >= 0 and example.pageSize > 0 " >
       limit #{example.limitStart} , #{example.pageSize}
     </if>
+  </select>
+  <select id="selectMembers" resultType="String">
+    select group_concat(workername) member
+    from hrg_worker_rel_project where projectdataid = #{projectdataid,jdbcType=VARCHAR}
   </select>
 </mapper>
