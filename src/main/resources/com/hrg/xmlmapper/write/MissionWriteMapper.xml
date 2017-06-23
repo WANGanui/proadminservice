@@ -180,6 +180,15 @@
           #{listItem}
         </foreach>
       </if>
+      <if test="example.level != null" >
+         and level = #{example.level,jdbcType=CHAR}
+      </if>
+      <if test="example.levelList != null  and  example.levelList.size() > 0 " >
+         and level in 
+        <foreach collection="example.levelList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
     </where>
   </sql>
   <delete id="deleteByPrimaryKey" parameterType="map" >
@@ -200,7 +209,8 @@
       creator, creatordataid, createtime, 
       modify, modifydataid, modifytime, 
       type, headerid, headername, 
-      auditorid, auditorname)
+      auditorid, auditorname, level
+      )
     values (#{record.dataid,jdbcType=VARCHAR}, #{record.name,jdbcType=VARCHAR}, #{record.context,jdbcType=VARCHAR}, 
       #{record.starttime,jdbcType=TIMESTAMP}, #{record.endtime,jdbcType=TIMESTAMP}, #{record.finishtime,jdbcType=TIMESTAMP}, 
       #{record.state,jdbcType=CHAR}, #{record.prodataid,jdbcType=VARCHAR}, #{record.proname,jdbcType=VARCHAR}, 
@@ -208,7 +218,8 @@
       #{record.creator,jdbcType=VARCHAR}, #{record.creatordataid,jdbcType=VARCHAR}, #{record.createtime,jdbcType=TIMESTAMP}, 
       #{record.modify,jdbcType=VARCHAR}, #{record.modifydataid,jdbcType=VARCHAR}, #{record.modifytime,jdbcType=TIMESTAMP}, 
       #{record.type,jdbcType=CHAR}, #{record.headerid,jdbcType=VARCHAR}, #{record.headername,jdbcType=VARCHAR}, 
-      #{record.auditorid,jdbcType=VARCHAR}, #{record.auditorname,jdbcType=VARCHAR})
+      #{record.auditorid,jdbcType=VARCHAR}, #{record.auditorname,jdbcType=VARCHAR}, #{record.level,jdbcType=CHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="map" >
     insert into hrg_mission
@@ -282,6 +293,9 @@
       <if test="record.auditorname != null" >
         auditorname,
       </if>
+      <if test="record.level != null" >
+        level,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="record.dataid != null" >
@@ -352,6 +366,9 @@
       </if>
       <if test="record.auditorname != null" >
         #{record.auditorname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.level != null" >
+        #{record.level,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -427,6 +444,9 @@
       <if test="record.auditorname != null" >
         auditorname = #{record.auditorname,jdbcType=VARCHAR},
       </if>
+      <if test="record.level != null" >
+        level = #{record.level,jdbcType=CHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -456,7 +476,8 @@
       headerid = #{record.headerid,jdbcType=VARCHAR},
       headername = #{record.headername,jdbcType=VARCHAR},
       auditorid = #{record.auditorid,jdbcType=VARCHAR},
-      auditorname = #{record.auditorname,jdbcType=VARCHAR}
+      auditorname = #{record.auditorname,jdbcType=VARCHAR},
+      level = #{record.level,jdbcType=CHAR}
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -530,6 +551,9 @@
       <if test="record.auditorname != null" >
         auditorname = #{record.auditorname,jdbcType=VARCHAR},
       </if>
+      <if test="record.level != null" >
+        level = #{record.level,jdbcType=CHAR},
+      </if>
     </set>
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
@@ -556,7 +580,8 @@
       headerid = #{record.headerid,jdbcType=VARCHAR},
       headername = #{record.headername,jdbcType=VARCHAR},
       auditorid = #{record.auditorid,jdbcType=VARCHAR},
-      auditorname = #{record.auditorname,jdbcType=VARCHAR}
+      auditorname = #{record.auditorname,jdbcType=VARCHAR},
+      level = #{record.level,jdbcType=CHAR}
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
 </mapper>

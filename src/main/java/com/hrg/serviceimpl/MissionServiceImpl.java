@@ -41,9 +41,6 @@ public class MissionServiceImpl implements MissionService {
      */
     @Override
     public List<Mission> selectList(MissionCriteria example) throws Exception {
-        if (ValidUtil.isNullOrEmpty(example))
-            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
-
         return missionReadMapper.selectByExample(example);
     }
 
@@ -186,6 +183,30 @@ public class MissionServiceImpl implements MissionService {
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("list1",missionList1);
         map.put("list2",missionList2);
+        return map;
+    }
+
+    /**
+     * @param example
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Map<String, Object> slectMissionBylevel(MissionCriteria example) throws Exception {
+        example.setLevel("1");
+        example.setOrderByClause("createtime desc,proportion desc");
+        List<Mission> missions1 = missionReadMapper.selectByExample(example);
+        example.setLevel("2");
+        List<Mission> missions2 = missionReadMapper.selectByExample(example);
+        example.setLevel("3");
+        List<Mission> missions3 = missionReadMapper.selectByExample(example);
+        example.setLevel("4");
+        List<Mission> missions4 = missionReadMapper.selectByExample(example);
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("list1",missions1);
+        map.put("list2",missions2);
+        map.put("list3",missions3);
+        map.put("list4",missions4);
         return map;
     }
 }

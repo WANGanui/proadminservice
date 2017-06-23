@@ -4,6 +4,7 @@ import com.hrg.enums.ErrorCode;
 import com.hrg.exception.ValidatorException;
 import com.hrg.javamapper.read.MissionReadMapper;
 import com.hrg.javamapper.read.ProjectReadMapper;
+import com.hrg.javamapper.read.WorkerRelProjectReadMapper;
 import com.hrg.javamapper.write.ProjectWriteMapper;
 import com.hrg.javamapper.write.WorkerRelProjectWriteMapper;
 import com.hrg.model.*;
@@ -16,10 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by 82705 on 2017/6/1.
@@ -35,6 +33,8 @@ public class ProjectServiceImpl implements ProjectService {
     MissionReadMapper missionReadMapper;
     @Autowired
     WorkerRelProjectWriteMapper workerRelProjectWriteMapper;
+    @Autowired
+    WorkerRelProjectReadMapper workerRelProjectReadMapper;
 
     /**
      * 添加项目
@@ -171,5 +171,28 @@ public class ProjectServiceImpl implements ProjectService {
         map.put("project",project);
         map.put("missionList",missionList);
         return map;
+    }
+
+    /**
+     * 查询员工拥有的项目
+     *
+     * @param workerdataid
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<Project> selectByWorker(String workerdataid) throws Exception {
+        if(ValidUtil.isNullOrEmpty(workerdataid))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+        WorkerRelProjectCriteria criteria = new WorkerRelProjectCriteria();
+        criteria.setWorkerdataid(workerdataid);
+        List<WorkerRelProject> relProjects = workerRelProjectReadMapper.selectByExample(criteria);
+        List<String> idList = new ArrayList<String>();
+        for (WorkerRelProject relProject : relProjects){
+            idList.add(relProject.getProjectdataid());
+        }
+        ProjectCriteria example = new ProjectCriteria();
+        example.setDataidList(idList);
+        return projectReadMapper.selectByExample(example);
     }
 }
