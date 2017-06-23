@@ -43,6 +43,10 @@ public class WorkerServiceImpl implements WorkerService {
     ModuleRelPermissionReadMapper moduleRelPermissionReadMapper;
     @Autowired
     PreRolePermissionReadMapper preRolePermissionReadMapper;
+    @Autowired
+    DepartmentReadMapper departmentReadMapper;
+    @Autowired
+    PreRoleReadMapper preRoleReadMapper;
 
     /**
      * 方法说明：根据员工账号查询员工对象
@@ -267,5 +271,21 @@ public class WorkerServiceImpl implements WorkerService {
     public List<Worker> selectList(WorkerCriteria example) throws Exception {
 
         return workerReadMapper.selectByExample(example);
+    }
+
+    /**
+     * 查询所有角色和部门
+     *
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Map<String, Object> selectRoleAndPartment() throws Exception {
+        List<Department> departmentList = departmentReadMapper.selectByExample(new DepartmentCriteria());
+        List<PreRole> preRoles = preRoleReadMapper.selectByExample(new PreRoleCriteria());
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("roles",preRoles);
+        map.put("daparts",departmentList);
+        return map;
     }
 }
