@@ -78,11 +78,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional(rollbackFor = { Exception.class, RuntimeException.class })
     public boolean update(Project project) throws Exception {
-        if (ValidUtil.isNullOrEmpty(project.getName()) || ValidUtil.isNullOrEmpty(project.getStarttime()) ||
-                ValidUtil.isNullOrEmpty(project.getEndtime()) || ValidUtil.isNullOrEmpty(project.getLeader()) ||
-                ValidUtil.isNullOrEmpty(project.getLeaderid()) || ValidUtil.isNullOrEmpty(project.getContect()) ||
-                ValidUtil.isNullOrEmpty(project.getCreator()) || ValidUtil.isNullOrEmpty(project.getCreatordataid())||
-                ValidUtil.isNullOrEmpty(project.getDataid()) || ValidUtil.isNullOrEmpty(project.getModify()) ||
+        if (ValidUtil.isNullOrEmpty(project.getDataid()) || ValidUtil.isNullOrEmpty(project.getModify()) ||
                 ValidUtil.isNullOrEmpty(project.getModifydataid()))
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
         project.setModifytime(new Date());

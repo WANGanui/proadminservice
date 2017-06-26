@@ -75,6 +75,7 @@ public class NoticeServiceImpl implements NoticeService {
      * @throws Exception
      */
     @Override
+    @Transactional(rollbackFor = { Exception.class, RuntimeException.class })
     public boolean delete(String dataid) throws Exception {
         if (ValidUtil.isNullOrEmpty(dataid))
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());

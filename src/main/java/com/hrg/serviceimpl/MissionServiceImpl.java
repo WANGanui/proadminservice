@@ -53,11 +53,17 @@ public class MissionServiceImpl implements MissionService {
      * @throws Exception
      */
     @Override
-    public Mission selectDetailById(String dataid) throws Exception {
+    public Map<String,Object> selectDetailById(String dataid) throws Exception {
         if (ValidUtil.isNullOrEmpty(dataid))
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
-
-        return missionReadMapper.selectByPrimaryKey(dataid);
+        Mission mission = missionReadMapper.selectByPrimaryKey(dataid);
+        WorkerRelMissionCriteria example = new WorkerRelMissionCriteria();
+        example.setMissiondataid(mission.getDataid());
+        List<WorkerRelMission> missionList = workerRelMissionReadMapper.selectByExample(example);
+        Map map = new HashMap();
+        map.put("mission",mission);
+        map.put("relworker",missionList);
+        return map;
     }
 
     /**
@@ -208,5 +214,30 @@ public class MissionServiceImpl implements MissionService {
         map.put("list3",missions3);
         map.put("list4",missions4);
         return map;
+    }
+
+    /**
+     * 根据主键删除任务
+     *
+     * @param dataid
+     * @return
+     * @throws Exception
+     */
+    @Override
+    @Transactional(rollbackFor = { Exception.class, RuntimeException.class })
+    public boolean deleteMission(String dataid) throws Exception {
+        if (ValidUtil.isNullOrEmpty(dataid))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+        int x = missionWriteMapper.deleteByPrimaryKey(dataid);
+        WorkerRelMissionCriteria example = new WorkerRelMissionCriteria();
+        example.setMissiondataid(dataid);
+        int count = workerRelMissionReadMapper.countByExample(example);
+        if (count!=0){
+            int y = workerRelMissionWriteMapper.deleteByExample(example);
+            if (y<=0)
+                return false;
+        }
+
+        return x > 0 ? true : false;
     }
 }

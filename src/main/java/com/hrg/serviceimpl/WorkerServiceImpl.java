@@ -13,6 +13,7 @@ import com.hrg.util.UUIDGenerator;
 import com.hrg.util.ValidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -163,6 +164,7 @@ public class WorkerServiceImpl implements WorkerService {
      * @throws Exception
      */
     @Override
+    @Transactional(rollbackFor = { Exception.class, RuntimeException.class })
     public boolean insert(Worker worker, String roledataid) throws Exception {
         if (ValidUtil.isNullOrEmpty(worker.getName())||ValidUtil.isNullOrEmpty(worker.getAccount())||
                 ValidUtil.isNullOrEmpty(worker.getDepartment())||ValidUtil.isNullOrEmpty(worker.getDepartmentdataid())||
@@ -204,6 +206,7 @@ public class WorkerServiceImpl implements WorkerService {
      * @throws Exception
      */
     @Override
+    @Transactional(rollbackFor = { Exception.class, RuntimeException.class })
     public boolean update(Worker worker) throws Exception {
         if (ValidUtil.isNullOrEmpty(worker.getDataid()))
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());

@@ -198,6 +198,7 @@
           #{listItem}
         </foreach>
       </if>
+      and state !='5'
     </where>
   </sql>
   <sql id="Base_Column_List" >
