@@ -86,17 +86,30 @@ public class MissionServiceImpl implements MissionService {
         mission.setCreatetime(new Date());
         mission.setState("0");
         int x = missionWriteMapper.insert(mission);
-        for (Worker worker : workerList){
-            WorkerRelMission relMission = new WorkerRelMission();
-            relMission.setDataid(UUIDGenerator.getUUID());
-            relMission.setWorkerdataid(worker.getDataid());
-            relMission.setWorkername(worker.getName());
-            relMission.setMissiondataid(mission.getDataid());
-            relMission.setMissionname(mission.getName());
-            int y = workerRelMissionWriteMapper.insert(relMission);
+        if (!ValidUtil.isNullOrEmpty(workerList)){
+            for (Worker worker : workerList){
+                WorkerRelMission relMission = new WorkerRelMission();
+                relMission.setDataid(UUIDGenerator.getUUID());
+                relMission.setWorkerdataid(worker.getDataid());
+                relMission.setWorkername(worker.getName());
+                relMission.setMissiondataid(mission.getDataid());
+                relMission.setMissionname(mission.getName());
+                int y = workerRelMissionWriteMapper.insert(relMission);
+                if (y <= 0)
+                    return false;
+            }
+        }else {
+            WorkerRelMission workerRelMission = new WorkerRelMission();
+            workerRelMission.setDataid(UUIDGenerator.getUUID());
+            workerRelMission.setWorkerdataid(mission.getCreatordataid());
+            workerRelMission.setWorkername(mission.getCreator());
+            workerRelMission.setMissiondataid(mission.getDataid());
+            workerRelMission.setMissionname(mission.getName());
+            int y = workerRelMissionWriteMapper.insert(workerRelMission);
             if (y <= 0)
                 return false;
         }
+
         return x > 0 ? true : false;
     }
 
@@ -111,28 +124,28 @@ public class MissionServiceImpl implements MissionService {
     @Override
     @Transactional(rollbackFor = { Exception.class, RuntimeException.class })
     public boolean update(Mission mission, List<Worker> workerList) throws Exception {
-        if (ValidUtil.isNullOrEmpty(mission.getContext()) || ValidUtil.isNullOrEmpty(mission.getCreator()) ||
-                ValidUtil.isNullOrEmpty(mission.getEndtime()) || ValidUtil.isNullOrEmpty(mission.getCreatordataid()) ||
-                ValidUtil.isNullOrEmpty(mission.getName()) || ValidUtil.isNullOrEmpty(mission.getProdataid()) ||
+        if (ValidUtil.isNullOrEmpty(mission.getContext()) || ValidUtil.isNullOrEmpty(mission.getEndtime()) ||
                 ValidUtil.isNullOrEmpty(mission.getProportion()) || ValidUtil.isNullOrEmpty(mission.getStarttime()) ||
-                ValidUtil.isNullOrEmpty(workerList)|| ValidUtil.isNullOrEmpty(mission.getModify()) ||
-                ValidUtil.isNullOrEmpty(mission.getModifydataid()))
+                ValidUtil.isNullOrEmpty(mission.getModify()) || ValidUtil.isNullOrEmpty(mission.getModifydataid()))
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
         mission.setModifytime(new Date());
         WorkerRelMissionCriteria example = new WorkerRelMissionCriteria();
         example.setMissiondataid(mission.getDataid());
         int x = workerRelMissionWriteMapper.deleteByExample(example);
         WorkerRelMission relMission = new WorkerRelMission();
-        for (Worker worker : workerList){
-            relMission.setMissiondataid(mission.getDataid());
-            relMission.setWorkername(worker.getName());
-            relMission.setDataid(UUIDGenerator.getUUID());
-            relMission.setWorkerdataid(worker.getDataid());
-            relMission.setMissionname(mission.getName());
-            int y = workerRelMissionWriteMapper.insert(relMission);
-            if (y<=0)
-                return false;
+        if (!ValidUtil.isNullOrEmpty(workerList)){
+            for (Worker worker : workerList){
+                relMission.setMissiondataid(mission.getDataid());
+                relMission.setWorkername(worker.getName());
+                relMission.setDataid(UUIDGenerator.getUUID());
+                relMission.setWorkerdataid(worker.getDataid());
+                relMission.setMissionname(mission.getName());
+                int y = workerRelMissionWriteMapper.insert(relMission);
+                if (y<=0)
+                    return false;
+            }
         }
+
         return x > 0 ? true : false;
     }
 
