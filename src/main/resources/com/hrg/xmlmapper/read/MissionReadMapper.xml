@@ -270,7 +270,7 @@
       <include refid="Example_Where_Clause" />
     </if>
     <if test="example.orderByClause != null" >
-      order by createtime DESC,proportion DESC
+      order by ${example.orderByClause}
     </if>
     <if test="example.limitStart >= 0 and example.pageSize > 0 " >
       limit #{example.limitStart} , #{example.pageSize}
