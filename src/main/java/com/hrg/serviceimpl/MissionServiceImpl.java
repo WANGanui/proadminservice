@@ -80,8 +80,7 @@ public class MissionServiceImpl implements MissionService {
         if (ValidUtil.isNullOrEmpty(mission.getContext()) || ValidUtil.isNullOrEmpty(mission.getCreator()) ||
                 ValidUtil.isNullOrEmpty(mission.getEndtime()) || ValidUtil.isNullOrEmpty(mission.getCreatordataid()) ||
                 ValidUtil.isNullOrEmpty(mission.getName()) ||
-                ValidUtil.isNullOrEmpty(mission.getProportion()) || ValidUtil.isNullOrEmpty(mission.getStarttime()) ||
-                ValidUtil.isNullOrEmpty(workerList))
+                ValidUtil.isNullOrEmpty(mission.getProportion()) || ValidUtil.isNullOrEmpty(mission.getStarttime()))
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
         mission.setDataid(UUIDGenerator.getUUID());
         mission.setCreatetime(new Date());
