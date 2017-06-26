@@ -122,7 +122,17 @@ public class MissionServiceImpl implements MissionService {
         WorkerRelMissionCriteria example = new WorkerRelMissionCriteria();
         example.setMissiondataid(mission.getDataid());
         int x = workerRelMissionWriteMapper.deleteByExample(example);
-
+        WorkerRelMission relMission = new WorkerRelMission();
+        for (Worker worker : workerList){
+            relMission.setMissiondataid(mission.getDataid());
+            relMission.setWorkername(worker.getName());
+            relMission.setDataid(UUIDGenerator.getUUID());
+            relMission.setWorkerdataid(worker.getDataid());
+            relMission.setMissionname(mission.getName());
+            int y = workerRelMissionWriteMapper.insert(relMission);
+            if (y<=0)
+                return false;
+        }
         return x > 0 ? true : false;
     }
 
@@ -237,6 +247,22 @@ public class MissionServiceImpl implements MissionService {
                 return false;
         }
 
+        return x > 0 ? true : false;
+    }
+
+    /**
+     * 修改状态
+     *
+     * @return
+     * @throws Exception
+     */
+    @Override
+    @Transactional(rollbackFor = { Exception.class, RuntimeException.class })
+    public boolean updateState(Mission mission) throws Exception {
+        if (ValidUtil.isNullOrEmpty(mission.getDataid()) || ValidUtil.isNullOrEmpty(mission.getMissionstate()))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+        mission.setModifytime(new Date());
+        int x = missionWriteMapper.updateByPrimaryKeySelective(mission);
         return x > 0 ? true : false;
     }
 }
