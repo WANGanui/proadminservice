@@ -39,12 +39,12 @@
       <if test="example.finishtime != null" >
          and finishtime = #{example.finishtime,jdbcType=TIMESTAMP}
       </if>
-      <if test="example.state != null" >
-         and state = #{example.state,jdbcType=CHAR}
+      <if test="example.missionstate != null" >
+         and missionstate = #{example.missionstate,jdbcType=CHAR}
       </if>
-      <if test="example.stateList != null  and  example.stateList.size() > 0 " >
-         and state in 
-        <foreach collection="example.stateList" item="listItem" open="(" close=")" separator="," >
+      <if test="example.missionstateList != null  and  example.missionstateList.size() > 0 " >
+         and missionstate in 
+        <foreach collection="example.missionstateList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
@@ -181,11 +181,20 @@
         </foreach>
       </if>
       <if test="example.level != null" >
-         and level = #{example.level,jdbcType=CHAR}
+         and level = #{example.level,jdbcType=VARCHAR}
       </if>
       <if test="example.levelList != null  and  example.levelList.size() > 0 " >
          and level in 
         <foreach collection="example.levelList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.state != null" >
+         and state = #{example.state,jdbcType=VARCHAR}
+      </if>
+      <if test="example.stateList != null  and  example.stateList.size() > 0 " >
+         and state in 
+        <foreach collection="example.stateList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
@@ -204,22 +213,22 @@
   <insert id="insert" parameterType="map" >
     insert into hrg_mission (dataid, name, context, 
       starttime, endtime, finishtime, 
-      state, prodataid, proname, 
+      missionstate, prodataid, proname, 
       remark, percentage, proportion, 
       creator, creatordataid, createtime, 
       modify, modifydataid, modifytime, 
       type, headerid, headername, 
-      auditorid, auditorname, level
-      )
+      auditorid, auditorname, level, 
+      state)
     values (#{record.dataid,jdbcType=VARCHAR}, #{record.name,jdbcType=VARCHAR}, #{record.context,jdbcType=VARCHAR}, 
       #{record.starttime,jdbcType=TIMESTAMP}, #{record.endtime,jdbcType=TIMESTAMP}, #{record.finishtime,jdbcType=TIMESTAMP}, 
-      #{record.state,jdbcType=CHAR}, #{record.prodataid,jdbcType=VARCHAR}, #{record.proname,jdbcType=VARCHAR}, 
+      #{record.missionstate,jdbcType=CHAR}, #{record.prodataid,jdbcType=VARCHAR}, #{record.proname,jdbcType=VARCHAR}, 
       #{record.remark,jdbcType=VARCHAR}, #{record.percentage,jdbcType=VARCHAR}, #{record.proportion,jdbcType=VARCHAR}, 
       #{record.creator,jdbcType=VARCHAR}, #{record.creatordataid,jdbcType=VARCHAR}, #{record.createtime,jdbcType=TIMESTAMP}, 
       #{record.modify,jdbcType=VARCHAR}, #{record.modifydataid,jdbcType=VARCHAR}, #{record.modifytime,jdbcType=TIMESTAMP}, 
       #{record.type,jdbcType=CHAR}, #{record.headerid,jdbcType=VARCHAR}, #{record.headername,jdbcType=VARCHAR}, 
-      #{record.auditorid,jdbcType=VARCHAR}, #{record.auditorname,jdbcType=VARCHAR}, #{record.level,jdbcType=CHAR}
-      )
+      #{record.auditorid,jdbcType=VARCHAR}, #{record.auditorname,jdbcType=VARCHAR}, #{record.level,jdbcType=VARCHAR}, 
+      #{record.state,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="map" >
     insert into hrg_mission
@@ -242,8 +251,8 @@
       <if test="record.finishtime != null" >
         finishtime,
       </if>
-      <if test="record.state != null" >
-        state,
+      <if test="record.missionstate != null" >
+        missionstate,
       </if>
       <if test="record.prodataid != null" >
         prodataid,
@@ -296,6 +305,9 @@
       <if test="record.level != null" >
         level,
       </if>
+      <if test="record.state != null" >
+        state,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="record.dataid != null" >
@@ -316,8 +328,8 @@
       <if test="record.finishtime != null" >
         #{record.finishtime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.state != null" >
-        #{record.state,jdbcType=CHAR},
+      <if test="record.missionstate != null" >
+        #{record.missionstate,jdbcType=CHAR},
       </if>
       <if test="record.prodataid != null" >
         #{record.prodataid,jdbcType=VARCHAR},
@@ -368,7 +380,10 @@
         #{record.auditorname,jdbcType=VARCHAR},
       </if>
       <if test="record.level != null" >
-        #{record.level,jdbcType=CHAR},
+        #{record.level,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null" >
+        #{record.state,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -393,8 +408,8 @@
       <if test="record.finishtime != null" >
         finishtime = #{record.finishtime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.state != null" >
-        state = #{record.state,jdbcType=CHAR},
+      <if test="record.missionstate != null" >
+        missionstate = #{record.missionstate,jdbcType=CHAR},
       </if>
       <if test="record.prodataid != null" >
         prodataid = #{record.prodataid,jdbcType=VARCHAR},
@@ -445,7 +460,10 @@
         auditorname = #{record.auditorname,jdbcType=VARCHAR},
       </if>
       <if test="record.level != null" >
-        level = #{record.level,jdbcType=CHAR},
+        level = #{record.level,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -460,7 +478,7 @@
       starttime = #{record.starttime,jdbcType=TIMESTAMP},
       endtime = #{record.endtime,jdbcType=TIMESTAMP},
       finishtime = #{record.finishtime,jdbcType=TIMESTAMP},
-      state = #{record.state,jdbcType=CHAR},
+      missionstate = #{record.missionstate,jdbcType=CHAR},
       prodataid = #{record.prodataid,jdbcType=VARCHAR},
       proname = #{record.proname,jdbcType=VARCHAR},
       remark = #{record.remark,jdbcType=VARCHAR},
@@ -477,7 +495,8 @@
       headername = #{record.headername,jdbcType=VARCHAR},
       auditorid = #{record.auditorid,jdbcType=VARCHAR},
       auditorname = #{record.auditorname,jdbcType=VARCHAR},
-      level = #{record.level,jdbcType=CHAR}
+      level = #{record.level,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -500,8 +519,8 @@
       <if test="record.finishtime != null" >
         finishtime = #{record.finishtime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.state != null" >
-        state = #{record.state,jdbcType=CHAR},
+      <if test="record.missionstate != null" >
+        missionstate = #{record.missionstate,jdbcType=CHAR},
       </if>
       <if test="record.prodataid != null" >
         prodataid = #{record.prodataid,jdbcType=VARCHAR},
@@ -552,7 +571,10 @@
         auditorname = #{record.auditorname,jdbcType=VARCHAR},
       </if>
       <if test="record.level != null" >
-        level = #{record.level,jdbcType=CHAR},
+        level = #{record.level,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=VARCHAR},
       </if>
     </set>
     where dataid = #{record.dataid,jdbcType=VARCHAR}
@@ -564,7 +586,7 @@
       starttime = #{record.starttime,jdbcType=TIMESTAMP},
       endtime = #{record.endtime,jdbcType=TIMESTAMP},
       finishtime = #{record.finishtime,jdbcType=TIMESTAMP},
-      state = #{record.state,jdbcType=CHAR},
+      missionstate = #{record.missionstate,jdbcType=CHAR},
       prodataid = #{record.prodataid,jdbcType=VARCHAR},
       proname = #{record.proname,jdbcType=VARCHAR},
       remark = #{record.remark,jdbcType=VARCHAR},
@@ -581,7 +603,8 @@
       headername = #{record.headername,jdbcType=VARCHAR},
       auditorid = #{record.auditorid,jdbcType=VARCHAR},
       auditorname = #{record.auditorname,jdbcType=VARCHAR},
-      level = #{record.level,jdbcType=CHAR}
+      level = #{record.level,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=VARCHAR}
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
 </mapper>

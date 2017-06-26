@@ -8,7 +8,7 @@
     <result column="starttime" property="starttime" jdbcType="TIMESTAMP" />
     <result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
     <result column="finishtime" property="finishtime" jdbcType="TIMESTAMP" />
-    <result column="state" property="state" jdbcType="CHAR" />
+    <result column="missionstate" property="missionstate" jdbcType="CHAR" />
     <result column="prodataid" property="prodataid" jdbcType="VARCHAR" />
     <result column="proname" property="proname" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
@@ -25,7 +25,8 @@
     <result column="headername" property="headername" jdbcType="VARCHAR" />
     <result column="auditorid" property="auditorid" jdbcType="VARCHAR" />
     <result column="auditorname" property="auditorname" jdbcType="VARCHAR" />
-    <result column="level" property="level" jdbcType="CHAR" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="HashMapBaseResultMap" type="hashmap" >
     <id column="dataid" property="dataid" jdbcType="VARCHAR" />
@@ -34,7 +35,7 @@
     <result column="starttime" property="starttime" jdbcType="TIMESTAMP" />
     <result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
     <result column="finishtime" property="finishtime" jdbcType="TIMESTAMP" />
-    <result column="state" property="state" jdbcType="CHAR" />
+    <result column="missionstate" property="missionstate" jdbcType="CHAR" />
     <result column="prodataid" property="prodataid" jdbcType="VARCHAR" />
     <result column="proname" property="proname" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
@@ -51,7 +52,8 @@
     <result column="headername" property="headername" jdbcType="VARCHAR" />
     <result column="auditorid" property="auditorid" jdbcType="VARCHAR" />
     <result column="auditorname" property="auditorname" jdbcType="VARCHAR" />
-    <result column="level" property="level" jdbcType="CHAR" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -91,12 +93,12 @@
       <if test="example.finishtime != null" >
          and finishtime = #{example.finishtime,jdbcType=TIMESTAMP}
       </if>
-      <if test="example.state != null" >
-         and state = #{example.state,jdbcType=CHAR}
+      <if test="example.missionstate != null" >
+         and missionstate = #{example.missionstate,jdbcType=CHAR}
       </if>
-      <if test="example.stateList != null  and  example.stateList.size() > 0 " >
-         and state in 
-        <foreach collection="example.stateList" item="listItem" open="(" close=")" separator="," >
+      <if test="example.missionstateList != null  and  example.missionstateList.size() > 0 " >
+         and missionstate in 
+        <foreach collection="example.missionstateList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
@@ -233,7 +235,7 @@
         </foreach>
       </if>
       <if test="example.level != null" >
-         and level = #{example.level,jdbcType=CHAR}
+         and level = #{example.level,jdbcType=VARCHAR}
       </if>
       <if test="example.levelList != null  and  example.levelList.size() > 0 " >
          and level in 
@@ -241,12 +243,21 @@
           #{listItem}
         </foreach>
       </if>
+      <if test="example.state != null" >
+         and state = #{example.state,jdbcType=VARCHAR}
+      </if>
+      <if test="example.stateList != null  and  example.stateList.size() > 0 " >
+         and state in 
+        <foreach collection="example.stateList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    dataid, name, context, starttime, endtime, finishtime, state, prodataid, proname, 
+    dataid, name, context, starttime, endtime, finishtime, missionstate, prodataid, proname, 
     remark, percentage, proportion, creator, creatordataid, createtime, modify, modifydataid, 
-    modifytime, type, headerid, headername, auditorid, auditorname, level
+    modifytime, type, headerid, headername, auditorid, auditorname, level, state
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="map" >
     select
@@ -259,7 +270,7 @@
       <include refid="Example_Where_Clause" />
     </if>
     <if test="example.orderByClause != null" >
-      order by #{example.orderByClause}
+      order by createtime DESC,proportion DESC
     </if>
     <if test="example.limitStart >= 0 and example.pageSize > 0 " >
       limit #{example.limitStart} , #{example.pageSize}
@@ -288,7 +299,7 @@
       <include refid="Example_Where_Clause" />
     </if>
     <if test="example.orderByClause != null" >
-      order by #{example.orderByClause}
+      order by ${example.orderByClause}
     </if>
      limit 0 , 1 
   </select>
@@ -311,7 +322,7 @@
       <include refid="Example_Where_Clause" />
     </if>
     <if test="example.orderByClause != null" >
-      order by #{example.orderByClause}
+      order by ${example.orderByClause}
     </if>
      limit 0 , 1 
   </select>
@@ -326,7 +337,7 @@
       <include refid="Example_Where_Clause" />
     </if>
     <if test="example.orderByClause != null" >
-      order by #{example.orderByClause}
+      order by ${example.orderByClause}
     </if>
     <if test="example.limitStart >= 0 and example.pageSize > 0 " >
       limit #{example.limitStart} , #{example.pageSize}

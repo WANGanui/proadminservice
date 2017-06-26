@@ -41,7 +41,7 @@ public class MissionServiceImpl implements MissionService {
      */
     @Override
     public List<Mission> selectList(MissionCriteria example) throws Exception {
-        example.setOrderByClause("proportion desc,createtime desc,state asc");
+        example.setOrderByClause("createtime asc,proportion desc");
         return missionReadMapper.selectByExample(example);
     }
 
