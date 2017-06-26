@@ -41,6 +41,7 @@ public class MissionServiceImpl implements MissionService {
      */
     @Override
     public List<Mission> selectList(MissionCriteria example) throws Exception {
+        example.setOrderByClause("proportion desc,createtime desc,state asc");
         return missionReadMapper.selectByExample(example);
     }
 
@@ -72,7 +73,7 @@ public class MissionServiceImpl implements MissionService {
     public boolean insert(Mission mission, List<Worker> workerList) throws Exception {
         if (ValidUtil.isNullOrEmpty(mission.getContext()) || ValidUtil.isNullOrEmpty(mission.getCreator()) ||
                 ValidUtil.isNullOrEmpty(mission.getEndtime()) || ValidUtil.isNullOrEmpty(mission.getCreatordataid()) ||
-                ValidUtil.isNullOrEmpty(mission.getName()) || ValidUtil.isNullOrEmpty(mission.getProdataid()) ||
+                ValidUtil.isNullOrEmpty(mission.getName()) ||
                 ValidUtil.isNullOrEmpty(mission.getProportion()) || ValidUtil.isNullOrEmpty(mission.getStarttime()) ||
                 ValidUtil.isNullOrEmpty(workerList))
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
@@ -87,7 +88,6 @@ public class MissionServiceImpl implements MissionService {
             relMission.setWorkername(worker.getName());
             relMission.setMissiondataid(mission.getDataid());
             relMission.setMissionname(mission.getName());
-            relMission.setSchedule("0%");
             int y = workerRelMissionWriteMapper.insert(relMission);
             if (y <= 0)
                 return false;

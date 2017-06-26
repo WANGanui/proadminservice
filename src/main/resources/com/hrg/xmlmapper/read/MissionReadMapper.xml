@@ -259,7 +259,7 @@
       <include refid="Example_Where_Clause" />
     </if>
     <if test="example.orderByClause != null" >
-      order by ${example.orderByClause}
+      order by #{example.orderByClause}
     </if>
     <if test="example.limitStart >= 0 and example.pageSize > 0 " >
       limit #{example.limitStart} , #{example.pageSize}
@@ -288,7 +288,7 @@
       <include refid="Example_Where_Clause" />
     </if>
     <if test="example.orderByClause != null" >
-      order by ${example.orderByClause}
+      order by #{example.orderByClause}
     </if>
      limit 0 , 1 
   </select>
@@ -311,7 +311,7 @@
       <include refid="Example_Where_Clause" />
     </if>
     <if test="example.orderByClause != null" >
-      order by ${example.orderByClause}
+      order by #{example.orderByClause}
     </if>
      limit 0 , 1 
   </select>
@@ -326,7 +326,7 @@
       <include refid="Example_Where_Clause" />
     </if>
     <if test="example.orderByClause != null" >
-      order by ${example.orderByClause}
+      order by #{example.orderByClause}
     </if>
     <if test="example.limitStart >= 0 and example.pageSize > 0 " >
       limit #{example.limitStart} , #{example.pageSize}

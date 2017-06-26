@@ -44,13 +44,11 @@ public class WorkDataServiceImpl implements WorkDataService {
     @Override
     @Transactional(rollbackFor = { Exception.class, RuntimeException.class })
     public boolean insert(Workdata workdata) throws Exception {
-        if (ValidUtil.isNullOrEmpty(workdata.getProjectdataid()) || ValidUtil.isNullOrEmpty(workdata.getProjectname())||
-                ValidUtil.isNullOrEmpty(workdata.getMissiondataid())||ValidUtil.isNullOrEmpty(workdata.getMissionname())||
+        if (
                 ValidUtil.isNullOrEmpty(workdata.getWorkerdataid())||ValidUtil.isNullOrEmpty(workdata.getWorkcontext())||
-                ValidUtil.isNullOrEmpty(workdata.getWorkername())||ValidUtil.isNullOrEmpty(workdata.getProjectleader()))
+                ValidUtil.isNullOrEmpty(workdata.getWorkername()))
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
         workdata.setDataid(UUIDGenerator.getUUID());
-        workdata.setTime(new Date());
         int x = workdataWriteMapper.insert(workdata);
         return x > 0 ? true : false;
     }

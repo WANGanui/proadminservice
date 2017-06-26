@@ -14,10 +14,7 @@ import com.hrg.util.ValidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by 82705 on 2017/6/1.
@@ -162,26 +159,26 @@ public class WorkerServiceImpl implements WorkerService {
      * 添加员工
      *
      * @param worker
-     * @param roleList
      * @return
      * @throws Exception
      */
     @Override
-    public boolean insert(Worker worker, List<WorkerRole> roleList) throws Exception {
+    public boolean insert(Worker worker, String roledataid) throws Exception {
         if (ValidUtil.isNullOrEmpty(worker.getName())||ValidUtil.isNullOrEmpty(worker.getAccount())||
                 ValidUtil.isNullOrEmpty(worker.getDepartment())||ValidUtil.isNullOrEmpty(worker.getDepartmentdataid())||
                 ValidUtil.isNullOrEmpty(worker.getPassword())||ValidUtil.isNullOrEmpty(worker.getPhone())||
-                ValidUtil.isNullOrEmpty(worker.getState())||ValidUtil.isNullOrEmpty(roleList))
+                ValidUtil.isNullOrEmpty(worker.getState())||ValidUtil.isNullOrEmpty(roledataid))
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
         worker.setDataid(UUIDGenerator.getUUID());
+        worker.setCreatetime(new Date());
         int x = workerWriteMapper.insert(worker);
-        for (WorkerRole workerRole : roleList){
-            workerRole.setDataid(UUIDGenerator.getUUID());
-            workerRole.setWorkerdataid(worker.getDataid());
-            int y = workerRoleWriteMapper.insert(workerRole);
-            if (y <= 0)
-                return false;
-        }
+        WorkerRole role = new WorkerRole();
+        role.setDataid(UUIDGenerator.getUUID());
+        role.setWorkerdataid(worker.getDataid());
+        role.setRoleid(roledataid);
+        int y = workerRoleWriteMapper.insert(role);
+        if (y <= 0)
+            return false;
         return x > 0 ? true : false;
     }
 
@@ -227,13 +224,10 @@ public class WorkerServiceImpl implements WorkerService {
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
         WorkerRoleCriteria workerRoleCriteria = new WorkerRoleCriteria();
         workerRoleCriteria.setWorkerdataid(workerdataid);
-        List<WorkerRole> workerRoles = workerRoleReadMapper.selectByExample(workerRoleCriteria);
-        List<String> roleids = new ArrayList<String>();
-        for (WorkerRole role : workerRoles){
-            roleids.add(role.getDataid());
-        }
+        WorkerRole workerRole = workerRoleReadMapper.selectByExampleForOne(workerRoleCriteria);
+
         PreRolePermissionCriteria preRolePermissionCriteria = new PreRolePermissionCriteria();
-        preRolePermissionCriteria.setRoleidList(roleids);
+        preRolePermissionCriteria.setRoleid(workerRole.getRoleid());
         List<PreRolePermission> preRolePermissions = preRolePermissionReadMapper.selectByExample(preRolePermissionCriteria);
         List<String> permissionids = new ArrayList<String>();
 
@@ -257,6 +251,7 @@ public class WorkerServiceImpl implements WorkerService {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("menus",moduleList);
         map.put("permissions",permissionList);
+        map.put("roleid",workerRole.getRoleid());
         return map;
     }
 
