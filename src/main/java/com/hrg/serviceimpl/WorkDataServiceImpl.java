@@ -129,4 +129,33 @@ public class WorkDataServiceImpl implements WorkDataService {
 
         return workdataReadMapper.selectByExample(example);
     }
+
+    /**
+     * @param dataid
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Workdata selectDetail(String dataid) throws Exception {
+        if (ValidUtil.isNullOrEmpty(dataid))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+
+        return workdataReadMapper.selectByPrimaryKey(dataid);
+    }
+
+    /**
+     * 修改
+     *
+     * @param workdata
+     * @return
+     * @throws Exception
+     */
+    @Override
+    @Transactional(rollbackFor = { Exception.class, RuntimeException.class })
+    public boolean update(Workdata workdata) throws Exception {
+        if (ValidUtil.isNullOrEmpty(workdata.getDataid())||ValidUtil.isNullOrEmpty(workdata.getWorkcontext()))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+        int x = workdataWriteMapper.updateByPrimaryKeySelective(workdata);
+        return x > 0 ? true : false;
+    }
 }

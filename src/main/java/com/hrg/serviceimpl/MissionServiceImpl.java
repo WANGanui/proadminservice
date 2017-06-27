@@ -145,7 +145,9 @@ public class MissionServiceImpl implements MissionService {
                     return false;
             }
         }
-
+        int y = missionWriteMapper.updateByPrimaryKeySelective(mission);
+        if (y<=0)
+            return false;
         return x > 0 ? true : false;
     }
 

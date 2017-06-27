@@ -58,9 +58,7 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     @Transactional(rollbackFor = { Exception.class, RuntimeException.class })
     public boolean update(Notice notice) throws Exception {
-        if (ValidUtil.isNullOrEmpty(notice.getContext())||ValidUtil.isNullOrEmpty(notice.getWorker())||
-                ValidUtil.isNullOrEmpty(notice.getWorkerdataid()) || ValidUtil.isNullOrEmpty(notice.getDepartment())||
-                ValidUtil.isNullOrEmpty(notice.getDepartmentdataid())|| ValidUtil.isNullOrEmpty(notice.getTime()) ||
+        if (ValidUtil.isNullOrEmpty(notice.getContext())||ValidUtil.isNullOrEmpty(notice.getTime()) ||
                 ValidUtil.isNullOrEmpty(notice.getDataid()))
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
         int x = noticeWriteMapper.updateByPrimaryKeySelective(notice);
@@ -123,5 +121,20 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     public List<Notice> selectList(NoticeCriteria example) throws Exception {
         return noticeReadMapper.selectByExample(example);
+    }
+
+    /**
+     * 详情
+     *
+     * @param dataid
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Notice selectDetail(String dataid) throws Exception {
+        if(ValidUtil.isNullOrEmpty(dataid))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+
+        return noticeReadMapper.selectByPrimaryKey(dataid);
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -25,8 +26,6 @@ public class WorkerServiceImpl implements WorkerService {
 
     @Autowired
     WorkerReadMapper workerReadMapper;
-    @Autowired
-    WorkerRelMissionReadMapper workerRelMissionReadMapper;
     @Autowired
     WorkdataReadMapper workdataReadMapper;
     @Autowired
@@ -45,6 +44,12 @@ public class WorkerServiceImpl implements WorkerService {
     DepartmentReadMapper departmentReadMapper;
     @Autowired
     PreRoleReadMapper preRoleReadMapper;
+    @Autowired
+    WorkerRelMissionReadMapper workerRelMissionReadMapper;
+    @Autowired
+    MissionReadMapper missionReadMapper;
+    @Autowired
+    NoticeReadMapper noticeReadMapper;
 
     /**
      * 方法说明：根据员工账号查询员工对象
@@ -255,6 +260,7 @@ public class WorkerServiceImpl implements WorkerService {
         map.put("menus",moduleList);
         map.put("permissions",permissionList);
         map.put("roleid",workerRole.getRoleid());
+
         return map;
     }
 
@@ -284,6 +290,105 @@ public class WorkerServiceImpl implements WorkerService {
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("roles",preRoles);
         map.put("daparts",departmentList);
+        return map;
+    }
+
+    /**
+     * @param dataid
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Map selectWorkerRole(String dataid) throws Exception {
+        if (ValidUtil.isNullOrEmpty(dataid))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+        WorkerRoleCriteria example = new WorkerRoleCriteria();
+        example.setWorkerdataid(dataid);
+        WorkerRole role = workerRoleReadMapper.selectByExampleForOne(example);
+        PreRole preRole = preRoleReadMapper.selectByPrimaryKey(role.getRoleid());
+        Map map = new HashMap();
+        map.put("workerroleid",preRole.getDataid());
+        map.put("workerrolename",preRole.getName());
+        return map;
+    }
+
+    /**
+     * 修改员工角色
+     *
+     * @param worker
+     * @param roleid
+     * @return
+     * @throws Exception
+     */
+    @Override
+    @Transactional(rollbackFor = { Exception.class, RuntimeException.class })
+    public boolean updateWorkerandRole(Worker worker, String roleid) throws Exception {
+        if (ValidUtil.isNullOrEmpty(worker.getDataid())|| ValidUtil.isNullOrEmpty(roleid))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+        int x = workerWriteMapper.updateByPrimaryKeySelective(worker);
+        WorkerRoleCriteria example = new WorkerRoleCriteria();
+        example.setWorkerdataid(worker.getDataid());
+        int y = workerRoleWriteMapper.deleteByExample(example);
+        if (y<=0)
+            return false;
+        WorkerRole role = new WorkerRole();
+        role.setDataid(UUIDGenerator.getUUID());
+        role.setWorkerdataid(worker.getDataid());
+        role.setRoleid(roleid);
+        int z = workerRoleWriteMapper.insert(role);
+        if (z <= 0)
+            return false;
+        return x > 0 ? true : false;
+    }
+
+    /**
+     * 删除
+     *
+     * @param dataid
+     * @return
+     * @throws Exception
+     */
+    @Override
+    @Transactional(rollbackFor = { Exception.class, RuntimeException.class })
+    public boolean delete(String dataid) throws Exception {
+        if(ValidUtil.isNullOrEmpty(dataid))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+        int x = workerWriteMapper.deleteByPrimaryKey(dataid);
+        return x > 0 ? true : false;
+    }
+
+    /**
+     * 查询首页数据
+     *
+     * @param dataid
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Map selectIndex(String dataid) throws Exception {
+        Map map = new HashMap();
+        WorkerRelMissionCriteria relmissionCriteria = new WorkerRelMissionCriteria();
+        relmissionCriteria.setWorkerdataid(dataid);
+        List<WorkerRelMission> relMissionList = workerRelMissionReadMapper.selectByExample(relmissionCriteria);
+        List<String> missionidList = new ArrayList<String>();
+        for (WorkerRelMission relMission : relMissionList){
+            missionidList.add(relMission.getMissiondataid());
+        }
+        MissionCriteria missionCriteria = new MissionCriteria();
+        missionCriteria.setDataidList(missionidList);
+        List<Mission> missionList = missionReadMapper.selectByExample(missionCriteria);
+
+        map.put("mission",missionList);
+
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        Date time= sdf.parse(sdf.format(new Date()));
+
+        NoticeCriteria noticeCriteria = new NoticeCriteria();
+        noticeCriteria.setTimeMin(time);
+        noticeCriteria.setTimeMax(DateUtil.addDay(time,1));
+        List<Notice> noticeList = noticeReadMapper.selectByExample(noticeCriteria);
+
+        map.put("notice",noticeList);
         return map;
     }
 }
