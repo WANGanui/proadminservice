@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="GBK"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
@@ -7,19 +7,19 @@
         http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
 
-	<!-- æä¾›æ–¹åº”ç”¨ä¿¡æ¯ï¼Œç”¨äºŽè®¡ç®—ä¾èµ–å…³ç³» -->
+	<!-- Ìá¹©·½Ó¦ÓÃÐÅÏ¢£¬ÓÃÓÚ¼ÆËãÒÀÀµ¹ØÏµ -->
 	<dubbo:application name="proadminservice" />
 
-	<!-- ä½¿ç”¨multicastå¹¿æ’­æ³¨å†Œä¸­å¿ƒæš´éœ²æœåŠ¡åœ°å€ <dubbo:registry address="multicast://224.5.6.7:1234" 
+	<!-- Ê¹ÓÃmulticast¹ã²¥×¢²áÖÐÐÄ±©Â¶·þÎñµØÖ· <dubbo:registry address="multicast://224.5.6.7:1234" 
 		/> -->
 
-	<!-- ä½¿ç”¨zookeeperæ³¨å†Œä¸­å¿ƒæš´éœ²æœåŠ¡åœ°å€ -->
+	<!-- Ê¹ÓÃzookeeper×¢²áÖÐÐÄ±©Â¶·þÎñµØÖ· -->
 	<dubbo:registry address="${registryaddress}" />
 
-	<!-- ç”¨dubboåè®®åœ¨20880ç«¯å£æš´éœ²æœåŠ¡ -->
+	<!-- ÓÃdubboÐ­ÒéÔÚ20880¶Ë¿Ú±©Â¶·þÎñ -->
 	<dubbo:protocol name="dubbo" port="20888" />
 
-	<!-- è¶…æ—¶æ—¶é—´20ç§’ é»˜è®¤ä¸º1000æ¯«ç§’ -->
+	<!-- ³¬Ê±Ê±¼ä20Ãë Ä¬ÈÏÎª1000ºÁÃë -->
 	<dubbo:provider timeout="20000"/>
 	<dubbo:consumer timeout="20000" check="false" />
 </beans>

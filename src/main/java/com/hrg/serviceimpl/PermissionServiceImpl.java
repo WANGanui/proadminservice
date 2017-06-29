@@ -49,10 +49,12 @@ public class PermissionServiceImpl implements PermissionService {
         example.setModuleid(moduleid);
         example.setPermissionid(permiss.getPermissionid());
         ModuleRelPermission permission = moduleRelPermissionReadMapper.selectByExampleForOne(example);
-        String[] ids = permission.getOptions().split(",");
         List<String> idList = new ArrayList<String>();
-        for (int i = 0;i<ids.length;i++){
-            idList.add(ids[i]);
+        if (!ValidUtil.isNullOrEmpty(permission)){
+            String[] ids = permission.getOptions().split(",");
+            for (int i = 0;i<ids.length;i++){
+                idList.add(ids[i]);
+            }
         }
         return idList;
     }

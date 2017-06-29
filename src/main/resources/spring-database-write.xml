@@ -1,107 +1,94 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="GBK"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:tx="http://www.springframework.org/schema/tx" 
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
-	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-    http://www.springframework.org/schema/context 
-    http://www.springframework.org/schema/context/spring-context-4.0.xsd 
-    http://www.springframework.org/schema/aop 
-    http://www.springframework.org/schema/aop/spring-aop-4.0.xsd 
-    http://www.springframework.org/schema/tx 
-    http://www.springframework.org/schema/tx/spring-tx-4.0.xsd ">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <bean id="dataSourceWrite" class="com.alibaba.druid.pool.DruidDataSource">
 
-	<bean id="dataSourceWrite" class="com.alibaba.druid.pool.DruidDataSource">
+        <!-- »ù±¾ÊôÐÔ url¡¢user¡¢password -->
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${write1.url}"/>
+        <property name="username" value="${write1.username}"/>
+        <property name="password" value="${write1.password}"/>
 
-		<!-- åŸºæœ¬å±žæ€§ urlã€userã€password -->
-		<property name="driverClassName" value="${jdbc.driverClassName}"/>
-		<property name="url" value="${write1.url}"/>
-		<property name="username" value="${write1.username}"/>
-		<property name="password" value="${write1.password}"/>
+        <!-- ³õÊ¼»¯Á¬½ÓÊýÁ¿ -->
+        <property name="initialSize" value="10" />
 
-		<!-- åˆå§‹åŒ–è¿žæŽ¥æ•°é‡ -->
-		<property name="initialSize" value="10" />
+        <!-- ×îÐ¡¿ÕÏÐÁ¬½ÓÊý -->
+        <property name="minIdle" value="3" />
 
-		<!-- æœ€å°ç©ºé—²è¿žæŽ¥æ•° -->
-		<property name="minIdle" value="3" />
+        <!-- ×î´ó²¢·¢Á¬½ÓÊý -->
+        <property name="maxActive" value="80" />
 
-		<!-- æœ€å¤§å¹¶å‘è¿žæŽ¥æ•° -->
-		<property name="maxActive" value="80" />
+        <!-- ÅäÖÃ»ñÈ¡Á¬½ÓµÈ´ý³¬Ê±µÄÊ±¼ä -->
+        <property name="maxWait" value="60000" />
 
-		<!-- é…ç½®èŽ·å–è¿žæŽ¥ç­‰å¾…è¶…æ—¶çš„æ—¶é—´ -->
-		<property name="maxWait" value="60000" />
+        <!-- ÅäÖÃ¼ä¸ô¶à¾Ã²Å½øÐÐÒ»´Î¼ì²â£¬¼ì²âÐèÒª¹Ø±ÕµÄ¿ÕÏÐÁ¬½Ó£¬µ¥Î»ÊÇºÁÃë -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
 
-		<!-- é…ç½®é—´éš”å¤šä¹…æ‰è¿›è¡Œä¸€æ¬¡æ£€æµ‹ï¼Œæ£€æµ‹éœ€è¦å…³é—­çš„ç©ºé—²è¿žæŽ¥ï¼Œå•ä½æ˜¯æ¯«ç§’ -->
-		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- ÅäÖÃÒ»¸öÁ¬½ÓÔÚ³ØÖÐ×îÐ¡Éú´æµÄÊ±¼ä£¬µ¥Î»ÊÇºÁÃë -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
 
-		<!-- é…ç½®ä¸€ä¸ªè¿žæŽ¥åœ¨æ± ä¸­æœ€å°ç”Ÿå­˜çš„æ—¶é—´ï¼Œå•ä½æ˜¯æ¯«ç§’ -->
-		<property name="minEvictableIdleTimeMillis" value="300000" />
+        <!-- ³¬¹ýÊ±¼äÏÞÖÆÊÇ·ñ»ØÊÕ -->
+        <property name="removeAbandoned" value="true" />
 
-		<!-- è¶…è¿‡æ—¶é—´é™åˆ¶æ˜¯å¦å›žæ”¶ -->
-		<property name="removeAbandoned" value="true" />
+        <!-- ³¬¹ýÊ±¼äÏÞÖÆ¶à³¤£» -->
+        <property name="removeAbandonedTimeout" value="180" />
 
-		<!-- è¶…è¿‡æ—¶é—´é™åˆ¶å¤šé•¿ï¼› -->
-		<property name="removeAbandonedTimeout" value="180" />
+        <!-- ÓÃÀ´¼ì²âÁ¬½ÓÊÇ·ñÓÐÐ§µÄsql£¬ÒªÇóÊÇÒ»¸ö²éÑ¯Óï¾ä-->
+        <property name="validationQuery" value="SELECT 1 FROM DUAL" />
 
-		<!-- ç”¨æ¥æ£€æµ‹è¿žæŽ¥æ˜¯å¦æœ‰æ•ˆçš„sqlï¼Œè¦æ±‚æ˜¯ä¸€ä¸ªæŸ¥è¯¢è¯­å¥-->
-		<property name="validationQuery" value="SELECT 1 FROM DUAL" />
+        <!-- ÉêÇëÁ¬½ÓµÄÊ±ºò¼ì²â -->
+        <property name="testWhileIdle" value="true" />
 
-		<!-- ç”³è¯·è¿žæŽ¥çš„æ—¶å€™æ£€æµ‹ -->
-		<property name="testWhileIdle" value="true" />
+        <!-- ÉêÇëÁ¬½ÓÊ±Ö´ÐÐvalidationQuery¼ì²âÁ¬½ÓÊÇ·ñÓÐÐ§£¬ÅäÖÃÎªtrue»á½µµÍÐÔÄÜ -->
+        <property name="testOnBorrow" value="false" />
 
-		<!-- ç”³è¯·è¿žæŽ¥æ—¶æ‰§è¡ŒvalidationQueryæ£€æµ‹è¿žæŽ¥æ˜¯å¦æœ‰æ•ˆï¼Œé…ç½®ä¸ºtrueä¼šé™ä½Žæ€§èƒ½ -->
-		<property name="testOnBorrow" value="false" />
-
-		<!-- å½’è¿˜è¿žæŽ¥æ—¶æ‰§è¡ŒvalidationQueryæ£€æµ‹è¿žæŽ¥æ˜¯å¦æœ‰æ•ˆï¼Œé…ç½®ä¸ºtrueä¼šé™ä½Žæ€§èƒ½  -->
-		<property name="testOnReturn" value="false" />
+        <!-- ¹é»¹Á¬½ÓÊ±Ö´ÐÐvalidationQuery¼ì²âÁ¬½ÓÊÇ·ñÓÐÐ§£¬ÅäÖÃÎªtrue»á½µµÍÐÔÄÜ  -->
+        <property name="testOnReturn" value="false" />
 
 
-		<!--å±žæ€§ç±»åž‹æ˜¯å­—ç¬¦ä¸²ï¼Œé€šè¿‡åˆ«åçš„æ–¹å¼é…ç½®æ‰©å±•æ’ä»¶ï¼Œå¸¸ç”¨çš„æ’ä»¶æœ‰ï¼š
-                    ç›‘æŽ§ç»Ÿè®¡ç”¨çš„filter:stat
-                    æ—¥å¿—ç”¨çš„filter:log4j
-                   é˜²å¾¡SQLæ³¨å…¥çš„filter:wall -->
-		<property name="filters" value="stat,wall" />
-	</bean>
 
-	<!-- åŠ¨æ€æ•°æ®æº -->  
-   <bean id="dataSource" class="com.hrg.databaseUtil.DynamicDataSource">
-   		<property name="targetDataSources">
-			<map>
-				<entry key="dataSourceWrite" value-ref="dataSourceWrite" />
-			</map>
-		</property>
-       <property name="defaultTargetDataSource" ref="dataSourceWrite" />      
-   </bean>  
+        <property name="filters" value="stat,wall" />
+    </bean>
+
+    <!-- ¶¯Ì¬Êý¾ÝÔ´ -->
+    <bean id="dataSource" class="com.hrg.databaseUtil.DynamicDataSource">
+        <property name="targetDataSources">
+            <map>
+                <entry key="dataSourceWrite" value-ref="dataSourceWrite" />
+            </map>
+        </property>
+        <property name="defaultTargetDataSource" ref="dataSourceWrite" />
+    </bean>
 
 
-	<!-- é…ç½®äº‹åŠ¡ç®¡ç†å™¨ -->
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
+    <!-- ÅäÖÃÊÂÎñ¹ÜÀíÆ÷ -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
 
-	<!-- é…ç½®å£°æ˜Žå¼äº‹åŠ¡ï¼šæ–¹æ³•ä¸€ï¼Œåœ¨Serviceå®žçŽ°ç±»æˆ–è€…publicå®žçŽ°æ–¹æ³•ä¸Šä½¿ç”¨æ³¨è§£@Transactionalï¼Œåˆ™æ­¤ç±»æˆ–æ–¹æ³•å°±ä¼šå¯ç”¨äº‹åŠ¡æœºåˆ¶ -->
-	<tx:annotation-driven transaction-manager="transactionManager" />
+    <!-- ÅäÖÃÉùÃ÷Ê½ÊÂÎñ£º·½·¨Ò»£¬ÔÚServiceÊµÏÖÀà»òÕßpublicÊµÏÖ·½·¨ÉÏÊ¹ÓÃ×¢½â@Transactional£¬Ôò´ËÀà»ò·½·¨¾Í»áÆôÓÃÊÂÎñ»úÖÆ -->
+    <tx:annotation-driven transaction-manager="transactionManager" />
 
-	<!-- ä½¿ç”¨mybatisé…ç½®sessionFactory -->
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="mapperLocations">
-			<value>classpath:/com/hrg/xmlmapper/write/*.xml</value>
-		</property>
-	</bean>
+    <!-- Ê¹ÓÃmybatisÅäÖÃsessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="mapperLocations">
+            <value>classpath:/com/hrg/xmlmapper/write/*.xml</value>
+        </property>
+    </bean>
 
-	<!-- é…ç½®sessionTemplate -->
-	<bean id="sessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg index="0" ref="sqlSessionFactory" />
-		<!-- <constructor-arg index="1" value="BATCH" /> å¦‚æžœæƒ³è¦è¿›è¡Œæ‰¹é‡æ“ä½œå¯åŠ å…¥è¿™ä¸ªå±žæ€§ -->
-	</bean>
+    <!-- ÅäÖÃsessionTemplate -->
+    <bean id="sessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory" />
+        <!-- <constructor-arg index="1" value="BATCH" /> Èç¹ûÏëÒª½øÐÐÅúÁ¿²Ù×÷¿É¼ÓÈëÕâ¸öÊôÐÔ -->
+    </bean>
 
-	<!-- mapperæ‰«æå™¨ -->
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<!-- æ‰«æåŒ…è·¯å¾„ï¼Œå¦‚æžœéœ€è¦æ‰«æå¤šä¸ªåŒ…ï¼Œä¸­é—´ä½¿ç”¨åŠè§’é€—å·éš”å¼€ -->
-		<property name="basePackage" value="com.hrg.javamapper.write"></property>
-		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
-	</bean>
+    <!-- mapperÉ¨ÃèÆ÷ -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- É¨Ãè°üÂ·¾¶£¬Èç¹ûÐèÒªÉ¨Ãè¶à¸ö°ü£¬ÖÐ¼äÊ¹ÓÃ°ë½Ç¶ººÅ¸ô¿ª -->
+        <property name="basePackage" value="com.hrg.javamapper.write"></property>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+    </bean>
 </beans>

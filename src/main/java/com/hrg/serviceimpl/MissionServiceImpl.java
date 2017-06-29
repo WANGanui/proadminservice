@@ -84,7 +84,6 @@ public class MissionServiceImpl implements MissionService {
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
         mission.setDataid(UUIDGenerator.getUUID());
         mission.setCreatetime(new Date());
-        mission.setState("0");
         int x = missionWriteMapper.insert(mission);
         if (!ValidUtil.isNullOrEmpty(workerList)){
             for (Worker worker : workerList){
