@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hrg.javamapper.write.ProjectAuditWriteMapper" >
+  <sql id="Example_Where_Clause" >
+    <where >
+      <if test="example.id != null" >
+         and id = #{example.id,jdbcType=INTEGER}
+      </if>
+      <if test="example.idList != null  and  example.idList.size() > 0 " >
+         and id in 
+        <foreach collection="example.idList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.projectid != null" >
+         and projectid = #{example.projectid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.projectidList != null  and  example.projectidList.size() > 0 " >
+         and projectid in 
+        <foreach collection="example.projectidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.auditorid != null" >
+         and auditorid = #{example.auditorid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.auditoridList != null  and  example.auditoridList.size() > 0 " >
+         and auditorid in 
+        <foreach collection="example.auditoridList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.auditstate != null" >
+         and auditstate = #{example.auditstate,jdbcType=CHAR}
+      </if>
+      <if test="example.auditstateList != null  and  example.auditstateList.size() > 0 " >
+         and auditstate in 
+        <foreach collection="example.auditstateList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.orderid != null" >
+         and orderid = #{example.orderid,jdbcType=INTEGER}
+      </if>
+      <if test="example.orderidList != null  and  example.orderidList.size() > 0 " >
+         and orderid in 
+        <foreach collection="example.orderidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+    </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from hrg_project_audit
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="map" >
+    delete from hrg_project_audit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="map" >
+    insert into hrg_project_audit (id, projectid, auditorid, 
+      auditstate, orderid)
+    values (#{record.id,jdbcType=INTEGER}, #{record.projectid,jdbcType=VARCHAR}, #{record.auditorid,jdbcType=VARCHAR}, 
+      #{record.auditstate,jdbcType=CHAR}, #{record.orderid,jdbcType=INTEGER})
+    <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="record.id" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+  <insert id="insertSelective" parameterType="map" >
+    insert into hrg_project_audit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="record.id != null" >
+        id,
+      </if>
+      <if test="record.projectid != null" >
+        projectid,
+      </if>
+      <if test="record.auditorid != null" >
+        auditorid,
+      </if>
+      <if test="record.auditstate != null" >
+        auditstate,
+      </if>
+      <if test="record.orderid != null" >
+        orderid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="record.id != null" >
+        #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.projectid != null" >
+        #{record.projectid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditorid != null" >
+        #{record.auditorid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditstate != null" >
+        #{record.auditstate,jdbcType=CHAR},
+      </if>
+      <if test="record.orderid != null" >
+        #{record.orderid,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="record.id" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update hrg_project_audit
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.projectid != null" >
+        projectid = #{record.projectid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditorid != null" >
+        auditorid = #{record.auditorid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditstate != null" >
+        auditstate = #{record.auditstate,jdbcType=CHAR},
+      </if>
+      <if test="record.orderid != null" >
+        orderid = #{record.orderid,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update hrg_project_audit
+    set id = #{record.id,jdbcType=INTEGER},
+      projectid = #{record.projectid,jdbcType=VARCHAR},
+      auditorid = #{record.auditorid,jdbcType=VARCHAR},
+      auditstate = #{record.auditstate,jdbcType=CHAR},
+      orderid = #{record.orderid,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="map" >
+    update hrg_project_audit
+    <set >
+      <if test="record.projectid != null" >
+        projectid = #{record.projectid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditorid != null" >
+        auditorid = #{record.auditorid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditstate != null" >
+        auditstate = #{record.auditstate,jdbcType=CHAR},
+      </if>
+      <if test="record.orderid != null" >
+        orderid = #{record.orderid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{record.id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="map" >
+    update hrg_project_audit
+    set projectid = #{record.projectid,jdbcType=VARCHAR},
+      auditorid = #{record.auditorid,jdbcType=VARCHAR},
+      auditstate = #{record.auditstate,jdbcType=CHAR},
+      orderid = #{record.orderid,jdbcType=INTEGER}
+    where id = #{record.id,jdbcType=INTEGER}
+  </update>
+</mapper>

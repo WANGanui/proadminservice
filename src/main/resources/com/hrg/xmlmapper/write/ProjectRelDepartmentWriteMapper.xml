@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hrg.javamapper.write.ProjectRelDepartmentWriteMapper" >
+  <sql id="Example_Where_Clause" >
+    <where >
+      <if test="example.dataid != null" >
+         and dataid = #{example.dataid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.dataidList != null  and  example.dataidList.size() > 0 " >
+         and dataid in 
+        <foreach collection="example.dataidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.projectid != null" >
+         and projectid = #{example.projectid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.projectidList != null  and  example.projectidList.size() > 0 " >
+         and projectid in 
+        <foreach collection="example.projectidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.departmentid != null" >
+         and departmentid = #{example.departmentid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.departmentidList != null  and  example.departmentidList.size() > 0 " >
+         and departmentid in 
+        <foreach collection="example.departmentidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.percentage != null" >
+         and percentage = #{example.percentage,jdbcType=VARCHAR}
+      </if>
+      <if test="example.percentageList != null  and  example.percentageList.size() > 0 " >
+         and percentage in 
+        <foreach collection="example.percentageList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+    </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from hrg_project_rel_department
+    where dataid = #{dataid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="map" >
+    delete from hrg_project_rel_department
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="map" >
+    insert into hrg_project_rel_department (dataid, projectid, 
+      departmentid, percentage)
+    values (#{record.dataid,jdbcType=VARCHAR}, #{record.projectid,jdbcType=VARCHAR}, 
+      #{record.departmentid,jdbcType=VARCHAR}, #{record.percentage,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="map" >
+    insert into hrg_project_rel_department
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="record.dataid != null" >
+        dataid,
+      </if>
+      <if test="record.projectid != null" >
+        projectid,
+      </if>
+      <if test="record.departmentid != null" >
+        departmentid,
+      </if>
+      <if test="record.percentage != null" >
+        percentage,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="record.dataid != null" >
+        #{record.dataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectid != null" >
+        #{record.projectid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departmentid != null" >
+        #{record.departmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.percentage != null" >
+        #{record.percentage,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update hrg_project_rel_department
+    <set >
+      <if test="record.dataid != null" >
+        dataid = #{record.dataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectid != null" >
+        projectid = #{record.projectid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departmentid != null" >
+        departmentid = #{record.departmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.percentage != null" >
+        percentage = #{record.percentage,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update hrg_project_rel_department
+    set dataid = #{record.dataid,jdbcType=VARCHAR},
+      projectid = #{record.projectid,jdbcType=VARCHAR},
+      departmentid = #{record.departmentid,jdbcType=VARCHAR},
+      percentage = #{record.percentage,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="map" >
+    update hrg_project_rel_department
+    <set >
+      <if test="record.projectid != null" >
+        projectid = #{record.projectid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departmentid != null" >
+        departmentid = #{record.departmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.percentage != null" >
+        percentage = #{record.percentage,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where dataid = #{record.dataid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="map" >
+    update hrg_project_rel_department
+    set projectid = #{record.projectid,jdbcType=VARCHAR},
+      departmentid = #{record.departmentid,jdbcType=VARCHAR},
+      percentage = #{record.percentage,jdbcType=VARCHAR}
+    where dataid = #{record.dataid,jdbcType=VARCHAR}
+  </update>
+</mapper>
