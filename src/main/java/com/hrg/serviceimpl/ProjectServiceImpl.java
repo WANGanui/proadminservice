@@ -198,6 +198,17 @@ public class ProjectServiceImpl implements ProjectService {
     public List<Project> selectByWorker(String workerdataid) throws Exception {
         if(ValidUtil.isNullOrEmpty(workerdataid))
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+        if (workerdataid.equals("1")){
+            ProjectCriteria projectCriteria=new ProjectCriteria();
+            List<String> list=new ArrayList<String>();
+            list.add("4");
+            list.add("3");
+            list.add("2");
+            list.add("1"); list.add("0");
+            projectCriteria.setStateList(list);
+            List<Project> projectList= projectReadMapper.selectByExample(projectCriteria);
+            return projectList;
+        }
         Worker worker = workerReadMapper.selectByPrimaryKey(workerdataid);
         ProjectRelDepartmentCriteria criteria = new ProjectRelDepartmentCriteria();
         criteria.setDepartmentid(worker.getDepartmentdataid());
