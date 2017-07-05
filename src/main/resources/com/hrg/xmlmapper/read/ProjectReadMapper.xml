@@ -294,4 +294,7 @@
     select group_concat(workername) member
     from hrg_worker_rel_project where projectdataid = #{projectdataid}
   </select>
+  <select id="selectProjectAudit" resultType="java.util.Map" parameterType="java.lang.String">
+    SELECT  a.*,b.auditstate from hrg_project a INNER JOIN hrg_project_audit b ON (a.dataid=b.projectid AND b.auditorid=${_parameter} AND b.auditstate=0)
+  </select>
 </mapper>

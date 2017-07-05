@@ -5,6 +5,8 @@ import com.hrg.exception.ValidatorException;
 import com.hrg.javamapper.read.MissionReadMapper;
 import com.hrg.javamapper.read.ProjectReadMapper;
 import com.hrg.javamapper.read.WorkerRelProjectReadMapper;
+import com.hrg.javamapper.write.ProjectAuditWriteMapper;
+import com.hrg.javamapper.write.ProjectRelDepartmentWriteMapper;
 import com.hrg.javamapper.write.ProjectWriteMapper;
 import com.hrg.javamapper.write.WorkerRelProjectWriteMapper;
 import com.hrg.model.*;
@@ -35,7 +37,10 @@ public class ProjectServiceImpl implements ProjectService {
     WorkerRelProjectWriteMapper workerRelProjectWriteMapper;
     @Autowired
     WorkerRelProjectReadMapper workerRelProjectReadMapper;
-
+    @Autowired
+    ProjectAuditWriteMapper projectAuditWriteMapper;
+    @Autowired
+    ProjectRelDepartmentWriteMapper projectRelDepartmentWriteMapper;
     /**
      * 添加项目
      *
@@ -45,25 +50,29 @@ public class ProjectServiceImpl implements ProjectService {
      */
     @Override
     @Transactional(rollbackFor = { Exception.class, RuntimeException.class })
-    public boolean insert(Project project, List<WorkerRelProject> projectList) throws Exception {
+    public boolean insert(Project project,List<ProjectAudit> projectAudits,List<ProjectRelDepartment> projectRelDepartments) throws Exception {
         if (ValidUtil.isNullOrEmpty(project.getName()) || ValidUtil.isNullOrEmpty(project.getStarttime()) ||
                 ValidUtil.isNullOrEmpty(project.getEndtime()) || ValidUtil.isNullOrEmpty(project.getLeader()) ||
                 ValidUtil.isNullOrEmpty(project.getLeaderid()) || ValidUtil.isNullOrEmpty(project.getContect()) ||
                 ValidUtil.isNullOrEmpty(project.getCreator()) || ValidUtil.isNullOrEmpty(project.getCreatordataid()))
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
-        project.setDataid(UUIDGenerator.getUUID());
+        String projectId=UUIDGenerator.getUUID();
+        project.setDataid(projectId);
         project.setDays((int) DateUtil.getDays(DateUtil.toDateStr(project.getStarttime()),DateUtil.toDateStr(project.getEndtime())));
         project.setMonth((int) DateUtil.getMonth(DateUtil.toDateStr(project.getStarttime()),DateUtil.toDateStr(project.getEndtime())));
         project.setState("0");
         project.setCreatetime(new Date());
         int x = projectWriteMapper.insert(project);
-        for (WorkerRelProject relProject : projectList){
-            relProject.setDataid(UUIDGenerator.getUUID());
-            relProject.setProjectdataid(project.getDataid());
-            relProject.setProjectname(project.getName());
-            int y = workerRelProjectWriteMapper.insert(relProject);
-            if (y<=0)
-                return false;
+        for (int i = 0; i < projectAudits.size(); i++) {
+            ProjectAudit projectAudit=projectAudits.get(i);
+            projectAudit.setProjectid(projectId);
+            projectAuditWriteMapper.insert(projectAudit);
+        }
+        for (int i = 0; i < projectRelDepartments.size(); i++) {
+            ProjectRelDepartment projectRelDepartment=projectRelDepartments.get(i);
+            projectRelDepartment.setProjectid(projectId);
+            projectRelDepartment.setDataid(UUIDGenerator.getUUID());
+            projectRelDepartmentWriteMapper.insert(projectRelDepartment);
         }
         return x > 0 ? true : false;
     }
@@ -190,5 +199,17 @@ public class ProjectServiceImpl implements ProjectService {
         ProjectCriteria example = new ProjectCriteria();
         example.setDataidList(idList);
         return projectReadMapper.selectByExample(example);
+    }
+
+    /**
+     * 查询当前登录人待审核任务
+     * @param auditId
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<Map> selectProjectAudit(String auditId) throws Exception{
+
+        return   projectReadMapper.selectProjectAudit(auditId);
     }
 }
