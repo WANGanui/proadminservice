@@ -2,9 +2,7 @@ package com.hrg.serviceimpl;
 
 import com.hrg.enums.ErrorCode;
 import com.hrg.exception.ValidatorException;
-import com.hrg.javamapper.read.MissionReadMapper;
-import com.hrg.javamapper.read.ProjectReadMapper;
-import com.hrg.javamapper.read.WorkerRelProjectReadMapper;
+import com.hrg.javamapper.read.*;
 import com.hrg.javamapper.write.ProjectWriteMapper;
 import com.hrg.javamapper.write.WorkerRelProjectWriteMapper;
 import com.hrg.model.*;
@@ -35,6 +33,10 @@ public class ProjectServiceImpl implements ProjectService {
     WorkerRelProjectWriteMapper workerRelProjectWriteMapper;
     @Autowired
     WorkerRelProjectReadMapper workerRelProjectReadMapper;
+    @Autowired
+    WorkerReadMapper workerReadMapper;
+    @Autowired
+    ProjectRelDepartmentReadMapper projectRelDepartmentReadMapper;
 
     /**
      * 添加项目
@@ -180,15 +182,21 @@ public class ProjectServiceImpl implements ProjectService {
     public List<Project> selectByWorker(String workerdataid) throws Exception {
         if(ValidUtil.isNullOrEmpty(workerdataid))
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
-        WorkerRelProjectCriteria criteria = new WorkerRelProjectCriteria();
-        criteria.setWorkerdataid(workerdataid);
-        List<WorkerRelProject> relProjects = workerRelProjectReadMapper.selectByExample(criteria);
-        List<String> idList = new ArrayList<String>();
-        for (WorkerRelProject relProject : relProjects){
-            idList.add(relProject.getProjectdataid());
+        Worker worker = workerReadMapper.selectByPrimaryKey(workerdataid);
+        ProjectRelDepartmentCriteria criteria = new ProjectRelDepartmentCriteria();
+        criteria.setDepartmentid(worker.getDepartmentdataid());
+        List<ProjectRelDepartment> departments = projectRelDepartmentReadMapper.selectByExample(criteria);
+        List ids = new ArrayList();
+        for (ProjectRelDepartment relDepartment:departments){
+            ids.add(relDepartment.getProjectid());
         }
-        ProjectCriteria example = new ProjectCriteria();
-        example.setDataidList(idList);
-        return projectReadMapper.selectByExample(example);
+        if (!ValidUtil.isNullOrEmpty(ids)){
+            ProjectCriteria example = new ProjectCriteria();
+            example.setDataidList(ids);
+            List<Project> projectList = projectReadMapper.selectByExample(example);
+            return projectList;
+        }else {
+            return null;
+        }
     }
 }
