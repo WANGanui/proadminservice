@@ -162,4 +162,12 @@
       limit #{example.limitStart} , #{example.pageSize}
     </if>
   </select>
+  <select id="selectProjectAuditDetail" resultType="java.util.Map" parameterType="java.util.Map">
+    SELECT a.*,b.`name` FROM hrg_project_audit a INNER JOIN hrg_worker b ON a.auditorid=b.dataid WHERE a.projectid=#{projectid}
+  </select>
+
+  <select id="selectAuditInt" resultType="java.lang.Integer" parameterType="java.util.Map">
+    SELECT COUNT(1) FROM hrg_project_audit  WHERE auditstate=#{auditstate} AND projectid=#{projectid}
+  </select>
+
 </mapper>

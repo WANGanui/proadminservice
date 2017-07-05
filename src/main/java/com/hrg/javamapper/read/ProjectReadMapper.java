@@ -2,9 +2,10 @@ package com.hrg.javamapper.read;
 
 import com.hrg.model.Project;
 import com.hrg.model.ProjectCriteria;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
-import org.apache.ibatis.annotations.Param;
 
 public interface ProjectReadMapper {
     int countByExample(@Param("example") ProjectCriteria example);
@@ -20,4 +21,6 @@ public interface ProjectReadMapper {
     Map<String, Object> selectMapByPrimaryKey(@Param("dataid") String dataid);
 
     Map<String, Object> selectMapByExampleForOne(@Param("example") ProjectCriteria example);
+
+    List<Map> selectProjectAudit(String auditId);
 }
