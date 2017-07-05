@@ -3,11 +3,13 @@ package com.hrg.serviceimpl;
 import com.hrg.enums.ErrorCode;
 import com.hrg.exception.ValidatorException;
 import com.hrg.javamapper.read.MissionReadMapper;
+import com.hrg.javamapper.read.WorkdataReadMapper;
 import com.hrg.javamapper.read.WorkerRelMissionReadMapper;
 import com.hrg.javamapper.write.MissionWriteMapper;
 import com.hrg.javamapper.write.WorkerRelMissionWriteMapper;
 import com.hrg.model.*;
 import com.hrg.service.MissionService;
+import com.hrg.util.DateUtil;
 import com.hrg.util.PageUtil;
 import com.hrg.util.UUIDGenerator;
 import com.hrg.util.ValidUtil;
@@ -31,6 +33,8 @@ public class MissionServiceImpl implements MissionService {
     WorkerRelMissionReadMapper workerRelMissionReadMapper;
     @Autowired
     WorkerRelMissionWriteMapper workerRelMissionWriteMapper;
+    @Autowired
+    WorkdataReadMapper workdataReadMapper;
 
     /**
      * 条件查询任务列表
@@ -278,5 +282,55 @@ public class MissionServiceImpl implements MissionService {
         mission.setModifytime(new Date());
         int x = missionWriteMapper.updateByPrimaryKeySelective(mission);
         return x > 0 ? true : false;
+    }
+
+    /**
+     * 任务进度详情
+     *
+     * @param dataid
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Map<String, Object> selectMissionJindu(String dataid) throws Exception {
+        if (ValidUtil.isNullOrEmpty(dataid))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+        Map map = new HashMap();
+        Mission mission = missionReadMapper.selectByPrimaryKey(dataid);
+        WorkdataCriteria workdataCriteria = new WorkdataCriteria();
+        workdataCriteria.setMissiondataid(dataid);
+        workdataCriteria.setTimeMin(mission.getStarttime());
+        workdataCriteria.setTimeMax(mission.getEndtime());
+        workdataCriteria.setOrderByClause("time asc");
+        List<Workdata> workdataList = workdataReadMapper.selectByExample(workdataCriteria);
+        /*List<Workdata> www = new ArrayList<Workdata>();
+        for (Workdata workdata: workdataList){
+            www.add(workdata);
+        }
+        List<Workdata> workdatas = new ArrayList<Workdata>();
+        for (Workdata workdata : workdataList){
+            for (Workdata data : workdataList){
+                if (workdata.getWorkerdataid()!=data.getWorkerdataid()){
+                    if (DateUtil.toShortDateStr(workdata.getTime())==DateUtil.toShortDateStr(data.getTime())||
+                        DateUtil.toShortDateStr(workdata.getTime()).equals(DateUtil.toShortDateStr(data.getTime()))){
+                            www.remove(workdata);
+                            Workdata workdata1 = new Workdata();
+                            workdata1.setProjectname(workdata.getProjectname());
+                            workdata1.setTime(data.getTime());
+                            workdata1.setWorkername(workdata.getWorkername()+","+data.getWorkername());
+                            workdata1.setWorkcontext(workdata.getWorkcontext()+"-----"+data.getWorkcontext());
+                            workdatas.add(workdata1);
+                    }
+                }
+            }
+        }
+
+        for (Workdata dd : www){
+            workdatas.add(dd);
+        }*/
+
+        map.put("mission",mission);
+        map.put("workdatas",workdataList);
+        return map;
     }
 }

@@ -3,9 +3,12 @@ package com.hrg.serviceimpl;
 import com.hrg.enums.ErrorCode;
 import com.hrg.exception.ValidatorException;
 import com.hrg.javamapper.read.DepartmentReadMapper;
+import com.hrg.javamapper.read.ProjectRelDepartmentReadMapper;
 import com.hrg.javamapper.write.DepartmentWriteMapper;
 import com.hrg.model.Department;
 import com.hrg.model.DepartmentCriteria;
+import com.hrg.model.ProjectRelDepartment;
+import com.hrg.model.ProjectRelDepartmentCriteria;
 import com.hrg.service.DepartmentService;
 import com.hrg.util.PageUtil;
 import com.hrg.util.UUIDGenerator;
@@ -13,6 +16,7 @@ import com.hrg.util.ValidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,6 +29,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     DepartmentReadMapper departmentReadMapper;
     @Autowired
     DepartmentWriteMapper departmentWriteMapper;
+    @Autowired
+    ProjectRelDepartmentReadMapper projectRelDepartmentReadMapper;
 
     /**
      * 添加部门
@@ -118,5 +124,36 @@ public class DepartmentServiceImpl implements DepartmentService {
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
 
         return departmentReadMapper.selectByPrimaryKey(dataid);
+    }
+
+    /**
+     * 查询项目部门
+     * @param prodataid
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<Department> selectPartmentBypro(String prodataid) throws Exception {
+        if (ValidUtil.isNullOrEmpty(prodataid))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+        ProjectRelDepartmentCriteria example = new ProjectRelDepartmentCriteria();
+        example.setProjectid(prodataid);
+        List<ProjectRelDepartment> relDepartments = projectRelDepartmentReadMapper.selectByExample(example);
+        List<String> ids = new ArrayList<String>();
+        for (ProjectRelDepartment relDepartment: relDepartments){
+            ids.add(relDepartment.getDepartmentid());
+        }
+        if (ids.size()>0){
+            DepartmentCriteria departmentCriteria = new DepartmentCriteria();
+            departmentCriteria.setDataidList(ids);
+            List<Department> departmentList = departmentReadMapper.selectByExample(departmentCriteria);
+            if (!ValidUtil.isNullOrEmpty(departmentList)){
+                return departmentList;
+            }else {
+                return null;
+            }
+        }else {
+            return null;
+        }
     }
 }
