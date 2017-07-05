@@ -243,6 +243,7 @@ public class ProjectServiceImpl implements ProjectService {
      * @param projectAudit
      * @return
      */
+    @Override
     public int updateByPrimaryKeySelective(ProjectAudit projectAudit){
         return projectAuditWriteMapper.updateByPrimaryKeySelective(projectAudit);
     }
