@@ -3,6 +3,7 @@ package com.hrg.serviceimpl;
 import com.hrg.enums.ErrorCode;
 import com.hrg.exception.ValidatorException;
 import com.hrg.javamapper.read.MissionReadMapper;
+import com.hrg.javamapper.read.ProjectAuditReadMapper;
 import com.hrg.javamapper.read.ProjectReadMapper;
 import com.hrg.javamapper.read.WorkerRelProjectReadMapper;
 import com.hrg.javamapper.write.ProjectAuditWriteMapper;
@@ -41,6 +42,8 @@ public class ProjectServiceImpl implements ProjectService {
     ProjectAuditWriteMapper projectAuditWriteMapper;
     @Autowired
     ProjectRelDepartmentWriteMapper projectRelDepartmentWriteMapper;
+    @Autowired
+    ProjectAuditReadMapper projectAuditReadMapper;
     /**
      * 添加项目
      *
@@ -211,5 +214,36 @@ public class ProjectServiceImpl implements ProjectService {
     public List<Map> selectProjectAudit(String auditId) throws Exception{
 
         return   projectReadMapper.selectProjectAudit(auditId);
+    }
+
+    /**
+     * 审核详情
+     * @param projectId
+     * @return
+     */
+    @Override
+    public List<Map> selectByExample(String projectId){
+        Map<String,String> map=new HashMap<String, String>();
+        map.put("projectid",projectId);
+        return  projectAuditReadMapper.selectProjectAuditDetail(map);
+    }
+
+    /**
+     * 根据项目ID 和状态查询总数
+     * @param map
+     * @return
+     */
+    @Override
+    public  int selectAuditInt(Map map){
+        return projectAuditReadMapper.selectAuditInt(map);
+    }
+
+    /**
+     * 修改项目审核状态。审核表的
+     * @param projectAudit
+     * @return
+     */
+    public int updateByPrimaryKeySelective(ProjectAudit projectAudit){
+        return projectAuditWriteMapper.updateByPrimaryKeySelective(projectAudit);
     }
 }
