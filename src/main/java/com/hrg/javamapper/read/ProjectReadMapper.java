@@ -22,5 +22,5 @@ public interface ProjectReadMapper {
 
     Map<String, Object> selectMapByExampleForOne(@Param("example") ProjectCriteria example);
 
-    List<Map> selectProjectAudit(String auditId);
+    List<Map> selectProjectAudit(Map map);
 }

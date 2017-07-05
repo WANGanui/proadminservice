@@ -225,7 +225,9 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<Map> selectProjectAudit(String auditId) throws Exception{
 
-        return   projectReadMapper.selectProjectAudit(auditId);
+        Map map=new HashMap();
+        map.put("auditId",auditId);
+        return   projectReadMapper.selectProjectAudit(map);
     }
 
     /**
