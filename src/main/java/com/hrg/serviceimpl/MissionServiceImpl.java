@@ -104,8 +104,8 @@ public class MissionServiceImpl implements MissionService {
         }else {
             WorkerRelMission workerRelMission = new WorkerRelMission();
             workerRelMission.setDataid(UUIDGenerator.getUUID());
-            workerRelMission.setWorkerdataid(mission.getCreatordataid());
-            workerRelMission.setWorkername(mission.getCreator());
+            workerRelMission.setWorkerdataid(mission.getHeaderid());
+            workerRelMission.setWorkername(mission.getHeadername());
             workerRelMission.setMissiondataid(mission.getDataid());
             workerRelMission.setMissionname(mission.getName());
             int y = workerRelMissionWriteMapper.insert(workerRelMission);
