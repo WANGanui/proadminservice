@@ -50,6 +50,8 @@ public class WorkerServiceImpl implements WorkerService {
     MissionReadMapper missionReadMapper;
     @Autowired
     NoticeReadMapper noticeReadMapper;
+    @Autowired
+    ProjectAuditReadMapper projectAuditReadMapper;
 
     /**
      * 方法说明：根据员工账号查询员工对象
@@ -230,6 +232,7 @@ public class WorkerServiceImpl implements WorkerService {
     public Map<String, Object> selectModuleAndPermission(String workerdataid) throws Exception {
         if (ValidUtil.isNullOrEmpty(workerdataid))
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+        Map<String, Object> map = new HashMap<String, Object>();
         WorkerRoleCriteria workerRoleCriteria = new WorkerRoleCriteria();
         workerRoleCriteria.setWorkerdataid(workerdataid);
         WorkerRole workerRole = workerRoleReadMapper.selectByExampleForOne(workerRoleCriteria);
@@ -256,7 +259,28 @@ public class WorkerServiceImpl implements WorkerService {
         moduleCriteria.setDatatidList(moduleid);
         List<Module> moduleList = moduleReadMapper.selectByExample(moduleCriteria);
 
-        Map<String, Object> map = new HashMap<String, Object>();
+        WorkerRelMissionCriteria relMissionCriteria = new WorkerRelMissionCriteria();
+        relMissionCriteria.setWorkerdataid(workerdataid);
+        List<WorkerRelMission> relMissionList = workerRelMissionReadMapper.selectByExample(relMissionCriteria);
+        if (!ValidUtil.isNullOrEmpty(relMissionList)){
+            map.put("workermission",workerRelMissionReadMapper.countByExample(relMissionCriteria));
+        }
+
+        MissionCriteria missionCriteria = new MissionCriteria();
+        missionCriteria.setAuditorid(workerdataid);
+        missionCriteria.setMissionstate("2");
+        int count = missionReadMapper.countByExample(missionCriteria);
+        if (count>0){
+            map.put("auditmission",count);
+        }
+
+        ProjectAuditCriteria projectCriteria = new ProjectAuditCriteria();
+        projectCriteria.setAuditorid(workerdataid);
+        projectCriteria.setAuditstate("0");
+        int x = projectAuditReadMapper.countByExample(projectCriteria);
+        if (x>0){
+            map.put("auditproject",x);
+        }
         map.put("menus",moduleList);
         map.put("permissions",permissionList);
         map.put("roleid",workerRole.getRoleid());
