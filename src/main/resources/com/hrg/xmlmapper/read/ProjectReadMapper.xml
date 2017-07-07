@@ -22,7 +22,8 @@
     <result column="modifydataid" property="modifydataid" jdbcType="VARCHAR" />
     <result column="progress" property="progress" jdbcType="VARCHAR" />
     <result column="member" property="member" jdbcType="VARCHAR" />
-    <collection property="member" column="{projectdataid=dataid}" javaType="String" ofType="String" select="selectMembers"></collection>
+    <result column="auditprogress" property="auditprogress" jdbcType="VARCHAR" />
+    <result column="isdelete" property="isdelete" jdbcType="CHAR" />
   </resultMap>
   <resultMap id="HashMapBaseResultMap" type="hashmap" >
     <id column="dataid" property="dataid" jdbcType="VARCHAR" />
@@ -45,6 +46,8 @@
     <result column="modifydataid" property="modifydataid" jdbcType="VARCHAR" />
     <result column="progress" property="progress" jdbcType="VARCHAR" />
     <result column="member" property="member" jdbcType="VARCHAR" />
+    <result column="auditprogress" property="auditprogress" jdbcType="VARCHAR" />
+    <result column="isdelete" property="isdelete" jdbcType="CHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -198,12 +201,30 @@
           #{listItem}
         </foreach>
       </if>
+      <if test="example.auditprogress != null" >
+         and auditprogress = #{example.auditprogress,jdbcType=VARCHAR}
+      </if>
+      <if test="example.auditprogressList != null  and  example.auditprogressList.size() > 0 " >
+         and auditprogress in 
+        <foreach collection="example.auditprogressList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.isdelete != null" >
+         and isdelete = #{example.isdelete,jdbcType=CHAR}
+      </if>
+      <if test="example.isdeleteList != null  and  example.isdeleteList.size() > 0 " >
+         and isdelete in 
+        <foreach collection="example.isdeleteList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
     </where>
   </sql>
   <sql id="Base_Column_List" >
     dataid, name, starttime, endtime, days, month, leaderid, leader, contect, state, 
     finishtime, remark, creator, createtime, modify, modifytime, creatordataid, modifydataid, 
-    progress, member
+    progress, member, auditprogress, isdelete
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="map" >
     select
@@ -288,12 +309,5 @@
     <if test="example.limitStart >= 0 and example.pageSize > 0 " >
       limit #{example.limitStart} , #{example.pageSize}
     </if>
-  </select>
-  <select id="selectMembers" resultType="String">
-    select group_concat(workername) member
-    from hrg_worker_rel_project where projectdataid = #{projectdataid}
-  </select>
-  <select id="selectProjectAudit" resultType="java.util.Map" parameterType="java.util.Map">
-    SELECT  a.*,b.auditstate,b.id from hrg_project a INNER JOIN hrg_project_audit b ON (a.dataid=b.projectid AND b.auditorid=#{auditId} AND b.auditstate=0)
   </select>
 </mapper>
