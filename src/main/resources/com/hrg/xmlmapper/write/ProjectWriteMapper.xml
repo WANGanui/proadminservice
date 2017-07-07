@@ -170,7 +170,16 @@
         <foreach collection="example.isdeleteList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
-      </if>											
+      </if>
+      <if test="example.deletestate != null" >
+        and deletestate = #{example.deletestate,jdbcType=CHAR}
+      </if>
+      <if test="example.deletestateList != null  and  example.deletestateList.size() > 0 " >
+        and deletestate in
+        <foreach collection="example.deletestateList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
     </where>
   </sql>
   <delete id="deleteByPrimaryKey" parameterType="map" >
@@ -191,7 +200,7 @@
       creator, createtime, modify, 
       modifytime, creatordataid, 
       modifydataid, progress, member, 
-      auditprogress, isdelete)
+      auditprogress, isdelete, deletestate)
     values (#{record.dataid,jdbcType=VARCHAR}, #{record.name,jdbcType=VARCHAR}, #{record.starttime,jdbcType=TIMESTAMP}, 
       #{record.endtime,jdbcType=TIMESTAMP}, #{record.days,jdbcType=INTEGER}, #{record.month,jdbcType=INTEGER}, 
       #{record.leaderid,jdbcType=VARCHAR}, #{record.leader,jdbcType=VARCHAR}, #{record.contect,jdbcType=VARCHAR}, 
@@ -199,7 +208,7 @@
       #{record.creator,jdbcType=VARCHAR}, #{record.createtime,jdbcType=TIMESTAMP}, #{record.modify,jdbcType=VARCHAR}, 
       #{record.modifytime,jdbcType=TIMESTAMP}, #{record.creatordataid,jdbcType=VARCHAR}, 
       #{record.modifydataid,jdbcType=VARCHAR}, #{record.progress,jdbcType=VARCHAR}, #{record.member,jdbcType=VARCHAR}
-	  #{record.auditprogress,jdbcType=VARCHAR}, #{record.isdelete,jdbcType=CHAR})
+	  #{record.auditprogress,jdbcType=VARCHAR}, #{record.isdelete,jdbcType=CHAR}, #{record.deletestate,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="map" >
     insert into hrg_project
@@ -269,8 +278,11 @@
       </if>
       <if test="record.isdelete != null" >
         isdelete,
-      </if>   
-</trim>
+      </if>
+      <if test="record.deletestate != null" >
+        deletestate,
+      </if>
+    </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="record.dataid != null" >
         #{record.dataid,jdbcType=VARCHAR},
@@ -337,7 +349,10 @@
       </if>
       <if test="record.isdelete != null" >
         #{record.isdelete,jdbcType=CHAR},
-      </if>   
+      </if>
+      <if test="record.deletestate != null" >
+        #{record.deletestate,jdbcType=CHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByExampleSelective" parameterType="map" >
@@ -408,7 +423,10 @@
       </if>
       <if test="record.isdelete != null" >
         isdelete = #{record.isdelete,jdbcType=CHAR},
-      </if>   
+      </if>
+      <if test="record.deletestate != null" >
+        deletestate = #{record.deletestate,jdbcType=CHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -437,8 +455,8 @@
       progress = #{record.progress,jdbcType=VARCHAR},
       member = #{record.member,jdbcType=VARCHAR},
 	  auditprogress = #{record.auditprogress,jdbcType=VARCHAR},
-      isdelete = #{record.isdelete,jdbcType=CHAR}							   
-											  
+      isdelete = #{record.isdelete,jdbcType=CHAR},
+      deletestate = #{record.deletestate,jdbcType=CHAR}
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -508,7 +526,10 @@
       </if>
       <if test="record.isdelete != null" >
         isdelete = #{record.isdelete,jdbcType=CHAR},
-      </if>   
+      </if>
+      <if test="record.deletestate != null" >
+        deletestate = #{record.deletestate,jdbcType=CHAR},
+      </if>
     </set>
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
@@ -534,7 +555,8 @@
       progress = #{record.progress,jdbcType=VARCHAR},
       member = #{record.member,jdbcType=VARCHAR},
 	  auditprogress = #{record.auditprogress,jdbcType=VARCHAR},
-      isdelete=#{record.isdelete,jdbcType=CHAR}									
+      isdelete=#{record.isdelete,jdbcType=CHAR},
+      deletestate=#{record.deletestate,jdbcType=CHAR}
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
 </mapper>
