@@ -22,9 +22,9 @@
     <result column="modifydataid" property="modifydataid" jdbcType="VARCHAR" />
     <result column="progress" property="progress" jdbcType="VARCHAR" />
     <result column="member" property="member" jdbcType="VARCHAR" />
+    <result column="auditprogress" property="auditprogress" jdbcType="VARCHAR" />
+    <result column="isdelete" property="isdelete" jdbcType="CHAR" />
     <collection property="member" column="{projectdataid=dataid}" javaType="String" ofType="String" select="selectMembers"></collection>
-	<result column="auditprogress" property="auditprogress" jdbcType="VARCHAR" />
-    <result column="isdelete" property="isdelete" jdbcType="CHAR" />																
   </resultMap>
   <resultMap id="HashMapBaseResultMap" type="hashmap" >
     <id column="dataid" property="dataid" jdbcType="VARCHAR" />
@@ -47,8 +47,8 @@
     <result column="modifydataid" property="modifydataid" jdbcType="VARCHAR" />
     <result column="progress" property="progress" jdbcType="VARCHAR" />
     <result column="member" property="member" jdbcType="VARCHAR" />
-	<result column="auditprogress" property="auditprogress" jdbcType="VARCHAR" />
-    <result column="isdelete" property="isdelete" jdbcType="CHAR" />																
+    <result column="auditprogress" property="auditprogress" jdbcType="VARCHAR" />
+    <result column="isdelete" property="isdelete" jdbcType="CHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -202,7 +202,7 @@
           #{listItem}
         </foreach>
       </if>
-	<if test="example.auditprogress != null" >
+      <if test="example.auditprogress != null" >
          and auditprogress = #{example.auditprogress,jdbcType=VARCHAR}
       </if>
       <if test="example.auditprogressList != null  and  example.auditprogressList.size() > 0 " >
@@ -219,7 +219,7 @@
         <foreach collection="example.isdeleteList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
-      </if>																  
+      </if>
     </where>
   </sql>
   <sql id="Base_Column_List" >
