@@ -133,6 +133,7 @@
     <if test="example.limitStart >= 0 and example.pageSize > 0 " >
       limit #{example.limitStart} , #{example.pageSize}
     </if>
+    WHERE dataid !=1
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
     select 
