@@ -195,6 +195,6 @@
     where id = #{record.id,jdbcType=INTEGER}
   </update>
   <insert id="copy" parameterType="map">
-    INSERT INTO hrg_project_audit_del(id,projectid,auditorid,orderid) SELECT id,projectid,auditorid,orderid FROM hrg_project_audit where projectid = #{projectid,jdbcType=VARCHAR};
+    INSERT INTO hrg_project_audit_del(id,projectid,auditorid,orderid) SELECT id,projectid,auditorid,orderid FROM hrg_project_audit where projectid = #{prodataid,jdbcType=VARCHAR};
   </insert>
 </mapper>
