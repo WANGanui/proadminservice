@@ -170,4 +170,8 @@
     SELECT COUNT(1) FROM hrg_project_audit  WHERE auditstate=#{auditstate} AND projectid=#{projectid}
   </select>
 
+  <select id="selectAuditDelInt" resultType="java.lang.Integer" parameterType="java.util.Map">
+    SELECT COUNT(1) FROM hrg_project_audit_del  WHERE auditstate=#{auditstate} AND projectid=#{projectid}
+  </select>
+
 </mapper>

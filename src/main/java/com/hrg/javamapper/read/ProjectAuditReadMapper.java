@@ -25,4 +25,6 @@ public interface ProjectAuditReadMapper {
     List<Map> selectProjectAuditDetail(Map<String,String> map);
 
     int selectAuditInt(Map<String,String> map);
+
+    int selectAuditDelInt(Map<String,String> map);
 }

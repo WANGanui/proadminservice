@@ -327,6 +327,8 @@
     from hrg_worker_rel_project where projectdataid = #{projectdataid}
   </select>
   <select id="selectProjectAudit" resultType="java.util.Map" parameterType="java.util.Map">
-    SELECT  a.*,b.auditstate,b.id from hrg_project a INNER JOIN hrg_project_audit b ON (a.dataid=b.projectid AND b.auditorid=#{auditId} AND b.auditstate=0)
+    SELECT  a.*,b.auditstate,b.id from hrg_project a INNER JOIN hrg_project_audit b ON (a.dataid=b.projectid AND a.isdelete='0' AND b.auditorid=#{auditId} AND b.auditstate=0)
+    UNION ALL
+    SELECT  a.*,b.auditstate,b.id from hrg_project a INNER JOIN hrg_project_audit_del b ON (a.dataid=b.projectid AND a.isdelete='1' AND b.auditorid=#{auditId} AND b.auditstate=0)
   </select>
 </mapper>

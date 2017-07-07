@@ -6,11 +6,8 @@ import com.hrg.javamapper.read.MissionReadMapper;
 import com.hrg.javamapper.read.ProjectAuditReadMapper;
 import com.hrg.javamapper.read.ProjectReadMapper;
 import com.hrg.javamapper.read.WorkerRelProjectReadMapper;
-import com.hrg.javamapper.write.ProjectAuditWriteMapper;
-import com.hrg.javamapper.write.ProjectRelDepartmentWriteMapper;
+import com.hrg.javamapper.write.*;
 import com.hrg.javamapper.read.*;
-import com.hrg.javamapper.write.ProjectWriteMapper;
-import com.hrg.javamapper.write.WorkerRelProjectWriteMapper;
 import com.hrg.model.*;
 import com.hrg.service.ProjectService;
 import com.hrg.util.DateUtil;
@@ -49,6 +46,9 @@ public class ProjectServiceImpl implements ProjectService {
     WorkerReadMapper workerReadMapper;
     @Autowired
     ProjectRelDepartmentReadMapper projectRelDepartmentReadMapper;
+
+    @Autowired
+    ProjectAuditDelWriteMapper projectAuditDelWriteMapper;
 
     /**
      * 添加项目
@@ -262,6 +262,15 @@ public class ProjectServiceImpl implements ProjectService {
     public  int selectAuditInt(Map map){
         return projectAuditReadMapper.selectAuditInt(map);
     }
+    /**
+     * 根据项目ID 和状态查询总数
+     * @param map
+     * @return
+     */
+    @Override
+    public  int selectAuditDelInt(Map map){
+        return projectAuditReadMapper.selectAuditDelInt(map);
+    }
 
     /**
      * 修改项目审核状态。审核表的
@@ -272,4 +281,24 @@ public class ProjectServiceImpl implements ProjectService {
     public int updateByPrimaryKeySelective(ProjectAudit projectAudit){
         return projectAuditWriteMapper.updateByPrimaryKeySelective(projectAudit);
     }
+
+    /**
+     * 修改项目删除审核状态表的
+     * @param projectAuditDel
+     * @return
+     */
+    @Override
+    public int updateByPrimaryKeySelective(ProjectAuditDel projectAuditDel){
+        return projectAuditDelWriteMapper.updateByPrimaryKeySelective(projectAuditDel);
+    }
+
+    //删除时复制到删除审核表使用
+    public int copy(String prodataid){
+        ProjectAuditDelCriteria projectAuditDelCriteria =new ProjectAuditDelCriteria();
+        projectAuditDelCriteria.setProjectid(prodataid);
+        projectAuditDelWriteMapper.deleteByExample(projectAuditDelCriteria);
+        projectAuditDelWriteMapper.copy(prodataid);
+
+        return 0;
+    };
 }

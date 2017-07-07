@@ -21,5 +21,5 @@ public interface ProjectAuditDelWriteMapper {
 
     int updateByPrimaryKey(@Param("record") ProjectAuditDel record);
 
-    int copy(@Param("prodataid") String prodataid);
+    void copy(@Param("prodataid") String prodataid);
 }
