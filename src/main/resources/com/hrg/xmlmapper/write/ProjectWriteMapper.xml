@@ -153,7 +153,7 @@
           #{listItem}
         </foreach>
       </if>
-      <if test="example.auditprogress != null" >
+	<if test="example.auditprogress != null" >
          and auditprogress = #{example.auditprogress,jdbcType=VARCHAR}
       </if>
       <if test="example.auditprogressList != null  and  example.auditprogressList.size() > 0 " >
@@ -170,7 +170,7 @@
         <foreach collection="example.isdeleteList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
-      </if>
+      </if>											
     </where>
   </sql>
   <delete id="deleteByPrimaryKey" parameterType="map" >
@@ -198,8 +198,8 @@
       #{record.state,jdbcType=CHAR}, #{record.finishtime,jdbcType=TIMESTAMP}, #{record.remark,jdbcType=VARCHAR}, 
       #{record.creator,jdbcType=VARCHAR}, #{record.createtime,jdbcType=TIMESTAMP}, #{record.modify,jdbcType=VARCHAR}, 
       #{record.modifytime,jdbcType=TIMESTAMP}, #{record.creatordataid,jdbcType=VARCHAR}, 
-      #{record.modifydataid,jdbcType=VARCHAR}, #{record.progress,jdbcType=VARCHAR}, #{record.member,jdbcType=VARCHAR}, 
-      #{record.auditprogress,jdbcType=VARCHAR}, #{record.isdelete,jdbcType=CHAR})
+      #{record.modifydataid,jdbcType=VARCHAR}, #{record.progress,jdbcType=VARCHAR}, #{record.member,jdbcType=VARCHAR}
+	  #{record.auditprogress,jdbcType=VARCHAR}, #{record.isdelete,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="map" >
     insert into hrg_project
@@ -264,13 +264,13 @@
       <if test="record.member != null" >
         member,
       </if>
-      <if test="record.auditprogress != null" >
+		<if test="record.auditprogress != null" >
         auditprogress,
       </if>
       <if test="record.isdelete != null" >
         isdelete,
-      </if>
-    </trim>
+      </if>   
+</trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="record.dataid != null" >
         #{record.dataid,jdbcType=VARCHAR},
@@ -332,12 +332,12 @@
       <if test="record.member != null" >
         #{record.member,jdbcType=VARCHAR},
       </if>
-      <if test="record.auditprogress != null" >
+		<if test="record.auditprogress != null" >
         #{record.auditprogress,jdbcType=VARCHAR},
       </if>
       <if test="record.isdelete != null" >
         #{record.isdelete,jdbcType=CHAR},
-      </if>
+      </if>   
     </trim>
   </insert>
   <update id="updateByExampleSelective" parameterType="map" >
@@ -403,12 +403,12 @@
       <if test="record.member != null" >
         member = #{record.member,jdbcType=VARCHAR},
       </if>
-      <if test="record.auditprogress != null" >
+		<if test="record.auditprogress != null" >
         auditprogress = #{record.auditprogress,jdbcType=VARCHAR},
       </if>
       <if test="record.isdelete != null" >
         isdelete = #{record.isdelete,jdbcType=CHAR},
-      </if>
+      </if>   
     </set>
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -436,8 +436,9 @@
       modifydataid = #{record.modifydataid,jdbcType=VARCHAR},
       progress = #{record.progress,jdbcType=VARCHAR},
       member = #{record.member,jdbcType=VARCHAR},
-      auditprogress = #{record.auditprogress,jdbcType=VARCHAR},
-      isdelete = #{record.isdelete,jdbcType=CHAR}
+	  auditprogress = #{record.auditprogress,jdbcType=VARCHAR},
+      isdelete = #{record.isdelete,jdbcType=CHAR}							   
+											  
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -502,12 +503,12 @@
       <if test="record.member != null" >
         member = #{record.member,jdbcType=VARCHAR},
       </if>
-      <if test="record.auditprogress != null" >
+		<if test="record.auditprogress != null" >
         auditprogress = #{record.auditprogress,jdbcType=VARCHAR},
       </if>
       <if test="record.isdelete != null" >
         isdelete = #{record.isdelete,jdbcType=CHAR},
-      </if>
+      </if>   
     </set>
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
@@ -532,8 +533,8 @@
       modifydataid = #{record.modifydataid,jdbcType=VARCHAR},
       progress = #{record.progress,jdbcType=VARCHAR},
       member = #{record.member,jdbcType=VARCHAR},
-      auditprogress = #{record.auditprogress,jdbcType=VARCHAR},
-      isdelete = #{record.isdelete,jdbcType=CHAR}
+	  auditprogress = #{record.auditprogress,jdbcType=VARCHAR},
+      isdelete=#{record.isdelete,jdbcType=CHAR}									
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
 </mapper>

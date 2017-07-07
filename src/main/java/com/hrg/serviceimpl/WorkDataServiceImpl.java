@@ -3,6 +3,7 @@ package com.hrg.serviceimpl;
 import com.ctc.wstx.util.DataUtil;
 import com.hrg.enums.ErrorCode;
 import com.hrg.exception.ValidatorException;
+import com.hrg.javamapper.read.MissionReadMapper;
 import com.hrg.javamapper.read.WorkdataReadMapper;
 import com.hrg.javamapper.read.WorkerReadMapper;
 import com.hrg.javamapper.read.WorkerRelMissionReadMapper;
@@ -33,6 +34,8 @@ public class WorkDataServiceImpl implements WorkDataService {
     WorkerReadMapper workerReadMapper;
     @Autowired
     WorkerRelMissionReadMapper workerRelMissionReadMapper;
+    @Autowired
+    MissionReadMapper missionReadMapper;
 
     /**
      * 添加工作日志
@@ -48,6 +51,11 @@ public class WorkDataServiceImpl implements WorkDataService {
                 ValidUtil.isNullOrEmpty(workdata.getWorkerdataid())||ValidUtil.isNullOrEmpty(workdata.getWorkcontext())||
                 ValidUtil.isNullOrEmpty(workdata.getWorkername()))
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+        Mission mission = missionReadMapper.selectByPrimaryKey(workdata.getMissiondataid());
+        if (mission.getType()=="0" || mission.getType().equals("0")){
+            workdata.setProjectdataid(mission.getProdataid());
+            workdata.setProjectname(mission.getProname());
+        }
         workdata.setDataid(UUIDGenerator.getUUID());
         int x = workdataWriteMapper.insert(workdata);
         return x > 0 ? true : false;
