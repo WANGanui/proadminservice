@@ -64,9 +64,8 @@ public class WorkerServiceImpl implements WorkerService {
     public Worker getWorkerInfo(String account) throws Exception {
         if (ValidUtil.isNullOrEmpty(account))
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
-        WorkerCriteria example = new WorkerCriteria();
-        example.setAccount(account);
-        return workerReadMapper.selectByExampleForOne(example);
+
+        return workerReadMapper.selectByAccount(account);
     }
 
     /**

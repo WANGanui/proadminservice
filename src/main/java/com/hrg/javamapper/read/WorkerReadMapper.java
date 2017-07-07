@@ -20,4 +20,6 @@ public interface WorkerReadMapper {
     Map<String, Object> selectMapByPrimaryKey(@Param("dataid") String dataid);
 
     Map<String, Object> selectMapByExampleForOne(@Param("example") WorkerCriteria example);
+
+    Worker selectByAccount(@Param("account") String account);
 }

@@ -111,6 +111,7 @@
       <if test="example.createtime != null" >
          and createtime = #{example.createtime,jdbcType=TIMESTAMP}
       </if>
+        and dataid !=1
     </where>
   </sql>
   <sql id="Base_Column_List" >
@@ -133,7 +134,6 @@
     <if test="example.limitStart >= 0 and example.pageSize > 0 " >
       limit #{example.limitStart} , #{example.pageSize}
     </if>
-    WHERE dataid !=1
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
     select 
@@ -202,4 +202,12 @@
       limit #{example.limitStart} , #{example.pageSize}
     </if>
   </select>
+    <select id="selectByAccount" resultMap="BaseResultMap" parameterType="map" >
+        select
+        <include refid="Base_Column_List" />
+        from hrg_worker
+        <where >
+            and account=#{account,jdbcType=VARCHAR}
+        </where>
+    </select>
 </mapper>
