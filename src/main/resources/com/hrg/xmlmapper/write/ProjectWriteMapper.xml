@@ -153,7 +153,7 @@
           #{listItem}
         </foreach>
       </if>
-	<if test="example.auditprogress != null" >
+      <if test="example.auditprogress != null" >
          and auditprogress = #{example.auditprogress,jdbcType=VARCHAR}
       </if>
       <if test="example.auditprogressList != null  and  example.auditprogressList.size() > 0 " >
@@ -172,10 +172,10 @@
         </foreach>
       </if>
       <if test="example.deletestate != null" >
-        and deletestate = #{example.deletestate,jdbcType=CHAR}
+         and deletestate = #{example.deletestate,jdbcType=CHAR}
       </if>
       <if test="example.deletestateList != null  and  example.deletestateList.size() > 0 " >
-        and deletestate in
+         and deletestate in 
         <foreach collection="example.deletestateList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
@@ -200,15 +200,17 @@
       creator, createtime, modify, 
       modifytime, creatordataid, 
       modifydataid, progress, member, 
-      auditprogress, isdelete, deletestate)
+      auditprogress, isdelete, deletestate
+      )
     values (#{record.dataid,jdbcType=VARCHAR}, #{record.name,jdbcType=VARCHAR}, #{record.starttime,jdbcType=TIMESTAMP}, 
       #{record.endtime,jdbcType=TIMESTAMP}, #{record.days,jdbcType=INTEGER}, #{record.month,jdbcType=INTEGER}, 
       #{record.leaderid,jdbcType=VARCHAR}, #{record.leader,jdbcType=VARCHAR}, #{record.contect,jdbcType=VARCHAR}, 
       #{record.state,jdbcType=CHAR}, #{record.finishtime,jdbcType=TIMESTAMP}, #{record.remark,jdbcType=VARCHAR}, 
       #{record.creator,jdbcType=VARCHAR}, #{record.createtime,jdbcType=TIMESTAMP}, #{record.modify,jdbcType=VARCHAR}, 
       #{record.modifytime,jdbcType=TIMESTAMP}, #{record.creatordataid,jdbcType=VARCHAR}, 
-      #{record.modifydataid,jdbcType=VARCHAR}, #{record.progress,jdbcType=VARCHAR}, #{record.member,jdbcType=VARCHAR}
-	  #{record.auditprogress,jdbcType=VARCHAR}, #{record.isdelete,jdbcType=CHAR}, #{record.deletestate,jdbcType=CHAR})
+      #{record.modifydataid,jdbcType=VARCHAR}, #{record.progress,jdbcType=VARCHAR}, #{record.member,jdbcType=VARCHAR}, 
+      #{record.auditprogress,jdbcType=VARCHAR}, #{record.isdelete,jdbcType=CHAR}, #{record.deletestate,jdbcType=CHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="map" >
     insert into hrg_project
@@ -273,7 +275,7 @@
       <if test="record.member != null" >
         member,
       </if>
-		<if test="record.auditprogress != null" >
+      <if test="record.auditprogress != null" >
         auditprogress,
       </if>
       <if test="record.isdelete != null" >
@@ -344,7 +346,7 @@
       <if test="record.member != null" >
         #{record.member,jdbcType=VARCHAR},
       </if>
-		<if test="record.auditprogress != null" >
+      <if test="record.auditprogress != null" >
         #{record.auditprogress,jdbcType=VARCHAR},
       </if>
       <if test="record.isdelete != null" >
@@ -418,7 +420,7 @@
       <if test="record.member != null" >
         member = #{record.member,jdbcType=VARCHAR},
       </if>
-		<if test="record.auditprogress != null" >
+      <if test="record.auditprogress != null" >
         auditprogress = #{record.auditprogress,jdbcType=VARCHAR},
       </if>
       <if test="record.isdelete != null" >
@@ -454,7 +456,7 @@
       modifydataid = #{record.modifydataid,jdbcType=VARCHAR},
       progress = #{record.progress,jdbcType=VARCHAR},
       member = #{record.member,jdbcType=VARCHAR},
-	  auditprogress = #{record.auditprogress,jdbcType=VARCHAR},
+      auditprogress = #{record.auditprogress,jdbcType=VARCHAR},
       isdelete = #{record.isdelete,jdbcType=CHAR},
       deletestate = #{record.deletestate,jdbcType=CHAR}
     <if test="_parameter != null" >
@@ -521,7 +523,7 @@
       <if test="record.member != null" >
         member = #{record.member,jdbcType=VARCHAR},
       </if>
-		<if test="record.auditprogress != null" >
+      <if test="record.auditprogress != null" >
         auditprogress = #{record.auditprogress,jdbcType=VARCHAR},
       </if>
       <if test="record.isdelete != null" >
@@ -554,9 +556,9 @@
       modifydataid = #{record.modifydataid,jdbcType=VARCHAR},
       progress = #{record.progress,jdbcType=VARCHAR},
       member = #{record.member,jdbcType=VARCHAR},
-	  auditprogress = #{record.auditprogress,jdbcType=VARCHAR},
-      isdelete=#{record.isdelete,jdbcType=CHAR},
-      deletestate=#{record.deletestate,jdbcType=CHAR}
+      auditprogress = #{record.auditprogress,jdbcType=VARCHAR},
+      isdelete = #{record.isdelete,jdbcType=CHAR},
+      deletestate = #{record.deletestate,jdbcType=CHAR}
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
 </mapper>
