@@ -24,5 +24,5 @@ public interface ProjectReadMapper {
 
     List<Map> selectProjectAudit(Map map);
 
-    int countAudit(@Param("auditorid") String auditorid);
+    int countAudit(@Param("auditId") String auditId);
 }
