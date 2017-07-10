@@ -51,9 +51,7 @@ public class WorkerServiceImpl implements WorkerService {
     @Autowired
     NoticeReadMapper noticeReadMapper;
     @Autowired
-    ProjectAuditReadMapper projectAuditReadMapper;
-    @Autowired
-    ProjectAuditDelReadMapper projectAuditDelReadMapper;
+    ProjectReadMapper projectReadMapper;
 
     /**
      * 方法说明：根据员工账号查询员工对象
@@ -275,22 +273,10 @@ public class WorkerServiceImpl implements WorkerService {
             map.put("auditmission",count);
         }
 
-        ProjectAuditCriteria projectCriteria = new ProjectAuditCriteria();
-        projectCriteria.setAuditorid(workerdataid);
-        projectCriteria.setAuditstate("0");
-        int x = projectAuditReadMapper.countByExample(projectCriteria);
+        int x = projectReadMapper.countAudit(workerdataid);
 
-        ProjectAuditDelCriteria projectAuditDelCriteria = new ProjectAuditDelCriteria();
-        projectAuditDelCriteria.setAuditorid(workerdataid);
-        projectAuditDelCriteria.setAuditstate("0");
-        int y = projectAuditDelReadMapper.countByExample(projectAuditDelCriteria);
-
-        if (x>0 && y<=0)
+        if (x>0)
             map.put("auditproject",x);
-        if (y>0 && x >0)
-            map.put("auditproject",x+y);
-        if (y>0 && x <=0)
-            map.put("auditproject",y);
 
         map.put("menus",moduleList);
         map.put("permissions",permissionList);

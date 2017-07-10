@@ -331,4 +331,9 @@
     UNION ALL
     SELECT  a.*,b.auditstate,b.id from hrg_project a INNER JOIN hrg_project_audit_del b ON (a.dataid=b.projectid AND a.isdelete='1' AND b.auditorid=#{auditId} AND b.auditstate=0)
   </select>
+  <select id="countAudit" parameterType="map" resultType="java.lang.Integer">
+    SELECT count(*) FROM (SELECT  a.*,b.auditstate,b.id from hrg_project a INNER JOIN hrg_project_audit b ON (a.dataid=b.projectid AND a.isdelete='0' AND b.auditorid=#{auditId} AND b.auditstate=0)
+    UNION ALL
+    SELECT  a.*,b.auditstate,b.id from hrg_project a INNER JOIN hrg_project_audit_del b ON (a.dataid=b.projectid AND a.isdelete='1' AND b.auditorid=#{auditId} AND b.auditstate=0)) temp
+  </select>
 </mapper>

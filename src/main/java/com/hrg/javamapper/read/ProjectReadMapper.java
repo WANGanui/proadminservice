@@ -23,4 +23,6 @@ public interface ProjectReadMapper {
     Map<String, Object> selectMapByExampleForOne(@Param("example") ProjectCriteria example);
 
     List<Map> selectProjectAudit(Map map);
+
+    int countAudit(@Param("auditorid") String auditorid);
 }
