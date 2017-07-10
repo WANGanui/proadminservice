@@ -52,6 +52,8 @@ public class WorkerServiceImpl implements WorkerService {
     NoticeReadMapper noticeReadMapper;
     @Autowired
     ProjectAuditReadMapper projectAuditReadMapper;
+    @Autowired
+    ProjectAuditDelReadMapper projectAuditDelReadMapper;
 
     /**
      * 方法说明：根据员工账号查询员工对象
@@ -277,9 +279,19 @@ public class WorkerServiceImpl implements WorkerService {
         projectCriteria.setAuditorid(workerdataid);
         projectCriteria.setAuditstate("0");
         int x = projectAuditReadMapper.countByExample(projectCriteria);
-        if (x>0){
+
+        ProjectAuditDelCriteria projectAuditDelCriteria = new ProjectAuditDelCriteria();
+        projectAuditDelCriteria.setAuditorid(workerdataid);
+        projectAuditDelCriteria.setAuditstate("0");
+        int y = projectAuditDelReadMapper.countByExample(projectAuditDelCriteria);
+
+        if (x>0 && y<=0)
             map.put("auditproject",x);
-        }
+        if (y>0 && x >0)
+            map.put("auditproject",x+y);
+        if (y>0 && x <=0)
+            map.put("auditproject",y);
+
         map.put("menus",moduleList);
         map.put("permissions",permissionList);
         map.put("roleid",workerRole.getRoleid());
@@ -390,6 +402,12 @@ public class WorkerServiceImpl implements WorkerService {
     @Override
     public Map selectIndex(String dataid) throws Exception {
         Map map = new HashMap();
+
+        WorkerRoleCriteria roleCriteria = new WorkerRoleCriteria();
+        roleCriteria.setWorkerdataid(dataid);
+        WorkerRole workerRole = workerRoleReadMapper.selectByExampleForOne(roleCriteria);
+
+
         WorkerRelMissionCriteria relmissionCriteria = new WorkerRelMissionCriteria();
         relmissionCriteria.setWorkerdataid(dataid);
         List<WorkerRelMission> relMissionList = workerRelMissionReadMapper.selectByExample(relmissionCriteria);
@@ -403,12 +421,14 @@ public class WorkerServiceImpl implements WorkerService {
 
         map.put("mission",missionList);
 
+        //查询公告
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
         Date time= sdf.parse(sdf.format(new Date()));
 
         NoticeCriteria noticeCriteria = new NoticeCriteria();
+        noticeCriteria.setLimitStart(0);
+        noticeCriteria.setPageSize(10);
         noticeCriteria.setTimeMin(time);
-        noticeCriteria.setTimeMax(DateUtil.addDay(time,1));
         List<Notice> noticeList = noticeReadMapper.selectByExample(noticeCriteria);
 
         map.put("notice",noticeList);
