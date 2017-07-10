@@ -293,6 +293,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     //删除时复制到删除审核表使用
+    @Override
     public int copy(String prodataid){
         ProjectAuditDelCriteria projectAuditDelCriteria =new ProjectAuditDelCriteria();
         projectAuditDelCriteria.setProjectid(prodataid);
