@@ -2,9 +2,7 @@ package com.hrg.serviceimpl;
 
 import com.hrg.enums.ErrorCode;
 import com.hrg.exception.ValidatorException;
-import com.hrg.javamapper.read.MissionReadMapper;
-import com.hrg.javamapper.read.WorkdataReadMapper;
-import com.hrg.javamapper.read.WorkerRelMissionReadMapper;
+import com.hrg.javamapper.read.*;
 import com.hrg.javamapper.write.MissionWriteMapper;
 import com.hrg.javamapper.write.WorkerRelMissionWriteMapper;
 import com.hrg.model.*;
@@ -17,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -35,6 +34,10 @@ public class MissionServiceImpl implements MissionService {
     WorkerRelMissionWriteMapper workerRelMissionWriteMapper;
     @Autowired
     WorkdataReadMapper workdataReadMapper;
+    @Autowired
+    WorkerReadMapper workerReadMapper;
+    @Autowired
+    WorkerRoleReadMapper workerRoleReadMapper;
 
     /**
      * 条件查询任务列表
@@ -44,9 +47,35 @@ public class MissionServiceImpl implements MissionService {
      * @throws Exception
      */
     @Override
-    public List<Mission> selectList(MissionCriteria example) throws Exception {
-        example.setOrderByClause("createtime asc,proportion desc");
-        return missionReadMapper.selectByExample(example);
+    public List<Mission> selectList(MissionCriteria example,Worker worker) throws Exception {
+        WorkerRoleCriteria workerRoleCriteria = new WorkerRoleCriteria();
+        workerRoleCriteria.setWorkerdataid(worker.getDataid());
+        WorkerRole workerRole = workerRoleReadMapper.selectByExampleForOne(workerRoleCriteria);
+        if (workerRole.getRoleid()=="1" || workerRole.getRoleid()=="5" ){
+            example.setOrderByClause("createtime desc,proportion desc");
+            return missionReadMapper.selectByExample(example);
+        }else {
+            WorkerCriteria workerCriteria = new WorkerCriteria();
+            workerCriteria.setDepartmentdataid(worker.getDepartmentdataid());
+            List<Worker> workerList = workerReadMapper.selectByExample(workerCriteria);
+            List<String> wids = new ArrayList<String>();
+            for (Worker worker1:workerList){
+                wids.add(worker1.getDataid());
+            }
+            WorkerRelMissionCriteria relMissionCriteria = new WorkerRelMissionCriteria();
+            relMissionCriteria.setWorkerdataidList(wids);
+            List<WorkerRelMission> relMissionList = workerRelMissionReadMapper.selectByExample(relMissionCriteria);
+            List<String> mids = new ArrayList<String>();
+            for (WorkerRelMission relMission:relMissionList){
+                mids.add(relMission.getMissiondataid());
+            }
+            MissionCriteria missionCriteria = new MissionCriteria();
+            missionCriteria.setDataidList(mids);
+            missionCriteria.isDistinct();
+            missionCriteria.setOrderByClause("proportion desc,createtime desc");
+            List<Mission> missionList = missionReadMapper.selectByExample(missionCriteria);
+            return missionList;
+        }
     }
 
     /**
@@ -148,10 +177,20 @@ public class MissionServiceImpl implements MissionService {
                     return false;
             }
         }
+        if (mission.getState().equals("2")){
+            mission.setFinishtime(new Date());
+        }
         int y = missionWriteMapper.updateByPrimaryKeySelective(mission);
         if (y<=0)
             return false;
         return x > 0 ? true : false;
+    }
+
+
+    @Override
+    public List<Mission> selectList(MissionCriteria example) throws Exception {
+        example.setOrderByClause("createtime desc,proportion desc");
+        return missionReadMapper.selectByExample(example);
     }
 
     /**

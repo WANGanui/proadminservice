@@ -278,6 +278,22 @@ public class WorkerServiceImpl implements WorkerService {
         if (x>0)
             map.put("auditproject",x);
 
+        Worker worker = workerReadMapper.selectByPrimaryKey(workerdataid);
+        WorkerCriteria workerCriteria = new WorkerCriteria();
+        workerCriteria.setDepartmentdataid(worker.getDepartmentdataid());
+        List<Worker> workerList = workerReadMapper.selectByExample(workerCriteria);
+        List<String> ids = new ArrayList<String>();
+        for (Worker worker1 : workerList){
+            ids.add(worker1.getDataid());
+        }
+        WorkdataCriteria workdataCriteria = new WorkdataCriteria();
+        workdataCriteria.setIsread("0");
+        workdataCriteria.setWorkerdataidList(ids);
+        int cou = workdataReadMapper.countByExample(workdataCriteria);
+        if (cou>0){
+            map.put("workdata",cou);
+        }
+
         map.put("menus",moduleList);
         map.put("permissions",permissionList);
         map.put("roleid",workerRole.getRoleid());
@@ -392,8 +408,11 @@ public class WorkerServiceImpl implements WorkerService {
         WorkerRoleCriteria roleCriteria = new WorkerRoleCriteria();
         roleCriteria.setWorkerdataid(dataid);
         WorkerRole workerRole = workerRoleReadMapper.selectByExampleForOne(roleCriteria);
+        //经理登录
+        if (workerRole.getRoleid()=="1"){
 
-
+        }
+        //按角色区分
         WorkerRelMissionCriteria relmissionCriteria = new WorkerRelMissionCriteria();
         relmissionCriteria.setWorkerdataid(dataid);
         List<WorkerRelMission> relMissionList = workerRelMissionReadMapper.selectByExample(relmissionCriteria);

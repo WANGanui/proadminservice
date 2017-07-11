@@ -34,7 +34,6 @@ public class WorkDataServiceImpl implements WorkDataService {
     WorkerRelMissionReadMapper workerRelMissionReadMapper;
     @Autowired
     MissionReadMapper missionReadMapper;
-
     @Autowired
     WorkdataChatReadMapper workdataChatReadMapper;
     @Autowired
@@ -59,6 +58,7 @@ public class WorkDataServiceImpl implements WorkDataService {
             workdata.setProjectname(mission.getProname());
         }
         workdata.setDataid(UUIDGenerator.getUUID());
+        workdata.setIsread("0");
         int x = workdataWriteMapper.insert(workdata);
         return x > 0 ? true : false;
     }
@@ -163,7 +163,7 @@ public class WorkDataServiceImpl implements WorkDataService {
     @Override
     @Transactional(rollbackFor = { Exception.class, RuntimeException.class })
     public boolean update(Workdata workdata) throws Exception {
-        if (ValidUtil.isNullOrEmpty(workdata.getDataid())||ValidUtil.isNullOrEmpty(workdata.getWorkcontext()))
+        if (ValidUtil.isNullOrEmpty(workdata.getDataid()))
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
         int x = workdataWriteMapper.updateByPrimaryKeySelective(workdata);
         return x > 0 ? true : false;
