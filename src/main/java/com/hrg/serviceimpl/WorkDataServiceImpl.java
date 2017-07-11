@@ -1,12 +1,9 @@
 package com.hrg.serviceimpl;
 
-import com.ctc.wstx.util.DataUtil;
 import com.hrg.enums.ErrorCode;
 import com.hrg.exception.ValidatorException;
-import com.hrg.javamapper.read.MissionReadMapper;
-import com.hrg.javamapper.read.WorkdataReadMapper;
-import com.hrg.javamapper.read.WorkerReadMapper;
-import com.hrg.javamapper.read.WorkerRelMissionReadMapper;
+import com.hrg.javamapper.read.*;
+import com.hrg.javamapper.write.WorkdataChatWriteMapper;
 import com.hrg.javamapper.write.WorkdataWriteMapper;
 import com.hrg.model.*;
 import com.hrg.service.WorkDataService;
@@ -18,7 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 82705 on 2017/6/2.
@@ -37,6 +35,10 @@ public class WorkDataServiceImpl implements WorkDataService {
     @Autowired
     MissionReadMapper missionReadMapper;
 
+    @Autowired
+    WorkdataChatReadMapper workdataChatReadMapper;
+    @Autowired
+    WorkdataChatWriteMapper workdataChatWriteMapper;
     /**
      * 添加工作日志
      *
@@ -166,4 +168,23 @@ public class WorkDataServiceImpl implements WorkDataService {
         int x = workdataWriteMapper.updateByPrimaryKeySelective(workdata);
         return x > 0 ? true : false;
     }
+
+    /**
+     * 查询日志评论
+     * @param workdataChatCriteria
+     * @return
+     */
+    @Override
+    public   List<WorkdataChat> selectByExample(WorkdataChatCriteria workdataChatCriteria){
+        return  workdataChatReadMapper.selectByExample(workdataChatCriteria);
+    };
+    /**
+     * 添加评论
+     * @param workdataChat
+     * @return
+     */
+    @Override
+    public int insert(WorkdataChat workdataChat){
+        return workdataChatWriteMapper.insert(workdataChat);
+    };
 }
