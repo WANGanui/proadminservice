@@ -203,19 +203,22 @@ public class MissionServiceImpl implements MissionService {
         relMissionCriteria.setWorkerdataid(wokerdataid);
         List<WorkerRelMission> relMissionList = workerRelMissionReadMapper.selectByExample(relMissionCriteria);
         List<String> idList = new ArrayList<String>();
-        for (WorkerRelMission relMission : relMissionList){
-            idList.add(relMission.getMissiondataid());
-        }
-        example.setDataidList(idList);
-        example.setType("1");
-        //个人任务
-        List<Mission> missionList1 = missionReadMapper.selectByExample(example);
-        example.setType("0");
-        //项目任务
-        List<Mission> missionList2 = missionReadMapper.selectByExample(example);
         Map<String,Object> map = new HashMap<String,Object>();
-        map.put("list1",missionList1);
-        map.put("list2",missionList2);
+        if (!ValidUtil.isNullOrEmpty(relMissionList)){
+            for (WorkerRelMission relMission : relMissionList){
+                idList.add(relMission.getMissiondataid());
+            }
+            example.setDataidList(idList);
+            example.setType("1");
+            //个人任务
+            List<Mission> missionList1 = missionReadMapper.selectByExample(example);
+            example.setType("0");
+            //项目任务
+            List<Mission> missionList2 = missionReadMapper.selectByExample(example);
+
+            map.put("list1",missionList1);
+            map.put("list2",missionList2);
+        }
         return map;
     }
 
@@ -259,7 +262,7 @@ public class MissionServiceImpl implements MissionService {
         WorkerRelMissionCriteria example = new WorkerRelMissionCriteria();
         example.setMissiondataid(dataid);
         int count = workerRelMissionReadMapper.countByExample(example);
-        if (count!=0){
+        if (count>0){
             int y = workerRelMissionWriteMapper.deleteByExample(example);
             if (y<=0)
                 return false;

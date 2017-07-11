@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hrg.javamapper.read.WorkdataChatReadMapper" >
+  <resultMap id="BaseResultMap" type="com.hrg.model.WorkdataChat" >
+    <id column="dataid" property="dataid" jdbcType="INTEGER" />
+    <result column="workerid" property="workerid" jdbcType="VARCHAR" />
+    <result column="chatid" property="chatid" jdbcType="VARCHAR" />
+    <result column="chatname" property="chatname" jdbcType="VARCHAR" />
+    <result column="context" property="context" jdbcType="VARCHAR" />
+    <result column="workdataid" property="workdataid" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="HashMapBaseResultMap" type="hashmap" >
+    <id column="dataid" property="dataid" jdbcType="INTEGER" />
+    <result column="workerid" property="workerid" jdbcType="VARCHAR" />
+    <result column="chatid" property="chatid" jdbcType="VARCHAR" />
+    <result column="chatname" property="chatname" jdbcType="VARCHAR" />
+    <result column="context" property="context" jdbcType="VARCHAR" />
+    <result column="workdataid" property="workdataid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <if test="example.dataid != null" >
+         and dataid = #{example.dataid,jdbcType=INTEGER}
+      </if>
+      <if test="example.dataidList != null  and  example.dataidList.size() > 0 " >
+         and dataid in 
+        <foreach collection="example.dataidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.workerid != null" >
+         and workerid = #{example.workerid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.workeridList != null  and  example.workeridList.size() > 0 " >
+         and workerid in 
+        <foreach collection="example.workeridList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.chatid != null" >
+         and chatid = #{example.chatid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.chatidList != null  and  example.chatidList.size() > 0 " >
+         and chatid in 
+        <foreach collection="example.chatidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.chatname != null" >
+         and chatname = #{example.chatname,jdbcType=VARCHAR}
+      </if>
+      <if test="example.chatnameList != null  and  example.chatnameList.size() > 0 " >
+         and chatname in 
+        <foreach collection="example.chatnameList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.context != null" >
+         and context = #{example.context,jdbcType=VARCHAR}
+      </if>
+      <if test="example.contextList != null  and  example.contextList.size() > 0 " >
+         and context in 
+        <foreach collection="example.contextList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.workdataid != null" >
+         and workdataid = #{example.workdataid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.workdataidList != null  and  example.workdataidList.size() > 0 " >
+         and workdataid in 
+        <foreach collection="example.workdataidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    dataid, workerid, chatid, chatname, context, workdataid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <if test="example.distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hrg_workdata_chat
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null" >
+      order by ${example.orderByClause}
+    </if>
+    <if test="example.limitStart >= 0 and example.pageSize > 0 " >
+      limit #{example.limitStart} , #{example.pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from hrg_workdata_chat
+    where dataid = #{dataid,jdbcType=INTEGER}
+  </select>
+  <select id="countByExample" parameterType="map" resultType="java.lang.Integer" >
+    select count(*) from hrg_workdata_chat
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="selectByExampleForOne" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <if test="example.distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hrg_workdata_chat
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null" >
+      order by ${example.orderByClause}
+    </if>
+     limit 0 , 1 
+  </select>
+  <select id="selectMapByPrimaryKey" resultMap="HashMapBaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from hrg_workdata_chat
+    <where >
+       and dataid=#{dataid,jdbcType=INTEGER}
+    </where>
+  </select>
+  <select id="selectMapByExampleForOne" resultMap="HashMapBaseResultMap" parameterType="map" >
+    select
+    <if test="example.distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hrg_workdata_chat
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null" >
+      order by ${example.orderByClause}
+    </if>
+     limit 0 , 1 
+  </select>
+  <select id="selectMapByExample" resultMap="HashMapBaseResultMap" parameterType="map" >
+    select
+    <if test="example.distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hrg_workdata_chat
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null" >
+      order by ${example.orderByClause}
+    </if>
+    <if test="example.limitStart >= 0 and example.pageSize > 0 " >
+      limit #{example.limitStart} , #{example.pageSize}
+    </if>
+  </select>
+</mapper>
