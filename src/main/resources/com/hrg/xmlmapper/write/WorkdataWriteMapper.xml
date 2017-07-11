@@ -87,6 +87,15 @@
           #{listItem}
         </foreach>
       </if>
+      <if test="example.isread != null" >
+         and isread = #{example.isread,jdbcType=CHAR}
+      </if>
+      <if test="example.isreadList != null  and  example.isreadList.size() > 0 " >
+         and isread in 
+        <foreach collection="example.isreadList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
     </where>
   </sql>
   <delete id="deleteByPrimaryKey" parameterType="map" >
@@ -104,12 +113,14 @@
       projectname, missiondataid, 
       missionname, workcontext, 
       workerdataid, workername, 
-      time, projectleader)
+      time, projectleader, isread
+      )
     values (#{record.dataid,jdbcType=VARCHAR}, #{record.projectdataid,jdbcType=VARCHAR}, 
       #{record.projectname,jdbcType=VARCHAR}, #{record.missiondataid,jdbcType=VARCHAR}, 
       #{record.missionname,jdbcType=VARCHAR}, #{record.workcontext,jdbcType=VARCHAR}, 
       #{record.workerdataid,jdbcType=VARCHAR}, #{record.workername,jdbcType=VARCHAR}, 
-      #{record.time,jdbcType=TIMESTAMP}, #{record.projectleader,jdbcType=VARCHAR})
+      #{record.time,jdbcType=TIMESTAMP}, #{record.projectleader,jdbcType=VARCHAR}, #{record.isread,jdbcType=CHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="map" >
     insert into hrg_workdata
@@ -144,6 +155,9 @@
       <if test="record.projectleader != null" >
         projectleader,
       </if>
+      <if test="record.isread != null" >
+        isread,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="record.dataid != null" >
@@ -175,6 +189,9 @@
       </if>
       <if test="record.projectleader != null" >
         #{record.projectleader,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isread != null" >
+        #{record.isread,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -211,6 +228,9 @@
       <if test="record.projectleader != null" >
         projectleader = #{record.projectleader,jdbcType=VARCHAR},
       </if>
+      <if test="record.isread != null" >
+        isread = #{record.isread,jdbcType=CHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -227,7 +247,8 @@
       workerdataid = #{record.workerdataid,jdbcType=VARCHAR},
       workername = #{record.workername,jdbcType=VARCHAR},
       time = #{record.time,jdbcType=TIMESTAMP},
-      projectleader = #{record.projectleader,jdbcType=VARCHAR}
+      projectleader = #{record.projectleader,jdbcType=VARCHAR},
+      isread = #{record.isread,jdbcType=CHAR}
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -262,6 +283,9 @@
       <if test="record.projectleader != null" >
         projectleader = #{record.projectleader,jdbcType=VARCHAR},
       </if>
+      <if test="record.isread != null" >
+        isread = #{record.isread,jdbcType=CHAR},
+      </if>
     </set>
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
@@ -275,7 +299,8 @@
       workerdataid = #{record.workerdataid,jdbcType=VARCHAR},
       workername = #{record.workername,jdbcType=VARCHAR},
       time = #{record.time,jdbcType=TIMESTAMP},
-      projectleader = #{record.projectleader,jdbcType=VARCHAR}
+      projectleader = #{record.projectleader,jdbcType=VARCHAR},
+      isread = #{record.isread,jdbcType=CHAR}
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
 </mapper>

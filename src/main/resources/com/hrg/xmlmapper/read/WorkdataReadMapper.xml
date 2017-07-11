@@ -12,6 +12,7 @@
     <result column="workername" property="workername" jdbcType="VARCHAR" />
     <result column="time" property="time" jdbcType="TIMESTAMP" />
     <result column="projectleader" property="projectleader" jdbcType="VARCHAR" />
+    <result column="isread" property="isread" jdbcType="CHAR" />
   </resultMap>
   <resultMap id="HashMapBaseResultMap" type="hashmap" >
     <id column="dataid" property="dataid" jdbcType="VARCHAR" />
@@ -24,6 +25,7 @@
     <result column="workername" property="workername" jdbcType="VARCHAR" />
     <result column="time" property="time" jdbcType="TIMESTAMP" />
     <result column="projectleader" property="projectleader" jdbcType="VARCHAR" />
+    <result column="isread" property="isread" jdbcType="CHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -102,12 +104,6 @@
       <if test="example.time != null" >
          and time = #{example.time,jdbcType=TIMESTAMP}
       </if>
-      <if test="example.timeMin != null" >
-        and time &gt;= #{example.timeMin,jdbcType=TIMESTAMP}
-      </if>
-      <if test="example.timeMax != null" >
-        and time &lt;= #{example.timeMax,jdbcType=TIMESTAMP}
-      </if>
       <if test="example.projectleader != null" >
          and projectleader = #{example.projectleader,jdbcType=VARCHAR}
       </if>
@@ -117,11 +113,20 @@
           #{listItem}
         </foreach>
       </if>
+      <if test="example.isread != null" >
+         and isread = #{example.isread,jdbcType=CHAR}
+      </if>
+      <if test="example.isreadList != null  and  example.isreadList.size() > 0 " >
+         and isread in 
+        <foreach collection="example.isreadList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
     </where>
   </sql>
   <sql id="Base_Column_List" >
     dataid, projectdataid, projectname, missiondataid, missionname, workcontext, workerdataid, 
-    workername, time, projectleader
+    workername, time, projectleader, isread
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="map" >
     select
