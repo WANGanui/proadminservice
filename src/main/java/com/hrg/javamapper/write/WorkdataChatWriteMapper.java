@@ -4,6 +4,8 @@ import com.hrg.model.WorkdataChat;
 import com.hrg.model.WorkdataChatCriteria;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Map;
+
 public interface WorkdataChatWriteMapper {
     int deleteByExample(@Param("example") WorkdataChatCriteria example);
 
@@ -20,4 +22,6 @@ public interface WorkdataChatWriteMapper {
     int updateByPrimaryKeySelective(@Param("record") WorkdataChat record);
 
     int updateByPrimaryKey(@Param("record") WorkdataChat record);
+
+    int updateIsread(Map map);
 }
