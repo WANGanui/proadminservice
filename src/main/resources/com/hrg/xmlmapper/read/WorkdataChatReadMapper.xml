@@ -3,19 +3,19 @@
 <mapper namespace="com.hrg.javamapper.read.WorkdataChatReadMapper" >
   <resultMap id="BaseResultMap" type="com.hrg.model.WorkdataChat" >
     <id column="dataid" property="dataid" jdbcType="INTEGER" />
-    <result column="workerid" property="workerid" jdbcType="VARCHAR" />
     <result column="chatid" property="chatid" jdbcType="VARCHAR" />
     <result column="chatname" property="chatname" jdbcType="VARCHAR" />
     <result column="context" property="context" jdbcType="VARCHAR" />
     <result column="workdataid" property="workdataid" jdbcType="VARCHAR" />
+    <result column="isread" property="isread" jdbcType="CHAR" />
   </resultMap>
   <resultMap id="HashMapBaseResultMap" type="hashmap" >
     <id column="dataid" property="dataid" jdbcType="INTEGER" />
-    <result column="workerid" property="workerid" jdbcType="VARCHAR" />
     <result column="chatid" property="chatid" jdbcType="VARCHAR" />
     <result column="chatname" property="chatname" jdbcType="VARCHAR" />
     <result column="context" property="context" jdbcType="VARCHAR" />
     <result column="workdataid" property="workdataid" jdbcType="VARCHAR" />
+    <result column="isread" property="isread" jdbcType="CHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -25,15 +25,6 @@
       <if test="example.dataidList != null  and  example.dataidList.size() > 0 " >
          and dataid in 
         <foreach collection="example.dataidList" item="listItem" open="(" close=")" separator="," >
-          #{listItem}
-        </foreach>
-      </if>
-      <if test="example.workerid != null" >
-         and workerid = #{example.workerid,jdbcType=VARCHAR}
-      </if>
-      <if test="example.workeridList != null  and  example.workeridList.size() > 0 " >
-         and workerid in 
-        <foreach collection="example.workeridList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
@@ -73,10 +64,19 @@
           #{listItem}
         </foreach>
       </if>
+      <if test="example.isread != null" >
+         and isread = #{example.isread,jdbcType=CHAR}
+      </if>
+      <if test="example.isreadList != null  and  example.isreadList.size() > 0 " >
+         and isread in 
+        <foreach collection="example.isreadList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    dataid, workerid, chatid, chatname, context, workdataid
+    dataid, chatid, chatname, context, workdataid, isread
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="map" >
     select

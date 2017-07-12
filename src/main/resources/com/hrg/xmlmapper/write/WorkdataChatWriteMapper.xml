@@ -12,15 +12,6 @@
           #{listItem}
         </foreach>
       </if>
-      <if test="example.workerid != null" >
-         and workerid = #{example.workerid,jdbcType=VARCHAR}
-      </if>
-      <if test="example.workeridList != null  and  example.workeridList.size() > 0 " >
-         and workerid in 
-        <foreach collection="example.workeridList" item="listItem" open="(" close=")" separator="," >
-          #{listItem}
-        </foreach>
-      </if>
       <if test="example.chatid != null" >
          and chatid = #{example.chatid,jdbcType=VARCHAR}
       </if>
@@ -57,6 +48,15 @@
           #{listItem}
         </foreach>
       </if>
+      <if test="example.isread != null" >
+         and isread = #{example.isread,jdbcType=CHAR}
+      </if>
+      <if test="example.isreadList != null  and  example.isreadList.size() > 0 " >
+         and isread in 
+        <foreach collection="example.isreadList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
     </where>
   </sql>
   <delete id="deleteByPrimaryKey" parameterType="map" >
@@ -70,11 +70,11 @@
     </if>
   </delete>
   <insert id="insert" parameterType="map" >
-    insert into hrg_workdata_chat (dataid, workerid, chatid, 
-      chatname, context, workdataid
+    insert into hrg_workdata_chat (dataid, chatid, chatname, 
+      context, workdataid, isread
       )
-    values (#{record.dataid,jdbcType=INTEGER}, #{record.workerid,jdbcType=VARCHAR}, #{record.chatid,jdbcType=VARCHAR}, 
-      #{record.chatname,jdbcType=VARCHAR}, #{record.context,jdbcType=VARCHAR}, #{record.workdataid,jdbcType=VARCHAR}
+    values (#{record.dataid,jdbcType=INTEGER}, #{record.chatid,jdbcType=VARCHAR}, #{record.chatname,jdbcType=VARCHAR}, 
+      #{record.context,jdbcType=VARCHAR}, #{record.workdataid,jdbcType=VARCHAR}, #{record.isread,jdbcType=CHAR}
       )
     <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="record.dataid" >
       SELECT LAST_INSERT_ID()
@@ -85,9 +85,6 @@
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="record.dataid != null" >
         dataid,
-      </if>
-      <if test="record.workerid != null" >
-        workerid,
       </if>
       <if test="record.chatid != null" >
         chatid,
@@ -101,13 +98,13 @@
       <if test="record.workdataid != null" >
         workdataid,
       </if>
+      <if test="record.isread != null" >
+        isread,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="record.dataid != null" >
         #{record.dataid,jdbcType=INTEGER},
-      </if>
-      <if test="record.workerid != null" >
-        #{record.workerid,jdbcType=VARCHAR},
       </if>
       <if test="record.chatid != null" >
         #{record.chatid,jdbcType=VARCHAR},
@@ -121,6 +118,9 @@
       <if test="record.workdataid != null" >
         #{record.workdataid,jdbcType=VARCHAR},
       </if>
+      <if test="record.isread != null" >
+        #{record.isread,jdbcType=CHAR},
+      </if>
     </trim>
     <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="record.dataid" >
       SELECT LAST_INSERT_ID()
@@ -132,9 +132,6 @@
       <if test="record.dataid != null" >
         dataid = #{record.dataid,jdbcType=INTEGER},
       </if>
-      <if test="record.workerid != null" >
-        workerid = #{record.workerid,jdbcType=VARCHAR},
-      </if>
       <if test="record.chatid != null" >
         chatid = #{record.chatid,jdbcType=VARCHAR},
       </if>
@@ -146,6 +143,9 @@
       </if>
       <if test="record.workdataid != null" >
         workdataid = #{record.workdataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isread != null" >
+        isread = #{record.isread,jdbcType=CHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -155,11 +155,11 @@
   <update id="updateByExample" parameterType="map" >
     update hrg_workdata_chat
     set dataid = #{record.dataid,jdbcType=INTEGER},
-      workerid = #{record.workerid,jdbcType=VARCHAR},
       chatid = #{record.chatid,jdbcType=VARCHAR},
       chatname = #{record.chatname,jdbcType=VARCHAR},
       context = #{record.context,jdbcType=VARCHAR},
-      workdataid = #{record.workdataid,jdbcType=VARCHAR}
+      workdataid = #{record.workdataid,jdbcType=VARCHAR},
+      isread = #{record.isread,jdbcType=CHAR}
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -167,9 +167,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="map" >
     update hrg_workdata_chat
     <set >
-      <if test="record.workerid != null" >
-        workerid = #{record.workerid,jdbcType=VARCHAR},
-      </if>
       <if test="record.chatid != null" >
         chatid = #{record.chatid,jdbcType=VARCHAR},
       </if>
@@ -182,16 +179,19 @@
       <if test="record.workdataid != null" >
         workdataid = #{record.workdataid,jdbcType=VARCHAR},
       </if>
+      <if test="record.isread != null" >
+        isread = #{record.isread,jdbcType=CHAR},
+      </if>
     </set>
     where dataid = #{record.dataid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="map" >
     update hrg_workdata_chat
-    set workerid = #{record.workerid,jdbcType=VARCHAR},
-      chatid = #{record.chatid,jdbcType=VARCHAR},
+    set chatid = #{record.chatid,jdbcType=VARCHAR},
       chatname = #{record.chatname,jdbcType=VARCHAR},
       context = #{record.context,jdbcType=VARCHAR},
-      workdataid = #{record.workdataid,jdbcType=VARCHAR}
+      workdataid = #{record.workdataid,jdbcType=VARCHAR},
+      isread = #{record.isread,jdbcType=CHAR}
     where dataid = #{record.dataid,jdbcType=INTEGER}
   </update>
 </mapper>
