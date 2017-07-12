@@ -351,6 +351,8 @@ public class MissionServiceImpl implements MissionService {
             WorkdataChatCriteria workdataChatCriteria = new WorkdataChatCriteria();
             workdataChatCriteria.setWorkdataid(workdata.getDataid());
             List<WorkdataChat> workdataChatList = workdataChatReadMapper.selectByExample(workdataChatCriteria);
+            workdataChatCriteria.setIsread("0");
+            workdata.setCount(workdataChatReadMapper.countByExample(workdataChatCriteria));
             String chat = "";
             for (WorkdataChat workdataChat : workdataChatList){
                 chat += workdataChat.getChatname()+" : "+workdataChat.getContext()+"---";

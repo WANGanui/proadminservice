@@ -126,6 +126,8 @@ public class WorkDataServiceImpl implements WorkDataService {
             WorkdataChatCriteria workdataChatCriteria = new WorkdataChatCriteria();
             workdataChatCriteria.setWorkdataid(workdata.getDataid());
             List<WorkdataChat> workdataChatList = workdataChatReadMapper.selectByExample(workdataChatCriteria);
+            workdataChatCriteria.setIsread("0");
+            workdata.setCount(workdataChatReadMapper.countByExample(workdataChatCriteria));
             String chate = "";
             for (WorkdataChat workdataChat : workdataChatList){
                 chate += workdataChat.getChatname()+" : "+workdataChat.getContext()+"---";
