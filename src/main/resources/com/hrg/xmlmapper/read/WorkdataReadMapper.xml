@@ -13,6 +13,7 @@
     <result column="time" property="time" jdbcType="TIMESTAMP" />
     <result column="projectleader" property="projectleader" jdbcType="VARCHAR" />
     <result column="isread" property="isread" jdbcType="CHAR" />
+    <collection property="chat" column="{workdataid=dataid}" javaType="String" ofType="String" select="selectChats"></collection>
   </resultMap>
   <resultMap id="HashMapBaseResultMap" type="hashmap" >
     <id column="dataid" property="dataid" jdbcType="VARCHAR" />
@@ -211,5 +212,9 @@
     <if test="example.limitStart >= 0 and example.pageSize > 0 " >
       limit #{example.limitStart} , #{example.pageSize}
     </if>
+  </select>
+  <select id="selectChats" resultType="String">
+    select group_concat(context) chat
+    from hrg_workdata_chat where workdataid = #{workdataid}
   </select>
 </mapper>

@@ -38,6 +38,8 @@ public class MissionServiceImpl implements MissionService {
     WorkerReadMapper workerReadMapper;
     @Autowired
     WorkerRoleReadMapper workerRoleReadMapper;
+    @Autowired
+    WorkdataChatReadMapper workdataChatReadMapper;
 
     /**
      * 条件查询任务列表
@@ -345,31 +347,16 @@ public class MissionServiceImpl implements MissionService {
         workdataCriteria.setTimeMax(mission.getEndtime());
         workdataCriteria.setOrderByClause("time asc");
         List<Workdata> workdataList = workdataReadMapper.selectByExample(workdataCriteria);
-        /*List<Workdata> www = new ArrayList<Workdata>();
-        for (Workdata workdata: workdataList){
-            www.add(workdata);
-        }
-        List<Workdata> workdatas = new ArrayList<Workdata>();
-        for (Workdata workdata : workdataList){
-            for (Workdata data : workdataList){
-                if (workdata.getWorkerdataid()!=data.getWorkerdataid()){
-                    if (DateUtil.toShortDateStr(workdata.getTime())==DateUtil.toShortDateStr(data.getTime())||
-                        DateUtil.toShortDateStr(workdata.getTime()).equals(DateUtil.toShortDateStr(data.getTime()))){
-                            www.remove(workdata);
-                            Workdata workdata1 = new Workdata();
-                            workdata1.setProjectname(workdata.getProjectname());
-                            workdata1.setTime(data.getTime());
-                            workdata1.setWorkername(workdata.getWorkername()+","+data.getWorkername());
-                            workdata1.setWorkcontext(workdata.getWorkcontext()+"-----"+data.getWorkcontext());
-                            workdatas.add(workdata1);
-                    }
-                }
+        for(Workdata workdata:workdataList){
+            WorkdataChatCriteria workdataChatCriteria = new WorkdataChatCriteria();
+            workdataChatCriteria.setWorkdataid(workdata.getDataid());
+            List<WorkdataChat> workdataChatList = workdataChatReadMapper.selectByExample(workdataChatCriteria);
+            String chat = "";
+            for (WorkdataChat workdataChat : workdataChatList){
+                chat += workdataChat.getChatname()+" : "+workdataChat.getContext()+"---";
             }
+            workdata.setChat(chat);
         }
-
-        for (Workdata dd : www){
-            workdatas.add(dd);
-        }*/
 
         map.put("mission",mission);
         map.put("workdatas",workdataList);

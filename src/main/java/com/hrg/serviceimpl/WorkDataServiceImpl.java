@@ -120,11 +120,18 @@ public class WorkDataServiceImpl implements WorkDataService {
             example.setOrderByClause("time desc");
         }
 
-        //设置周五时间
-
-        //根据员工id查询每个员工本周工作日志与任务
-
-        return workdataReadMapper.selectByExample(example);
+        List<Workdata> workdataList = workdataReadMapper.selectByExample(example);
+        for(Workdata workdata:workdataList){
+            WorkdataChatCriteria workdataChatCriteria = new WorkdataChatCriteria();
+            workdataChatCriteria.setWorkdataid(workdata.getDataid());
+            List<WorkdataChat> workdataChatList = workdataChatReadMapper.selectByExample(workdataChatCriteria);
+            String chate = "";
+            for (WorkdataChat workdataChat : workdataChatList){
+                chate += workdataChat.getChatname()+" : "+workdataChat.getContext()+"---";
+            }
+            workdata.setChat(chate);
+        }
+        return workdataList;
     }
 
     /**
