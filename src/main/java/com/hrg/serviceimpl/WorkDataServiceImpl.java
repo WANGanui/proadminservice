@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 82705 on 2017/6/2.
@@ -193,5 +194,15 @@ public class WorkDataServiceImpl implements WorkDataService {
     @Override
     public int insert(WorkdataChat workdataChat){
         return workdataChatWriteMapper.insert(workdataChat);
+    };
+
+    /**
+     * 修改评论
+     * @param record
+     * @return
+     */
+    @Override
+    public int updateByExampleSelective(Map record){
+        return  workdataChatWriteMapper.updateIsread(record);
     };
 }

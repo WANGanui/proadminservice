@@ -194,4 +194,14 @@
       isread = #{record.isread,jdbcType=CHAR}
     where dataid = #{record.dataid,jdbcType=INTEGER}
   </update>
+
+
+  <update id="updateIsread" parameterType="java.util.Map" >
+    update hrg_workdata_chat
+    set
+    isread = #{isread,jdbcType=CHAR}
+    where workdataid = #{workdataid,jdbcType=VARCHAR} AND chatid != #{chatid,jdbcType=VARCHAR}
+  </update>
+
+
 </mapper>
