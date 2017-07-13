@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -60,6 +61,7 @@ public class WorkDataServiceImpl implements WorkDataService {
                 workdata.setProjectname(mission.getProname());
             }
         }
+        workdata.setTime(new Date());
         workdata.setDataid(UUIDGenerator.getUUID());
         workdata.setIsread("0");
         int x = workdataWriteMapper.insert(workdata);

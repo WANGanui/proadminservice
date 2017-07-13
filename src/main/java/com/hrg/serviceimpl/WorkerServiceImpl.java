@@ -269,14 +269,11 @@ public class WorkerServiceImpl implements WorkerService {
         missionCriteria.setAuditorid(workerdataid);
         missionCriteria.setMissionstate("2");
         int count = missionReadMapper.countByExample(missionCriteria);
-        if (count>0){
-            map.put("auditmission",count);
-        }
+        map.put("auditmission",count);
 
         int x = projectReadMapper.countAudit(workerdataid);
 
-        if (x>0)
-            map.put("auditproject",x);
+        map.put("auditproject",x);
 
         Worker worker = workerReadMapper.selectByPrimaryKey(workerdataid);
         WorkerCriteria workerCriteria = new WorkerCriteria();
@@ -290,9 +287,7 @@ public class WorkerServiceImpl implements WorkerService {
         workdataCriteria.setIsread("0");
         workdataCriteria.setWorkerdataidList(ids);
         int cou = workdataReadMapper.countByExample(workdataCriteria);
-        if (cou>0){
-            map.put("workdata",cou);
-        }
+        map.put("workdata",cou);
 
         map.put("menus",moduleList);
         map.put("permissions",permissionList);
@@ -436,7 +431,46 @@ public class WorkerServiceImpl implements WorkerService {
         noticeCriteria.setTimeMin(time);
         List<Notice> noticeList = noticeReadMapper.selectByExample(noticeCriteria);
 
+        WorkerCriteria workerCriteria = new WorkerCriteria();
+        workerCriteria.setDepartmentdataid("3");
+        List<Worker> workerList = workerReadMapper.selectByExample(workerCriteria);
+        Map mapp = new HashMap();
+        List mapList = new ArrayList();
+        for (Worker worker:workerList){
+            WorkerRelMissionCriteria workerRelMissionCriteria = new WorkerRelMissionCriteria();
+            workerRelMissionCriteria.setWorkerdataid(worker.getDataid());
+            int count = workerRelMissionReadMapper.countByExample(workerRelMissionCriteria);
+            mapp.put("name",worker.getName());
+            mapp.put("count",count);
+            mapList.add(mapp);
+        }
+        map.put("yeji",mapList);
         map.put("notice",noticeList);
         return map;
+    }
+
+    /**
+     * 柱状图
+     *
+     * @param worker
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List slectyeji(Worker worker) throws Exception {
+        List mapList = new ArrayList();
+        Map mapp = new HashMap();
+        WorkerCriteria workerCriteria = new WorkerCriteria();
+        workerCriteria.setDepartmentdataid("3");
+        List<Worker> workerList = workerReadMapper.selectByExample(workerCriteria);
+        for (Worker worker1:workerList){
+            WorkerRelMissionCriteria workerRelMissionCriteria = new WorkerRelMissionCriteria();
+            workerRelMissionCriteria.setWorkerdataid(worker1.getDataid());
+            int count = workerRelMissionReadMapper.countByExample(workerRelMissionCriteria);
+            mapp.put("name",worker.getName());
+            mapp.put("count",count);
+            mapList.add(mapp);
+        }
+        return mapList;
     }
 }
