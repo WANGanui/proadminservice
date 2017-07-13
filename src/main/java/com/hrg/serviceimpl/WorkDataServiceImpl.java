@@ -54,9 +54,11 @@ public class WorkDataServiceImpl implements WorkDataService {
                 ValidUtil.isNullOrEmpty(workdata.getWorkername()))
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
         Mission mission = missionReadMapper.selectByPrimaryKey(workdata.getMissiondataid());
-        if (mission.getType()=="0" || mission.getType().equals("0")){
-            workdata.setProjectdataid(mission.getProdataid());
-            workdata.setProjectname(mission.getProname());
+        if(!ValidUtil.isNullOrEmpty(mission)){
+            if (mission.getType()=="0" || mission.getType().equals("0")){
+                workdata.setProjectdataid(mission.getProdataid());
+                workdata.setProjectname(mission.getProname());
+            }
         }
         workdata.setDataid(UUIDGenerator.getUUID());
         workdata.setIsread("0");
