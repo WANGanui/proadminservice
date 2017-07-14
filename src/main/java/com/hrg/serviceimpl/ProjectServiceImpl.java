@@ -67,8 +67,8 @@ public class ProjectServiceImpl implements ProjectService {
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
         String projectId=UUIDGenerator.getUUID();
         project.setDataid(projectId);
-        project.setDays((int) DateUtil.getDays(DateUtil.toDateStr(project.getStarttime()),DateUtil.toDateStr(project.getEndtime())));
-        project.setMonth((int) DateUtil.getMonth(DateUtil.toDateStr(project.getStarttime()),DateUtil.toDateStr(project.getEndtime())));
+        project.setDays((int) DateUtil.getDays(DateUtil.toDateStr(project.getEndtime()),DateUtil.toDateStr(project.getStarttime())));
+        project.setMonth((int) DateUtil.getMonth(DateUtil.toDateStr(project.getEndtime()),DateUtil.toDateStr(project.getStarttime())));
         project.setState("0");
         project.setCreatetime(new Date());
         int x = projectWriteMapper.insert(project);
