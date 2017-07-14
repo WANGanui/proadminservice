@@ -261,9 +261,8 @@ public class WorkerServiceImpl implements WorkerService {
         WorkerRelMissionCriteria relMissionCriteria = new WorkerRelMissionCriteria();
         relMissionCriteria.setWorkerdataid(workerdataid);
         List<WorkerRelMission> relMissionList = workerRelMissionReadMapper.selectByExample(relMissionCriteria);
-        if (!ValidUtil.isNullOrEmpty(relMissionList)){
-            map.put("workermission",workerRelMissionReadMapper.countByExample(relMissionCriteria));
-        }
+        int y = workerRelMissionReadMapper.countByExample(relMissionCriteria);
+        map.put("workermission",y);
 
         MissionCriteria missionCriteria = new MissionCriteria();
         missionCriteria.setAuditorid(workerdataid);
@@ -403,48 +402,54 @@ public class WorkerServiceImpl implements WorkerService {
         WorkerRoleCriteria roleCriteria = new WorkerRoleCriteria();
         roleCriteria.setWorkerdataid(dataid);
         WorkerRole workerRole = workerRoleReadMapper.selectByExampleForOne(roleCriteria);
-        //经理登录
-        if (workerRole.getRoleid()=="1"){
-
-        }
+        map.put("roleid",workerRole.getRoleid());
         //按角色区分
-        WorkerRelMissionCriteria relmissionCriteria = new WorkerRelMissionCriteria();
+       /* WorkerRelMissionCriteria relmissionCriteria = new WorkerRelMissionCriteria();
         relmissionCriteria.setWorkerdataid(dataid);
         List<WorkerRelMission> relMissionList = workerRelMissionReadMapper.selectByExample(relmissionCriteria);
         List<String> missionidList = new ArrayList<String>();
         for (WorkerRelMission relMission : relMissionList){
             missionidList.add(relMission.getMissiondataid());
-        }
-        MissionCriteria missionCriteria = new MissionCriteria();
-        missionCriteria.setDataidList(missionidList);
-        List<Mission> missionList = missionReadMapper.selectByExample(missionCriteria);
+        }*/
 
+        MissionCriteria mCriteria = new MissionCriteria();
+        mCriteria.setAuditorid(dataid);
+        mCriteria.setMissionstate("2");
+        int count = missionReadMapper.countByExample(mCriteria);
+        map.put("auditmission",count);
+        int cou = projectReadMapper.countAudit(dataid);
+        map.put("auditproject",cou);
+
+        ProjectCriteria projectCriteria = new ProjectCriteria();
+        projectCriteria.setEndtimeMin(new Date());
+        projectCriteria.setEndtimeMax(DateUtil.addDays(new Date(),5));
+        projectCriteria.setOrderByClause("endtime asc");
+        projectCriteria.setLimitStart(0);
+        projectCriteria.setPageSize(7);
+        List<Project> projectList = projectReadMapper.selectByExample(projectCriteria);
+        int x = projectReadMapper.countByExample(new ProjectCriteria());
+        map.put("project",projectList);
+        map.put("projectNum",x);
+
+        MissionCriteria missionCriteria = new MissionCriteria();
+        missionCriteria.setEndtimeMin(new Date());
+        missionCriteria.setEndtimeMax(DateUtil.addDays(new Date(),5));
+        missionCriteria.setOrderByClause("endtime asc");
+        projectCriteria.setLimitStart(0);
+        projectCriteria.setPageSize(7);
+        List<Mission> missionList = missionReadMapper.selectByExample(missionCriteria);
+        int y = missionReadMapper.countByExample(new MissionCriteria());
+        map.put("missionNum",y);
         map.put("mission",missionList);
 
         //查询公告
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-        Date time= sdf.parse(sdf.format(new Date()));
-
         NoticeCriteria noticeCriteria = new NoticeCriteria();
         noticeCriteria.setLimitStart(0);
         noticeCriteria.setPageSize(10);
-        noticeCriteria.setTimeMin(time);
+        noticeCriteria.setTimeMax(new Date());
+        noticeCriteria.setOrderByClause("time desc");
         List<Notice> noticeList = noticeReadMapper.selectByExample(noticeCriteria);
 
-        WorkerCriteria workerCriteria = new WorkerCriteria();
-        workerCriteria.setDepartmentdataid("3");
-        List<Worker> workerList = workerReadMapper.selectByExample(workerCriteria);
-        Map mapp = new HashMap();
-        List mapList = new ArrayList();
-        for (Worker worker:workerList){
-            WorkerRelMissionCriteria workerRelMissionCriteria = new WorkerRelMissionCriteria();
-            workerRelMissionCriteria.setWorkerdataid(worker.getDataid());
-            int count = workerRelMissionReadMapper.countByExample(workerRelMissionCriteria);
-            mapp.put("name",worker.getName());
-            mapp.put("count",count);
-            mapList.add(mapp);
-        }
-        map.put("yeji",mapList);
         map.put("notice",noticeList);
         return map;
     }
@@ -459,15 +464,20 @@ public class WorkerServiceImpl implements WorkerService {
     @Override
     public List slectyeji(Worker worker) throws Exception {
         List mapList = new ArrayList();
-        Map mapp = new HashMap();
         WorkerCriteria workerCriteria = new WorkerCriteria();
-        workerCriteria.setDepartmentdataid("3");
+        List<String> ids = new ArrayList<String>();
+        ids.add("1");
+        ids.add("3");
+        ids.add("4");
+        ids.add("6");
+        workerCriteria.setDepartmentdataidList(ids);
         List<Worker> workerList = workerReadMapper.selectByExample(workerCriteria);
         for (Worker worker1:workerList){
+            Map mapp = new HashMap();
             WorkerRelMissionCriteria workerRelMissionCriteria = new WorkerRelMissionCriteria();
             workerRelMissionCriteria.setWorkerdataid(worker1.getDataid());
             int count = workerRelMissionReadMapper.countByExample(workerRelMissionCriteria);
-            mapp.put("name",worker.getName());
+            mapp.put("name",worker1.getName());
             mapp.put("count",count);
             mapList.add(mapp);
         }
