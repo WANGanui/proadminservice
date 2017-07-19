@@ -49,7 +49,12 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Autowired
     ProjectAuditDelWriteMapper projectAuditDelWriteMapper;
-
+    @Autowired
+    DataTableWriteMapper dataTableWriteMapper;
+    @Override
+    public void insertDataTable(Map map){
+        dataTableWriteMapper.insertDataTable(map);
+    };
     /**
      * 添加项目
      *
