@@ -52,6 +52,8 @@ public class WorkerServiceImpl implements WorkerService {
     NoticeReadMapper noticeReadMapper;
     @Autowired
     ProjectReadMapper projectReadMapper;
+    @Autowired
+    WorkdataChatReadMapper workdataChatReadMapper;
 
     /**
      * 方法说明：根据员工账号查询员工对象
@@ -288,6 +290,17 @@ public class WorkerServiceImpl implements WorkerService {
         int cou = workdataReadMapper.countByExample(workdataCriteria);
         map.put("workdata",cou);
 
+        WorkdataCriteria example = new WorkdataCriteria();
+        example.setWorkerdataid(workerdataid);
+        List<Workdata> workdataList = workdataReadMapper.selectByExample(example);
+        int cht = 0;
+        for (Workdata workdata:workdataList){
+            WorkdataChatCriteria workdataChatCriteria = new WorkdataChatCriteria();
+            workdataChatCriteria.setWorkdataid(workdata.getDataid());
+            workdataChatCriteria.setIsread("0");
+           cht += workdataChatReadMapper.countByExample(workdataChatCriteria);
+        }
+        map.put("dataworker",cht);
         map.put("menus",moduleList);
         map.put("permissions",permissionList);
         map.put("roleid",workerRole.getRoleid());
