@@ -2,9 +2,10 @@ package com.hrg.javamapper.read;
 
 import com.hrg.model.Department;
 import com.hrg.model.DepartmentCriteria;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
-import org.apache.ibatis.annotations.Param;
 
 public interface DepartmentReadMapper {
     int countByExample(@Param("example") DepartmentCriteria example);
