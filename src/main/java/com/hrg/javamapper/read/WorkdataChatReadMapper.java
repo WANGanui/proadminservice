@@ -2,9 +2,10 @@ package com.hrg.javamapper.read;
 
 import com.hrg.model.WorkdataChat;
 import com.hrg.model.WorkdataChatCriteria;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
-import org.apache.ibatis.annotations.Param;
 
 public interface WorkdataChatReadMapper {
     int countByExample(@Param("example") WorkdataChatCriteria example);
@@ -20,4 +21,6 @@ public interface WorkdataChatReadMapper {
     Map<String, Object> selectMapByPrimaryKey(@Param("dataid") Integer dataid);
 
     Map<String, Object> selectMapByExampleForOne(@Param("example") WorkdataChatCriteria example);
+
+    Integer selectCount(Map map);
 }

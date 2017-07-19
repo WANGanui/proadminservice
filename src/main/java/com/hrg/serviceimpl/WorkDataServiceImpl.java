@@ -15,10 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by 82705 on 2017/6/2.
@@ -131,7 +128,11 @@ public class WorkDataServiceImpl implements WorkDataService {
             workdataChatCriteria.setWorkdataid(workdata.getDataid());
             List<WorkdataChat> workdataChatList = workdataChatReadMapper.selectByExample(workdataChatCriteria);
             workdataChatCriteria.setIsread("0");
-            workdata.setCount(workdataChatReadMapper.countByExample(workdataChatCriteria));
+            Map map=new HashMap();
+            map.put("workdataid",workdata.getDataid());
+            map.put("chatid",example.getWorkerdataid());
+            map.put("isread",0);
+            workdata.setCount(workdataChatReadMapper.selectCount(map));
             String chate = "";
             for (WorkdataChat workdataChat : workdataChatList){
                 chate += workdataChat.getChatname()+" : "+workdataChat.getContext()+"---";

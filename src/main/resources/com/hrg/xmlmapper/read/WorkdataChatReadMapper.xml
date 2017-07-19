@@ -162,4 +162,15 @@
       limit #{example.limitStart} , #{example.pageSize}
     </if>
   </select>
+
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+   SELECT
+	COUNT(1)
+      FROM
+	hrg_workdata_chat
+      WHERE
+	    workdataid = #{workdataid}
+      AND chatid != #{chatid}
+      AND isread = #{isread}
+  </select>
 </mapper>
