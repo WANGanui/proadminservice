@@ -104,7 +104,8 @@ public class WorkDataServiceImpl implements WorkDataService {
      * @throws Exception
      */
     @Override
-    public List<Workdata> selectList(WorkdataCriteria example,String dapartmentdataid) throws Exception {
+    public List<Workdata> selectList(WorkdataCriteria example,Worker dapartmentdata) throws Exception {
+        String dapartmentdataid =dapartmentdata.getDepartmentdataid();
         if (!ValidUtil.isNullOrEmpty(dapartmentdataid)){
             WorkerCriteria workerCriteria = new WorkerCriteria();
             workerCriteria.setDepartmentdataid(dapartmentdataid);
@@ -130,7 +131,7 @@ public class WorkDataServiceImpl implements WorkDataService {
             workdataChatCriteria.setIsread("0");
             Map map=new HashMap();
             map.put("workdataid",workdata.getDataid());
-            map.put("chatid",example.getWorkerdataid());
+            map.put("chatid",dapartmentdata.getDataid());
             map.put("isread",0);
             workdata.setCount(workdataChatReadMapper.selectCount(map));
             String chate = "";
