@@ -477,6 +477,7 @@ public class WorkerServiceImpl implements WorkerService {
         param.put("first",first);
         param.put("currentTime",currentTime);
         param.put("departmentdataid",worker.getDepartmentdataid());
+
         map.put("workDataMissingLog",workdataReadMapper.selectMissingLog(param));
         return map;
     }
