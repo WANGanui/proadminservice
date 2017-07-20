@@ -10,10 +10,9 @@
     <result column="workcontext" property="workcontext" jdbcType="VARCHAR" />
     <result column="workerdataid" property="workerdataid" jdbcType="VARCHAR" />
     <result column="workername" property="workername" jdbcType="VARCHAR" />
-    <result column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="time" property="time" jdbcType="DATE" />
     <result column="projectleader" property="projectleader" jdbcType="VARCHAR" />
     <result column="isread" property="isread" jdbcType="CHAR" />
-    <collection property="chat" column="{workdataid=dataid}" javaType="String" ofType="String" select="selectChats"></collection>
   </resultMap>
   <resultMap id="HashMapBaseResultMap" type="hashmap" >
     <id column="dataid" property="dataid" jdbcType="VARCHAR" />
@@ -24,7 +23,7 @@
     <result column="workcontext" property="workcontext" jdbcType="VARCHAR" />
     <result column="workerdataid" property="workerdataid" jdbcType="VARCHAR" />
     <result column="workername" property="workername" jdbcType="VARCHAR" />
-    <result column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="time" property="time" jdbcType="DATE" />
     <result column="projectleader" property="projectleader" jdbcType="VARCHAR" />
     <result column="isread" property="isread" jdbcType="CHAR" />
   </resultMap>
@@ -103,7 +102,7 @@
         </foreach>
       </if>
       <if test="example.time != null" >
-         and time = #{example.time,jdbcType=TIMESTAMP}
+         and time = #{example.time,jdbcType=DATE}
       </if>
       <if test="example.projectleader != null" >
          and projectleader = #{example.projectleader,jdbcType=VARCHAR}
@@ -212,9 +211,5 @@
     <if test="example.limitStart >= 0 and example.pageSize > 0 " >
       limit #{example.limitStart} , #{example.pageSize}
     </if>
-  </select>
-  <select id="selectChats" resultType="String">
-    select group_concat(context) chat
-    from hrg_workdata_chat where workdataid = #{workdataid}
   </select>
 </mapper>

@@ -484,12 +484,23 @@ public class WorkerServiceImpl implements WorkerService {
         ids.add("4");
         ids.add("6");
         workerCriteria.setDepartmentdataidList(ids);
+        workerCriteria.setOrderByClause("departmentdataid asc");
         List<Worker> workerList = workerReadMapper.selectByExample(workerCriteria);
         for (Worker worker1:workerList){
             Map mapp = new HashMap();
             WorkerRelMissionCriteria workerRelMissionCriteria = new WorkerRelMissionCriteria();
             workerRelMissionCriteria.setWorkerdataid(worker1.getDataid());
-            int count = workerRelMissionReadMapper.countByExample(workerRelMissionCriteria);
+            List<WorkerRelMission> workerRelMissions = workerRelMissionReadMapper.selectByExample(workerRelMissionCriteria);
+            int count = 0;
+            if (!ValidUtil.isNullOrEmpty(workerRelMissions)){
+                for (WorkerRelMission relMission:workerRelMissions){
+                    MissionCriteria missionCriteria = new MissionCriteria();
+                    missionCriteria.setDataid(relMission.getMissiondataid());
+                    missionCriteria.setMissionstate("0");
+                    missionCriteria.setState("2");
+                    count += missionReadMapper.countByExample(missionCriteria);
+                }
+            }
             mapp.put("name",worker1.getName());
             mapp.put("count",count);
             mapList.add(mapp);

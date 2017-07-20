@@ -76,7 +76,7 @@
         </foreach>
       </if>
       <if test="example.time != null" >
-         and time = #{example.time,jdbcType=TIMESTAMP}
+         and time = #{example.time,jdbcType=DATE}
       </if>
       <if test="example.projectleader != null" >
          and projectleader = #{example.projectleader,jdbcType=VARCHAR}
@@ -119,7 +119,7 @@
       #{record.projectname,jdbcType=VARCHAR}, #{record.missiondataid,jdbcType=VARCHAR}, 
       #{record.missionname,jdbcType=VARCHAR}, #{record.workcontext,jdbcType=VARCHAR}, 
       #{record.workerdataid,jdbcType=VARCHAR}, #{record.workername,jdbcType=VARCHAR}, 
-      #{record.time,jdbcType=TIMESTAMP}, #{record.projectleader,jdbcType=VARCHAR}, #{record.isread,jdbcType=CHAR}
+      #{record.time,jdbcType=DATE}, #{record.projectleader,jdbcType=VARCHAR}, #{record.isread,jdbcType=CHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="map" >
@@ -185,7 +185,7 @@
         #{record.workername,jdbcType=VARCHAR},
       </if>
       <if test="record.time != null" >
-        #{record.time,jdbcType=TIMESTAMP},
+        #{record.time,jdbcType=DATE},
       </if>
       <if test="record.projectleader != null" >
         #{record.projectleader,jdbcType=VARCHAR},
@@ -223,7 +223,7 @@
         workername = #{record.workername,jdbcType=VARCHAR},
       </if>
       <if test="record.time != null" >
-        time = #{record.time,jdbcType=TIMESTAMP},
+        time = #{record.time,jdbcType=DATE},
       </if>
       <if test="record.projectleader != null" >
         projectleader = #{record.projectleader,jdbcType=VARCHAR},
@@ -246,7 +246,7 @@
       workcontext = #{record.workcontext,jdbcType=VARCHAR},
       workerdataid = #{record.workerdataid,jdbcType=VARCHAR},
       workername = #{record.workername,jdbcType=VARCHAR},
-      time = #{record.time,jdbcType=TIMESTAMP},
+      time = #{record.time,jdbcType=DATE},
       projectleader = #{record.projectleader,jdbcType=VARCHAR},
       isread = #{record.isread,jdbcType=CHAR}
     <if test="_parameter != null" >
@@ -278,7 +278,7 @@
         workername = #{record.workername,jdbcType=VARCHAR},
       </if>
       <if test="record.time != null" >
-        time = #{record.time,jdbcType=TIMESTAMP},
+        time = #{record.time,jdbcType=DATE},
       </if>
       <if test="record.projectleader != null" >
         projectleader = #{record.projectleader,jdbcType=VARCHAR},
@@ -298,7 +298,7 @@
       workcontext = #{record.workcontext,jdbcType=VARCHAR},
       workerdataid = #{record.workerdataid,jdbcType=VARCHAR},
       workername = #{record.workername,jdbcType=VARCHAR},
-      time = #{record.time,jdbcType=TIMESTAMP},
+      time = #{record.time,jdbcType=DATE},
       projectleader = #{record.projectleader,jdbcType=VARCHAR},
       isread = #{record.isread,jdbcType=CHAR}
     where dataid = #{record.dataid,jdbcType=VARCHAR}

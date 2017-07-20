@@ -58,6 +58,7 @@ public class WorkDataServiceImpl implements WorkDataService {
                 workdata.setProjectname(mission.getProname());
             }
         }
+
         workdata.setTime(new Date());
         workdata.setDataid(UUIDGenerator.getUUID());
         workdata.setIsread("0");

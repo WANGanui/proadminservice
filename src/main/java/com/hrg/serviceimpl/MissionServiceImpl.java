@@ -54,7 +54,7 @@ public class MissionServiceImpl implements MissionService {
         workerRoleCriteria.setWorkerdataid(worker.getDataid());
         WorkerRole workerRole = workerRoleReadMapper.selectByExampleForOne(workerRoleCriteria);
         if (workerRole.getRoleid()=="1" || workerRole.getRoleid()=="5" ){
-            example.setOrderByClause("createtime desc,proportion desc");
+            example.setOrderByClause("modifytime desc,proportion desc");
             return missionReadMapper.selectByExample(example);
         }else {
             WorkerCriteria workerCriteria = new WorkerCriteria();
@@ -74,7 +74,11 @@ public class MissionServiceImpl implements MissionService {
             MissionCriteria missionCriteria = new MissionCriteria();
             missionCriteria.setDataidList(mids);
             missionCriteria.isDistinct();
-            missionCriteria.setOrderByClause("proportion desc,createtime desc");
+            List list = new ArrayList();
+            list.add("0");
+            list.add("1");
+            missionCriteria.setStateList(list);
+            missionCriteria.setOrderByClause("modifytime desc,proportion desc");
             List<Mission> missionList = missionReadMapper.selectByExample(missionCriteria);
             return missionList;
         }
@@ -191,7 +195,7 @@ public class MissionServiceImpl implements MissionService {
 
     @Override
     public List<Mission> selectList(MissionCriteria example) throws Exception {
-        example.setOrderByClause("createtime desc,proportion desc");
+        example.setOrderByClause("modifytime desc,proportion desc");
         return missionReadMapper.selectByExample(example);
     }
 
@@ -217,7 +221,7 @@ public class MissionServiceImpl implements MissionService {
             example.setState(null);
 
         //设置分页参数
-        example.setOrderByClause(" createtime DESC，proportion DESC ");
+        example.setOrderByClause(" modifytime DESC，proportion DESC ");
         example.setPageSize((pageUtil.getPageSize() == null) ? 8 : pageUtil.getPageSize());
         example.setLimitStart((pageUtil.getCurrentPage()  == null) ? 0 : (pageUtil.getCurrentPage()-1) * 8);
         List<Mission> missionList = missionReadMapper.selectByExample(example);
@@ -271,7 +275,7 @@ public class MissionServiceImpl implements MissionService {
     @Override
     public Map<String, Object> slectMissionBylevel(MissionCriteria example) throws Exception {
         example.setLevel("1");
-        example.setOrderByClause("createtime desc,proportion desc");
+        example.setOrderByClause("modifytime desc,proportion desc");
         List<Mission> missions1 = missionReadMapper.selectByExample(example);
         example.setLevel("2");
         List<Mission> missions2 = missionReadMapper.selectByExample(example);
