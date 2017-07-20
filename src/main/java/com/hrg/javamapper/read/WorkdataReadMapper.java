@@ -2,9 +2,10 @@ package com.hrg.javamapper.read;
 
 import com.hrg.model.Workdata;
 import com.hrg.model.WorkdataCriteria;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
-import org.apache.ibatis.annotations.Param;
 
 public interface WorkdataReadMapper {
     int countByExample(@Param("example") WorkdataCriteria example);
@@ -20,4 +21,6 @@ public interface WorkdataReadMapper {
     Map<String, Object> selectMapByPrimaryKey(@Param("dataid") String dataid);
 
     Map<String, Object> selectMapByExampleForOne(@Param("example") WorkdataCriteria example);
+
+    List<Map> selectMissingLog(Map map);
 }

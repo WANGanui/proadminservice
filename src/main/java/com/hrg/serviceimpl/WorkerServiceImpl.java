@@ -409,7 +409,7 @@ public class WorkerServiceImpl implements WorkerService {
      * @throws Exception
      */
     @Override
-    public Map selectIndex(String dataid) throws Exception {
+    public Map selectIndex(String dataid,Worker worker) throws Exception {
         Map map = new HashMap();
 
         WorkerRoleCriteria roleCriteria = new WorkerRoleCriteria();
@@ -464,6 +464,20 @@ public class WorkerServiceImpl implements WorkerService {
         List<Notice> noticeList = noticeReadMapper.selectByExample(noticeCriteria);
 
         map.put("notice",noticeList);
+
+        //查询当前月缺失日志
+        //获取当前月第一天：
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.MONTH, 0);
+        c.set(Calendar.DAY_OF_MONTH,1);//设置为1号,当前日期既为本月第一天
+        String first = format.format(c.getTime());//当前月第一天
+        String currentTime=format.format(new Date());//当前日期
+        Map param=new HashMap();
+        param.put("first",first);
+        param.put("currentTime",currentTime);
+        param.put("departmentdataid",worker.getDepartmentdataid());
+        map.put("workDataMissingLog",workdataReadMapper.selectMissingLog(param));
         return map;
     }
 
