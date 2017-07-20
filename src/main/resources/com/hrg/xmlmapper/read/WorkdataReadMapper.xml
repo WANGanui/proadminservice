@@ -212,4 +212,44 @@
       limit #{example.limitStart} , #{example.pageSize}
     </if>
   </select>
+
+  <select id="selectChats" resultType="String">
+    select group_concat(context) chat
+    from hrg_workdata_chat where workdataid = #{workdataid}
+  </select>
+  <select id="selectMissingLog" parameterType="java.util.Map" resultType="java.util.Map">
+     SELECT
+    name,
+    (
+    SELECT
+    COUNT(1)
+    FROM
+    hrg_datatable
+    WHERE
+    data_rest = 0
+    AND data_time  >=#{first}
+    AND data_time  <![CDATA[ < ]]> #{currentTime}
+    ) - Total AS missingLog
+    FROM
+    (
+    SELECT
+    b. NAME,
+    IFNULL(a.Total, 0) Total
+    FROM
+    (SELECT * FROM hrg_worker WHERE departmentdataid=#{departmentdataid}) b
+    LEFT JOIN (SELECT d.workerdataid,COUNT(1) total FROM(
+    SELECT
+    time,
+    COUNT(1) Total,
+    workerdataid
+    FROM
+    hrg_workdata
+    GROUP BY
+    time,
+    workerdataid
+    ) d GROUP BY d.workerdataid ) a ON a.workerdataid = b.dataid
+    ) c
+    ORDER BY
+    missingLog DESC LIMIT 0,10
+  </select>
 </mapper>
