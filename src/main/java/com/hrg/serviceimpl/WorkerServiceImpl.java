@@ -55,6 +55,9 @@ public class WorkerServiceImpl implements WorkerService {
     @Autowired
     WorkdataChatReadMapper workdataChatReadMapper;
 
+    @Autowired
+    NoticeRelWorkerReadMapper noticeRelWorkerReadMapper;
+
     /**
      * 方法说明：根据员工账号查询员工对象
      *
@@ -478,6 +481,16 @@ public class WorkerServiceImpl implements WorkerService {
         param.put("currentTime",currentTime);
         param.put("departmentdataid",worker.getDepartmentdataid());
         map.put("workDataMissingLog",workdataReadMapper.selectMissingLog(param));
+
+        //查询公告
+        NoticeRelWorkerCriteria noticeRelWorkerCriteria=new NoticeRelWorkerCriteria();
+        noticeRelWorkerCriteria.setIsread("0");
+        noticeRelWorkerCriteria.setWorkerid(worker.getDataid());
+        map.put("noticeRelWorkTotal",noticeRelWorkerReadMapper.countByExample(noticeRelWorkerCriteria));//该角色未读公告
+        Map map1=new HashMap();
+        map1.put("isRead",0);
+        map1.put("workerId",worker.getDataid());
+        map.put("relWorkMap",noticeRelWorkerReadMapper.selectOneWorker(map1));
         return map;
     }
 
