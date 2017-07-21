@@ -3,6 +3,7 @@ package com.hrg.serviceimpl;
 import com.hrg.enums.ErrorCode;
 import com.hrg.exception.ValidatorException;
 import com.hrg.javamapper.read.*;
+import com.hrg.javamapper.write.MissionAuditWriteMapper;
 import com.hrg.javamapper.write.MissionWriteMapper;
 import com.hrg.javamapper.write.WorkerRelMissionWriteMapper;
 import com.hrg.model.*;
@@ -40,6 +41,10 @@ public class MissionServiceImpl implements MissionService {
     WorkerRoleReadMapper workerRoleReadMapper;
     @Autowired
     WorkdataChatReadMapper workdataChatReadMapper;
+    @Autowired
+    MissionAuditWriteMapper missionAuditWriteMapper;
+    @Autowired
+    MissionAuditReadMapper missionAuditReadMapper;
 
     /**
      * 条件查询任务列表
@@ -101,9 +106,13 @@ public class MissionServiceImpl implements MissionService {
         WorkerRelMissionCriteria example = new WorkerRelMissionCriteria();
         example.setMissiondataid(mission.getDataid());
         List<WorkerRelMission> missionList = workerRelMissionReadMapper.selectByExample(example);
+        MissionAuditCriteria missionAuditCriteria = new MissionAuditCriteria();
+        missionAuditCriteria.setMissionid(dataid);
+        List<MissionAudit> auditList = missionAuditReadMapper.selectByExample(missionAuditCriteria);
         Map map = new HashMap();
         map.put("mission",mission);
         map.put("relworker",missionList);
+        map.put("audit",auditList);
         return map;
     }
 
@@ -117,7 +126,7 @@ public class MissionServiceImpl implements MissionService {
      */
     @Override
     @Transactional(rollbackFor = { Exception.class, RuntimeException.class })
-    public boolean insert(Mission mission, List<Worker> workerList) throws Exception {
+    public boolean insert(Mission mission, List<Worker> workerList,List<MissionAudit> auditList) throws Exception {
         if (ValidUtil.isNullOrEmpty(mission.getContext()) || ValidUtil.isNullOrEmpty(mission.getCreator()) ||
                 ValidUtil.isNullOrEmpty(mission.getEndtime()) || ValidUtil.isNullOrEmpty(mission.getCreatordataid()) ||
                 ValidUtil.isNullOrEmpty(mission.getName()) ||
@@ -146,6 +155,13 @@ public class MissionServiceImpl implements MissionService {
             workerRelMission.setMissiondataid(mission.getDataid());
             workerRelMission.setMissionname(mission.getName());
             int y = workerRelMissionWriteMapper.insert(workerRelMission);
+            if (y <= 0)
+                return false;
+        }
+        for (MissionAudit missionAudit : auditList){
+            missionAudit.setMissionid(mission.getDataid());
+            missionAudit.setAuditstate("0");
+            int y = missionAuditWriteMapper.insert(missionAudit);
             if (y <= 0)
                 return false;
         }

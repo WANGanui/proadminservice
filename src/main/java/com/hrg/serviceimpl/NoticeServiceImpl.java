@@ -3,9 +3,10 @@ package com.hrg.serviceimpl;
 import com.hrg.enums.ErrorCode;
 import com.hrg.exception.ValidatorException;
 import com.hrg.javamapper.read.NoticeReadMapper;
+import com.hrg.javamapper.read.WorkerReadMapper;
+import com.hrg.javamapper.write.NoticeRelWorkerWriteMapper;
 import com.hrg.javamapper.write.NoticeWriteMapper;
-import com.hrg.model.Notice;
-import com.hrg.model.NoticeCriteria;
+import com.hrg.model.*;
 import com.hrg.service.NoticeService;
 import com.hrg.util.PageUtil;
 import com.hrg.util.UUIDGenerator;
@@ -27,6 +28,10 @@ public class NoticeServiceImpl implements NoticeService {
     NoticeReadMapper noticeReadMapper;
     @Autowired
     NoticeWriteMapper noticeWriteMapper;
+    @Autowired
+    WorkerReadMapper workerReadMapper;
+    @Autowired
+    NoticeRelWorkerWriteMapper noticeRelWorkerWriteMapper;
 
     /**
      * 添加公告
@@ -45,6 +50,17 @@ public class NoticeServiceImpl implements NoticeService {
         notice.setDataid(UUIDGenerator.getUUID());
         notice.setCreatetime(new Date());
         int x = noticeWriteMapper.insert(notice);
+        List<Worker> workerList = workerReadMapper.selectByExample(new WorkerCriteria());
+        for (Worker worker : workerList){
+            NoticeRelWorker noticeRelWorker = new NoticeRelWorker();
+            noticeRelWorker.setDataid(UUIDGenerator.getUUID());
+            noticeRelWorker.setNoticeid(notice.getDataid());
+            noticeRelWorker.setWorkerid(worker.getDataid());
+            noticeRelWorker.setIsread("0");
+            int y = noticeRelWorkerWriteMapper.insert(noticeRelWorker);
+            if (y<=0)
+                return false;
+        }
         return x > 0 ? true : false;
     }
 

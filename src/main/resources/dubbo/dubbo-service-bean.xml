@@ -16,4 +16,5 @@
 	<dubbo:service interface="com.hrg.service.DepartmentService" ref="departmentServiceImpl"/>
 	<dubbo:service interface="com.hrg.service.ModuleService" ref="moduleServiceImpl"/>
 	<dubbo:service interface="com.hrg.service.PermissionService" ref="permissionServiceImpl"/>
+	<dubbo:service interface="com.hrg.service.MissionAuditService" ref="missionAuditServiceImpl"/>
 </beans>

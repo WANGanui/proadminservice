@@ -57,6 +57,15 @@
           #{listItem}
         </foreach>
       </if>
+      <if test="example.auditname != null" >
+         and auditname = #{example.auditname,jdbcType=VARCHAR}
+      </if>
+      <if test="example.auditnameList != null  and  example.auditnameList.size() > 0 " >
+         and auditname in 
+        <foreach collection="example.auditnameList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
     </where>
   </sql>
   <delete id="deleteByPrimaryKey" parameterType="map" >
@@ -71,11 +80,11 @@
   </delete>
   <insert id="insert" parameterType="map" >
     insert into hrg_mission_audit (id, missionid, auditorid, 
-      auditstate, orderid, remark
-      )
+      auditstate, orderid, remark, 
+      auditname)
     values (#{record.id,jdbcType=INTEGER}, #{record.missionid,jdbcType=VARCHAR}, #{record.auditorid,jdbcType=VARCHAR}, 
-      #{record.auditstate,jdbcType=CHAR}, #{record.orderid,jdbcType=INTEGER}, #{record.remark,jdbcType=VARCHAR}
-      )
+      #{record.auditstate,jdbcType=CHAR}, #{record.orderid,jdbcType=INTEGER}, #{record.remark,jdbcType=VARCHAR}, 
+      #{record.auditname,jdbcType=VARCHAR})
     <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="record.id" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -101,6 +110,9 @@
       <if test="record.remark != null" >
         remark,
       </if>
+      <if test="record.auditname != null" >
+        auditname,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="record.id != null" >
@@ -120,6 +132,9 @@
       </if>
       <if test="record.remark != null" >
         #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditname != null" >
+        #{record.auditname,jdbcType=VARCHAR},
       </if>
     </trim>
     <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="record.id" >
@@ -147,6 +162,9 @@
       <if test="record.remark != null" >
         remark = #{record.remark,jdbcType=VARCHAR},
       </if>
+      <if test="record.auditname != null" >
+        auditname = #{record.auditname,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -159,7 +177,8 @@
       auditorid = #{record.auditorid,jdbcType=VARCHAR},
       auditstate = #{record.auditstate,jdbcType=CHAR},
       orderid = #{record.orderid,jdbcType=INTEGER},
-      remark = #{record.remark,jdbcType=VARCHAR}
+      remark = #{record.remark,jdbcType=VARCHAR},
+      auditname = #{record.auditname,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -182,6 +201,9 @@
       <if test="record.remark != null" >
         remark = #{record.remark,jdbcType=VARCHAR},
       </if>
+      <if test="record.auditname != null" >
+        auditname = #{record.auditname,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{record.id,jdbcType=INTEGER}
   </update>
@@ -191,7 +213,8 @@
       auditorid = #{record.auditorid,jdbcType=VARCHAR},
       auditstate = #{record.auditstate,jdbcType=CHAR},
       orderid = #{record.orderid,jdbcType=INTEGER},
-      remark = #{record.remark,jdbcType=VARCHAR}
+      remark = #{record.remark,jdbcType=VARCHAR},
+      auditname = #{record.auditname,jdbcType=VARCHAR}
     where id = #{record.id,jdbcType=INTEGER}
   </update>
 </mapper>
