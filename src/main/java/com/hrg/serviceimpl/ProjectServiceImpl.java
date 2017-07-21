@@ -225,6 +225,7 @@ public class ProjectServiceImpl implements ProjectService {
         if (!ValidUtil.isNullOrEmpty(ids)){
             ProjectCriteria example = new ProjectCriteria();
             example.setDataidList(ids);
+            example.setState("1");
             List<Project> projectList = projectReadMapper.selectByExample(example);
             return projectList;
         }else {

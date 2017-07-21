@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hrg.javamapper.write.NoticeRelWorkerWriteMapper" >
+  <sql id="Example_Where_Clause" >
+    <where >
+      <if test="example.dataid != null" >
+         and dataid = #{example.dataid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.dataidList != null  and  example.dataidList.size() > 0 " >
+         and dataid in 
+        <foreach collection="example.dataidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.noticeid != null" >
+         and noticeid = #{example.noticeid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.noticeidList != null  and  example.noticeidList.size() > 0 " >
+         and noticeid in 
+        <foreach collection="example.noticeidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.workerid != null" >
+         and workerid = #{example.workerid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.workeridList != null  and  example.workeridList.size() > 0 " >
+         and workerid in 
+        <foreach collection="example.workeridList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.isread != null" >
+         and isread = #{example.isread,jdbcType=CHAR}
+      </if>
+      <if test="example.isreadList != null  and  example.isreadList.size() > 0 " >
+         and isread in 
+        <foreach collection="example.isreadList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+    </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from hrg_notice_rel_worker
+    where dataid = #{dataid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="map" >
+    delete from hrg_notice_rel_worker
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="map" >
+    insert into hrg_notice_rel_worker (dataid, noticeid, workerid, 
+      isread)
+    values (#{record.dataid,jdbcType=VARCHAR}, #{record.noticeid,jdbcType=VARCHAR}, #{record.workerid,jdbcType=VARCHAR}, 
+      #{record.isread,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="map" >
+    insert into hrg_notice_rel_worker
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="record.dataid != null" >
+        dataid,
+      </if>
+      <if test="record.noticeid != null" >
+        noticeid,
+      </if>
+      <if test="record.workerid != null" >
+        workerid,
+      </if>
+      <if test="record.isread != null" >
+        isread,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="record.dataid != null" >
+        #{record.dataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noticeid != null" >
+        #{record.noticeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workerid != null" >
+        #{record.workerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isread != null" >
+        #{record.isread,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update hrg_notice_rel_worker
+    <set >
+      <if test="record.dataid != null" >
+        dataid = #{record.dataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noticeid != null" >
+        noticeid = #{record.noticeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workerid != null" >
+        workerid = #{record.workerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isread != null" >
+        isread = #{record.isread,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update hrg_notice_rel_worker
+    set dataid = #{record.dataid,jdbcType=VARCHAR},
+      noticeid = #{record.noticeid,jdbcType=VARCHAR},
+      workerid = #{record.workerid,jdbcType=VARCHAR},
+      isread = #{record.isread,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="map" >
+    update hrg_notice_rel_worker
+    <set >
+      <if test="record.noticeid != null" >
+        noticeid = #{record.noticeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workerid != null" >
+        workerid = #{record.workerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isread != null" >
+        isread = #{record.isread,jdbcType=CHAR},
+      </if>
+    </set>
+    where dataid = #{record.dataid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="map" >
+    update hrg_notice_rel_worker
+    set noticeid = #{record.noticeid,jdbcType=VARCHAR},
+      workerid = #{record.workerid,jdbcType=VARCHAR},
+      isread = #{record.isread,jdbcType=CHAR}
+    where dataid = #{record.dataid,jdbcType=VARCHAR}
+  </update>
+</mapper>
