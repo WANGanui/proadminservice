@@ -78,6 +78,12 @@
       <if test="example.endtime != null" >
          and endtime = #{example.endtime,jdbcType=TIMESTAMP}
       </if>
+      <if test="example.endtimeMin != null" >
+        and endtime &gt;= #{example.endtimeMin,jdbcType=TIMESTAMP}
+      </if>
+      <if test="example.endtimeMax != null" >
+        and endtime &lt;= #{example.endtimeMax,jdbcType=TIMESTAMP}
+      </if>
       <if test="example.days != null" >
          and days = #{example.days,jdbcType=INTEGER}
       </if>

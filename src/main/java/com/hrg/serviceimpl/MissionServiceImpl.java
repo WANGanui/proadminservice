@@ -74,6 +74,8 @@ public class MissionServiceImpl implements MissionService {
             MissionCriteria missionCriteria = new MissionCriteria();
             missionCriteria.setDataidList(mids);
             missionCriteria.isDistinct();
+            missionCriteria.setHeaderid(example.getHeaderid());
+            missionCriteria.setCreatetime(example.getCreatetime());
             List list = new ArrayList();
             list.add("0");
             list.add("1");
