@@ -244,6 +244,8 @@
     workerdataid
     FROM
     hrg_workdata
+    WHERE time  >=#{first}
+    AND  time  <![CDATA[ < ]]> #{currentTime}
     GROUP BY
     time,
     workerdataid
