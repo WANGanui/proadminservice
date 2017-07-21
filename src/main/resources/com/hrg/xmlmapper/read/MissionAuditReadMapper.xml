@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hrg.javamapper.read.MissionAuditReadMapper" >
+  <resultMap id="BaseResultMap" type="com.hrg.model.MissionAudit" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="missionid" property="missionid" jdbcType="VARCHAR" />
+    <result column="auditorid" property="auditorid" jdbcType="VARCHAR" />
+    <result column="auditstate" property="auditstate" jdbcType="CHAR" />
+    <result column="orderid" property="orderid" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="HashMapBaseResultMap" type="hashmap" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="missionid" property="missionid" jdbcType="VARCHAR" />
+    <result column="auditorid" property="auditorid" jdbcType="VARCHAR" />
+    <result column="auditstate" property="auditstate" jdbcType="CHAR" />
+    <result column="orderid" property="orderid" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <if test="example.id != null" >
+         and id = #{example.id,jdbcType=INTEGER}
+      </if>
+      <if test="example.idList != null  and  example.idList.size() > 0 " >
+         and id in 
+        <foreach collection="example.idList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.missionid != null" >
+         and missionid = #{example.missionid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.missionidList != null  and  example.missionidList.size() > 0 " >
+         and missionid in 
+        <foreach collection="example.missionidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.auditorid != null" >
+         and auditorid = #{example.auditorid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.auditoridList != null  and  example.auditoridList.size() > 0 " >
+         and auditorid in 
+        <foreach collection="example.auditoridList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.auditstate != null" >
+         and auditstate = #{example.auditstate,jdbcType=CHAR}
+      </if>
+      <if test="example.auditstateList != null  and  example.auditstateList.size() > 0 " >
+         and auditstate in 
+        <foreach collection="example.auditstateList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.orderid != null" >
+         and orderid = #{example.orderid,jdbcType=INTEGER}
+      </if>
+      <if test="example.orderidList != null  and  example.orderidList.size() > 0 " >
+         and orderid in 
+        <foreach collection="example.orderidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.remark != null" >
+         and remark = #{example.remark,jdbcType=VARCHAR}
+      </if>
+      <if test="example.remarkList != null  and  example.remarkList.size() > 0 " >
+         and remark in 
+        <foreach collection="example.remarkList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, missionid, auditorid, auditstate, orderid, remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <if test="example.distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hrg_mission_audit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null" >
+      order by ${example.orderByClause}
+    </if>
+    <if test="example.limitStart >= 0 and example.pageSize > 0 " >
+      limit #{example.limitStart} , #{example.pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from hrg_mission_audit
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="countByExample" parameterType="map" resultType="java.lang.Integer" >
+    select count(*) from hrg_mission_audit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="selectByExampleForOne" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <if test="example.distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hrg_mission_audit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null" >
+      order by ${example.orderByClause}
+    </if>
+     limit 0 , 1 
+  </select>
+  <select id="selectMapByPrimaryKey" resultMap="HashMapBaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from hrg_mission_audit
+    <where >
+       and id=#{id,jdbcType=INTEGER}
+    </where>
+  </select>
+  <select id="selectMapByExampleForOne" resultMap="HashMapBaseResultMap" parameterType="map" >
+    select
+    <if test="example.distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hrg_mission_audit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null" >
+      order by ${example.orderByClause}
+    </if>
+     limit 0 , 1 
+  </select>
+  <select id="selectMapByExample" resultMap="HashMapBaseResultMap" parameterType="map" >
+    select
+    <if test="example.distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hrg_mission_audit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null" >
+      order by ${example.orderByClause}
+    </if>
+    <if test="example.limitStart >= 0 and example.pageSize > 0 " >
+      limit #{example.limitStart} , #{example.pageSize}
+    </if>
+  </select>
+</mapper>
