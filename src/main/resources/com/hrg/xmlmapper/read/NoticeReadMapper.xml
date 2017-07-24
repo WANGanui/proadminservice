@@ -190,4 +190,15 @@
       limit #{example.limitStart} , #{example.pageSize}
     </if>
   </select>
+  <select id="selectNoticeWork" parameterType="java.util.Map" resultType="java.util.Map">
+      SELECT
+          a.*, b.dataid AS noticeWorkId,
+          b.isread
+      FROM
+          hrg_notice a
+      INNER JOIN hrg_notice_rel_worker b ON a.dataid = b.noticeid
+      WHERE
+          b.workerid = #{workerid}
+  </select>
+
 </mapper>

@@ -2,9 +2,10 @@ package com.hrg.javamapper.read;
 
 import com.hrg.model.Notice;
 import com.hrg.model.NoticeCriteria;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
-import org.apache.ibatis.annotations.Param;
 
 public interface NoticeReadMapper {
     int countByExample(@Param("example") NoticeCriteria example);
@@ -20,4 +21,6 @@ public interface NoticeReadMapper {
     Map<String, Object> selectMapByPrimaryKey(@Param("dataid") String dataid);
 
     Map<String, Object> selectMapByExampleForOne(@Param("example") NoticeCriteria example);
+
+    List<Map> selectNoticeWork(Map map);
 }
