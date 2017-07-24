@@ -3,11 +3,9 @@ package com.hrg.serviceimpl;
 import com.hrg.enums.ErrorCode;
 import com.hrg.exception.ValidatorException;
 import com.hrg.javamapper.read.NoticeReadMapper;
-import com.hrg.javamapper.write.NoticeRelWorkerWriteMapper;
 import com.hrg.javamapper.write.NoticeWriteMapper;
 import com.hrg.model.Notice;
 import com.hrg.model.NoticeCriteria;
-import com.hrg.model.NoticeRelWorker;
 import com.hrg.service.NoticeService;
 import com.hrg.util.PageUtil;
 import com.hrg.util.UUIDGenerator;
@@ -18,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by 82705 on 2017/6/1.
@@ -30,6 +27,8 @@ public class NoticeServiceImpl implements NoticeService {
     NoticeReadMapper noticeReadMapper;
     @Autowired
     NoticeWriteMapper noticeWriteMapper;
+    @Autowired
+    WorkerReadMapper workerReadMapper;
     @Autowired
     NoticeRelWorkerWriteMapper noticeRelWorkerWriteMapper;
 
@@ -50,6 +49,17 @@ public class NoticeServiceImpl implements NoticeService {
         notice.setDataid(UUIDGenerator.getUUID());
         notice.setCreatetime(new Date());
         int x = noticeWriteMapper.insert(notice);
+        List<Worker> workerList = workerReadMapper.selectByExample(new WorkerCriteria());
+        for (Worker worker : workerList){
+            NoticeRelWorker noticeRelWorker = new NoticeRelWorker();
+            noticeRelWorker.setDataid(UUIDGenerator.getUUID());
+            noticeRelWorker.setNoticeid(notice.getDataid());
+            noticeRelWorker.setWorkerid(worker.getDataid());
+            noticeRelWorker.setIsread("0");
+            int y = noticeRelWorkerWriteMapper.insert(noticeRelWorker);
+            if (y<=0)
+                return false;
+        }
         return x > 0 ? true : false;
     }
 
@@ -142,27 +152,4 @@ public class NoticeServiceImpl implements NoticeService {
 
         return noticeReadMapper.selectByPrimaryKey(dataid);
     }
-
-    /**
-     * 查询公告列表
-     * @param map
-     * @return
-     * @throws Exception
-     */
-    @Override
-    public  List<Map> selectNoticeWork(Map map)  throws Exception{
-        return  noticeReadMapper.selectNoticeWork(map);
-    }
-
-    /**
-     * 修改公告阅读表
-     * @param map
-     * @return
-     * @throws Exception
-     */
-    @Override
-    public  int updateStatusNoticeRelWorker(NoticeRelWorker map)  throws Exception{
-        return  noticeRelWorkerWriteMapper.updateByPrimaryKeySelective(map);
-    }
-
 }

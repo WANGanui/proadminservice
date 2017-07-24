@@ -54,6 +54,8 @@ public class WorkerServiceImpl implements WorkerService {
     ProjectReadMapper projectReadMapper;
     @Autowired
     WorkdataChatReadMapper workdataChatReadMapper;
+    @Autowired
+    MissionAuditReadMapper missionAuditReadMapper;
 
     @Autowired
     NoticeRelWorkerReadMapper noticeRelWorkerReadMapper;
@@ -273,7 +275,11 @@ public class WorkerServiceImpl implements WorkerService {
         missionCriteria.setAuditorid(workerdataid);
         missionCriteria.setMissionstate("2");
         int count = missionReadMapper.countByExample(missionCriteria);
-        map.put("auditmission",count);
+        MissionAuditCriteria missionAuditCriteria = new MissionAuditCriteria();
+        missionAuditCriteria.setAuditorid(workerdataid);
+        missionAuditCriteria.setAuditstate("0");
+        int cc = missionAuditReadMapper.countByExample(missionAuditCriteria);
+        map.put("auditmission",count+cc);
 
         int x = projectReadMapper.countAudit(workerdataid);
 
@@ -432,7 +438,11 @@ public class WorkerServiceImpl implements WorkerService {
         mCriteria.setAuditorid(dataid);
         mCriteria.setMissionstate("2");
         int count = missionReadMapper.countByExample(mCriteria);
-        map.put("auditmission",count);
+        MissionAuditCriteria missionAuditCriteria = new MissionAuditCriteria();
+        missionAuditCriteria.setAuditorid(dataid);
+        missionAuditCriteria.setAuditstate("0");
+        int cc = missionAuditReadMapper.countByExample(missionAuditCriteria);
+        map.put("auditmission",count+cc);
         int cou = projectReadMapper.countAudit(dataid);
         map.put("auditproject",cou);
 
