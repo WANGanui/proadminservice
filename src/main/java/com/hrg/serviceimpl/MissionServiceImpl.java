@@ -207,6 +207,11 @@ public class MissionServiceImpl implements MissionService {
         int y = missionWriteMapper.updateByPrimaryKeySelective(mission);
         if (y<=0)
             return false;
+        MissionAuditCriteria missionAuditCriteria = new MissionAuditCriteria();
+        missionAuditCriteria.setMissionid(mission.getDataid());
+        MissionAudit missionAudit = new MissionAudit();
+        missionAudit.setAuditstate("0");
+        int s = missionAuditWriteMapper.updateByExampleSelective(missionAudit,missionAuditCriteria);
         return x > 0 ? true : false;
     }
 

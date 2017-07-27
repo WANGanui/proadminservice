@@ -461,8 +461,8 @@ public class WorkerServiceImpl implements WorkerService {
         missionCriteria.setEndtimeMin(new Date());
         missionCriteria.setEndtimeMax(DateUtil.addDays(new Date(),5));
         missionCriteria.setOrderByClause("endtime asc");
-        projectCriteria.setLimitStart(0);
-        projectCriteria.setPageSize(7);
+        missionCriteria.setLimitStart(0);
+        missionCriteria.setPageSize(7);
         List<Mission> missionList = missionReadMapper.selectByExample(missionCriteria);
         int y = missionReadMapper.countByExample(new MissionCriteria());
         map.put("missionNum",y);
