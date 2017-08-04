@@ -4,6 +4,7 @@ import com.hrg.enums.ErrorCode;
 import com.hrg.exception.ValidatorException;
 import com.hrg.javamapper.read.*;
 import com.hrg.javamapper.write.MissionAuditWriteMapper;
+import com.hrg.javamapper.write.MissionFileWriteMapper;
 import com.hrg.javamapper.write.MissionWriteMapper;
 import com.hrg.javamapper.write.WorkerRelMissionWriteMapper;
 import com.hrg.model.*;
@@ -45,6 +46,10 @@ public class MissionServiceImpl implements MissionService {
     MissionAuditWriteMapper missionAuditWriteMapper;
     @Autowired
     MissionAuditReadMapper missionAuditReadMapper;
+    @Autowired
+    MissionFileReadMapper missionFileReadMapper;
+    @Autowired
+    MissionFileWriteMapper missionFileWriteMapper;
 
     /**
      * 条件查询任务列表
@@ -390,5 +395,74 @@ public class MissionServiceImpl implements MissionService {
         map.put("mission",mission);
         map.put("workdatas",workdataList);
         return map;
+    }
+
+    /**
+     * 查询任务文件集合
+     *
+     * @param example
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<MissionFile> selectMissionFileList(MissionFileCriteria example) throws Exception {
+        return missionFileReadMapper.selectByExample(example);
+    }
+
+    /**
+     * 添加文件
+     *
+     * @param missionFile
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public boolean insert(MissionFile missionFile) throws Exception {
+        if (ValidUtil.isNullOrEmpty(missionFile.getPath()))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+        missionFile.setDataid(UUIDGenerator.getUUID());
+        int x = missionFileWriteMapper.insert(missionFile);
+        return x > 0 ? true : false;
+    }
+
+    /**
+     * 查询文件
+     *
+     * @param missionid
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<MissionFile> selectMissionFile(String missionid) throws Exception {
+        if (ValidUtil.isNullOrEmpty(missionid))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+        MissionFileCriteria example = new MissionFileCriteria();
+        example.setMissionid(missionid);
+        return missionFileReadMapper.selectByExample(example);
+    }
+
+    /**
+     * 任务实体
+     *
+     * @param dataid
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Mission selectDetail(String dataid) throws Exception {
+        return missionReadMapper.selectByPrimaryKey(dataid);
+    }
+
+    /**
+     * 删除文件
+     *
+     * @param dataid
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public boolean deleteFile(String dataid) throws Exception {
+        int x = missionFileWriteMapper.deleteByPrimaryKey(dataid);
+        return x > 0 ? true : false;
     }
 }

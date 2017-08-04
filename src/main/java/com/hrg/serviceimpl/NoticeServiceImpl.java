@@ -3,12 +3,12 @@ package com.hrg.serviceimpl;
 import com.hrg.enums.ErrorCode;
 import com.hrg.exception.ValidatorException;
 import com.hrg.javamapper.read.NoticeReadMapper;
+import com.hrg.javamapper.read.WorkerReadMapper;
 import com.hrg.javamapper.write.NoticeRelWorkerWriteMapper;
 import com.hrg.javamapper.write.NoticeWriteMapper;
-import com.hrg.model.Notice;
-import com.hrg.model.NoticeCriteria;
-import com.hrg.model.NoticeRelWorker;
+import com.hrg.model.*;
 import com.hrg.service.NoticeService;
+import com.hrg.service.WorkerService;
 import com.hrg.util.PageUtil;
 import com.hrg.util.UUIDGenerator;
 import com.hrg.util.ValidUtil;
@@ -32,6 +32,8 @@ public class NoticeServiceImpl implements NoticeService {
     NoticeWriteMapper noticeWriteMapper;
     @Autowired
     NoticeRelWorkerWriteMapper noticeRelWorkerWriteMapper;
+    @Autowired
+    WorkerReadMapper workerReadMapper;
 
     /**
      * 添加公告
@@ -43,13 +45,24 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     @Transactional(rollbackFor = { Exception.class, RuntimeException.class })
     public boolean insert(Notice notice) throws Exception {
-        if (ValidUtil.isNullOrEmpty(notice.getContext())||ValidUtil.isNullOrEmpty(notice.getWorker())||
+        if (ValidUtil.isNullOrEmpty(notice.getContext())||
                 ValidUtil.isNullOrEmpty(notice.getWorkerdataid()) || ValidUtil.isNullOrEmpty(notice.getDepartment())||
                 ValidUtil.isNullOrEmpty(notice.getDepartmentdataid())|| ValidUtil.isNullOrEmpty(notice.getTime()))
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
         notice.setDataid(UUIDGenerator.getUUID());
         notice.setCreatetime(new Date());
         int x = noticeWriteMapper.insert(notice);
+        List<Worker> workerList = workerReadMapper.selectByExample(new WorkerCriteria());
+        for (Worker worker : workerList){
+            NoticeRelWorker relWorker = new NoticeRelWorker();
+            relWorker.setDataid(UUIDGenerator.getUUID());
+            relWorker.setNoticeid(notice.getDataid());
+            relWorker.setWorkerid(worker.getDataid());
+            relWorker.setIsread("0");
+            int y = noticeRelWorkerWriteMapper.insert(relWorker);
+            if (y <= 0)
+                return false;
+        }
         return x > 0 ? true : false;
     }
 

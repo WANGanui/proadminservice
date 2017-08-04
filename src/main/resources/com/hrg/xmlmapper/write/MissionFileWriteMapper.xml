@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hrg.javamapper.write.MissionFileWriteMapper" >
+  <sql id="Example_Where_Clause" >
+    <where >
+      <if test="example.dataid != null" >
+         and dataid = #{example.dataid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.dataidList != null  and  example.dataidList.size() > 0 " >
+         and dataid in 
+        <foreach collection="example.dataidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.nameold != null" >
+         and nameold = #{example.nameold,jdbcType=VARCHAR}
+      </if>
+      <if test="example.nameoldList != null  and  example.nameoldList.size() > 0 " >
+         and nameold in 
+        <foreach collection="example.nameoldList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.namenew != null" >
+         and namenew = #{example.namenew,jdbcType=VARCHAR}
+      </if>
+      <if test="example.namenewList != null  and  example.namenewList.size() > 0 " >
+         and namenew in 
+        <foreach collection="example.namenewList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.path != null" >
+         and path = #{example.path,jdbcType=VARCHAR}
+      </if>
+      <if test="example.pathList != null  and  example.pathList.size() > 0 " >
+         and path in 
+        <foreach collection="example.pathList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.missionid != null" >
+         and missionid = #{example.missionid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.missionidList != null  and  example.missionidList.size() > 0 " >
+         and missionid in 
+        <foreach collection="example.missionidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+    </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from hrg_mission_file
+    where dataid = #{dataid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="map" >
+    delete from hrg_mission_file
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="map" >
+    insert into hrg_mission_file (dataid, nameold, namenew, 
+      path, missionid)
+    values (#{record.dataid,jdbcType=VARCHAR}, #{record.nameold,jdbcType=VARCHAR}, #{record.namenew,jdbcType=VARCHAR}, 
+      #{record.path,jdbcType=VARCHAR}, #{record.missionid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="map" >
+    insert into hrg_mission_file
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="record.dataid != null" >
+        dataid,
+      </if>
+      <if test="record.nameold != null" >
+        nameold,
+      </if>
+      <if test="record.namenew != null" >
+        namenew,
+      </if>
+      <if test="record.path != null" >
+        path,
+      </if>
+      <if test="record.missionid != null" >
+        missionid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="record.dataid != null" >
+        #{record.dataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nameold != null" >
+        #{record.nameold,jdbcType=VARCHAR},
+      </if>
+      <if test="record.namenew != null" >
+        #{record.namenew,jdbcType=VARCHAR},
+      </if>
+      <if test="record.path != null" >
+        #{record.path,jdbcType=VARCHAR},
+      </if>
+      <if test="record.missionid != null" >
+        #{record.missionid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update hrg_mission_file
+    <set >
+      <if test="record.dataid != null" >
+        dataid = #{record.dataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nameold != null" >
+        nameold = #{record.nameold,jdbcType=VARCHAR},
+      </if>
+      <if test="record.namenew != null" >
+        namenew = #{record.namenew,jdbcType=VARCHAR},
+      </if>
+      <if test="record.path != null" >
+        path = #{record.path,jdbcType=VARCHAR},
+      </if>
+      <if test="record.missionid != null" >
+        missionid = #{record.missionid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update hrg_mission_file
+    set dataid = #{record.dataid,jdbcType=VARCHAR},
+      nameold = #{record.nameold,jdbcType=VARCHAR},
+      namenew = #{record.namenew,jdbcType=VARCHAR},
+      path = #{record.path,jdbcType=VARCHAR},
+      missionid = #{record.missionid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="map" >
+    update hrg_mission_file
+    <set >
+      <if test="record.nameold != null" >
+        nameold = #{record.nameold,jdbcType=VARCHAR},
+      </if>
+      <if test="record.namenew != null" >
+        namenew = #{record.namenew,jdbcType=VARCHAR},
+      </if>
+      <if test="record.path != null" >
+        path = #{record.path,jdbcType=VARCHAR},
+      </if>
+      <if test="record.missionid != null" >
+        missionid = #{record.missionid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where dataid = #{record.dataid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="map" >
+    update hrg_mission_file
+    set nameold = #{record.nameold,jdbcType=VARCHAR},
+      namenew = #{record.namenew,jdbcType=VARCHAR},
+      path = #{record.path,jdbcType=VARCHAR},
+      missionid = #{record.missionid,jdbcType=VARCHAR}
+    where dataid = #{record.dataid,jdbcType=VARCHAR}
+  </update>
+</mapper>
