@@ -7,6 +7,7 @@
     <result column="namenew" property="namenew" jdbcType="VARCHAR" />
     <result column="path" property="path" jdbcType="VARCHAR" />
     <result column="missionid" property="missionid" jdbcType="VARCHAR" />
+    <result column="projectid" property="projectid" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="HashMapBaseResultMap" type="hashmap" >
     <id column="dataid" property="dataid" jdbcType="VARCHAR" />
@@ -14,6 +15,7 @@
     <result column="namenew" property="namenew" jdbcType="VARCHAR" />
     <result column="path" property="path" jdbcType="VARCHAR" />
     <result column="missionid" property="missionid" jdbcType="VARCHAR" />
+    <result column="projectid" property="projectid" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -62,10 +64,19 @@
           #{listItem}
         </foreach>
       </if>
+      <if test="example.projectid != null" >
+         and projectid = #{example.projectid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.projectidList != null  and  example.projectidList.size() > 0 " >
+         and projectid in 
+        <foreach collection="example.projectidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    dataid, nameold, namenew, path, missionid
+    dataid, nameold, namenew, path, missionid, projectid
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="map" >
     select

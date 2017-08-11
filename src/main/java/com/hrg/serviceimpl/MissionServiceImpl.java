@@ -442,6 +442,34 @@ public class MissionServiceImpl implements MissionService {
     }
 
     /**
+     * 查询项目文件
+     *
+     * @param projectid
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<MissionFile> selectProjectFile(String projectid) throws Exception {
+        if (ValidUtil.isNullOrEmpty(projectid))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+        MissionFileCriteria example = new MissionFileCriteria();
+        example.setProjectid(projectid);
+        return missionFileReadMapper.selectByExample(example);
+    }
+
+    /**
+     * 查询文件实体
+     *
+     * @param example
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public MissionFile selectFIle(MissionFileCriteria example) throws Exception {
+        return missionFileReadMapper.selectByExampleForOne(example);
+    }
+
+    /**
      * 任务实体
      *
      * @param dataid
@@ -464,5 +492,16 @@ public class MissionServiceImpl implements MissionService {
     public boolean deleteFile(String dataid) throws Exception {
         int x = missionFileWriteMapper.deleteByPrimaryKey(dataid);
         return x > 0 ? true : false;
+    }
+
+    /**
+     * 查询列表文件
+     * @param example
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<MissionFile> selectFileList(MissionFileCriteria example) throws Exception {
+        return missionFileReadMapper.selectByExample(example);
     }
 }

@@ -48,6 +48,15 @@
           #{listItem}
         </foreach>
       </if>
+      <if test="example.projectid != null" >
+         and projectid = #{example.projectid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.projectidList != null  and  example.projectidList.size() > 0 " >
+         and projectid in 
+        <foreach collection="example.projectidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
     </where>
   </sql>
   <delete id="deleteByPrimaryKey" parameterType="map" >
@@ -62,9 +71,11 @@
   </delete>
   <insert id="insert" parameterType="map" >
     insert into hrg_mission_file (dataid, nameold, namenew, 
-      path, missionid)
+      path, missionid, projectid
+      )
     values (#{record.dataid,jdbcType=VARCHAR}, #{record.nameold,jdbcType=VARCHAR}, #{record.namenew,jdbcType=VARCHAR}, 
-      #{record.path,jdbcType=VARCHAR}, #{record.missionid,jdbcType=VARCHAR})
+      #{record.path,jdbcType=VARCHAR}, #{record.missionid,jdbcType=VARCHAR}, #{record.projectid,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="map" >
     insert into hrg_mission_file
@@ -84,6 +95,9 @@
       <if test="record.missionid != null" >
         missionid,
       </if>
+      <if test="record.projectid != null" >
+        projectid,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="record.dataid != null" >
@@ -100,6 +114,9 @@
       </if>
       <if test="record.missionid != null" >
         #{record.missionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectid != null" >
+        #{record.projectid,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -121,6 +138,9 @@
       <if test="record.missionid != null" >
         missionid = #{record.missionid,jdbcType=VARCHAR},
       </if>
+      <if test="record.projectid != null" >
+        projectid = #{record.projectid,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -132,7 +152,8 @@
       nameold = #{record.nameold,jdbcType=VARCHAR},
       namenew = #{record.namenew,jdbcType=VARCHAR},
       path = #{record.path,jdbcType=VARCHAR},
-      missionid = #{record.missionid,jdbcType=VARCHAR}
+      missionid = #{record.missionid,jdbcType=VARCHAR},
+      projectid = #{record.projectid,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -152,6 +173,9 @@
       <if test="record.missionid != null" >
         missionid = #{record.missionid,jdbcType=VARCHAR},
       </if>
+      <if test="record.projectid != null" >
+        projectid = #{record.projectid,jdbcType=VARCHAR},
+      </if>
     </set>
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
@@ -160,7 +184,8 @@
     set nameold = #{record.nameold,jdbcType=VARCHAR},
       namenew = #{record.namenew,jdbcType=VARCHAR},
       path = #{record.path,jdbcType=VARCHAR},
-      missionid = #{record.missionid,jdbcType=VARCHAR}
+      missionid = #{record.missionid,jdbcType=VARCHAR},
+      projectid = #{record.projectid,jdbcType=VARCHAR}
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
 </mapper>
