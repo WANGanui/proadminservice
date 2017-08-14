@@ -25,6 +25,7 @@
     <result column="auditprogress" property="auditprogress" jdbcType="VARCHAR" />
     <result column="isdelete" property="isdelete" jdbcType="CHAR" />
     <result column="deletestate" property="deletestate" jdbcType="CHAR"/>
+    <result column="price" property="price" jdbcType="INTEGER" />
     <collection property="member" column="{projectdataid=dataid}" javaType="String" ofType="String" select="selectMembers"></collection>
   </resultMap>
   <resultMap id="HashMapBaseResultMap" type="hashmap" >
@@ -51,32 +52,33 @@
     <result column="auditprogress" property="auditprogress" jdbcType="VARCHAR" />
     <result column="isdelete" property="isdelete" jdbcType="CHAR" />
     <result column="deletestate" property="deletestate" jdbcType="CHAR"/>
+    <result column="price" property="price" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
       <if test="example.dataid != null" >
-         and dataid = #{example.dataid,jdbcType=VARCHAR}
+        and dataid = #{example.dataid,jdbcType=VARCHAR}
       </if>
       <if test="example.dataidList != null  and  example.dataidList.size() > 0 " >
-         and dataid in 
+        and dataid in
         <foreach collection="example.dataidList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.name != null" >
-         and name = #{example.name,jdbcType=VARCHAR}
+        and name = #{example.name,jdbcType=VARCHAR}
       </if>
       <if test="example.nameList != null  and  example.nameList.size() > 0 " >
-         and name in 
+        and name in
         <foreach collection="example.nameList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.starttime != null" >
-         and starttime = #{example.starttime,jdbcType=TIMESTAMP}
+        and starttime = #{example.starttime,jdbcType=TIMESTAMP}
       </if>
       <if test="example.endtime != null" >
-         and endtime = #{example.endtime,jdbcType=TIMESTAMP}
+        and endtime = #{example.endtime,jdbcType=TIMESTAMP}
       </if>
       <if test="example.endtimeMin != null" >
         and endtime &gt;= #{example.endtimeMin,jdbcType=TIMESTAMP}
@@ -85,145 +87,145 @@
         and endtime &lt;= #{example.endtimeMax,jdbcType=TIMESTAMP}
       </if>
       <if test="example.days != null" >
-         and days = #{example.days,jdbcType=INTEGER}
+        and days = #{example.days,jdbcType=INTEGER}
       </if>
       <if test="example.daysList != null  and  example.daysList.size() > 0 " >
-         and days in 
+        and days in
         <foreach collection="example.daysList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.month != null" >
-         and month = #{example.month,jdbcType=INTEGER}
+        and month = #{example.month,jdbcType=INTEGER}
       </if>
       <if test="example.monthList != null  and  example.monthList.size() > 0 " >
-         and month in 
+        and month in
         <foreach collection="example.monthList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.leaderid != null" >
-         and leaderid = #{example.leaderid,jdbcType=VARCHAR}
+        and leaderid = #{example.leaderid,jdbcType=VARCHAR}
       </if>
       <if test="example.leaderidList != null  and  example.leaderidList.size() > 0 " >
-         and leaderid in 
+        and leaderid in
         <foreach collection="example.leaderidList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.leader != null" >
-         and leader = #{example.leader,jdbcType=VARCHAR}
+        and leader = #{example.leader,jdbcType=VARCHAR}
       </if>
       <if test="example.leaderList != null  and  example.leaderList.size() > 0 " >
-         and leader in 
+        and leader in
         <foreach collection="example.leaderList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.contect != null" >
-         and contect = #{example.contect,jdbcType=VARCHAR}
+        and contect = #{example.contect,jdbcType=VARCHAR}
       </if>
       <if test="example.contectList != null  and  example.contectList.size() > 0 " >
-         and contect in 
+        and contect in
         <foreach collection="example.contectList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.state != null" >
-         and state = #{example.state,jdbcType=CHAR}
+        and state = #{example.state,jdbcType=CHAR}
       </if>
       <if test="example.stateList != null  and  example.stateList.size() > 0 " >
-         and state in 
+        and state in
         <foreach collection="example.stateList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.finishtime != null" >
-         and finishtime = #{example.finishtime,jdbcType=TIMESTAMP}
+        and finishtime = #{example.finishtime,jdbcType=TIMESTAMP}
       </if>
       <if test="example.remark != null" >
-         and remark = #{example.remark,jdbcType=VARCHAR}
+        and remark = #{example.remark,jdbcType=VARCHAR}
       </if>
       <if test="example.remarkList != null  and  example.remarkList.size() > 0 " >
-         and remark in 
+        and remark in
         <foreach collection="example.remarkList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.creator != null" >
-         and creator = #{example.creator,jdbcType=VARCHAR}
+        and creator = #{example.creator,jdbcType=VARCHAR}
       </if>
       <if test="example.creatorList != null  and  example.creatorList.size() > 0 " >
-         and creator in 
+        and creator in
         <foreach collection="example.creatorList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.createtime != null" >
-         and createtime = #{example.createtime,jdbcType=TIMESTAMP}
+        and createtime = #{example.createtime,jdbcType=TIMESTAMP}
       </if>
       <if test="example.modify != null" >
-         and modify = #{example.modify,jdbcType=VARCHAR}
+        and modify = #{example.modify,jdbcType=VARCHAR}
       </if>
       <if test="example.modifyList != null  and  example.modifyList.size() > 0 " >
-         and modify in 
+        and modify in
         <foreach collection="example.modifyList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.modifytime != null" >
-         and modifytime = #{example.modifytime,jdbcType=TIMESTAMP}
+        and modifytime = #{example.modifytime,jdbcType=TIMESTAMP}
       </if>
       <if test="example.creatordataid != null" >
-         and creatordataid = #{example.creatordataid,jdbcType=VARCHAR}
+        and creatordataid = #{example.creatordataid,jdbcType=VARCHAR}
       </if>
       <if test="example.creatordataidList != null  and  example.creatordataidList.size() > 0 " >
-         and creatordataid in 
+        and creatordataid in
         <foreach collection="example.creatordataidList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.modifydataid != null" >
-         and modifydataid = #{example.modifydataid,jdbcType=VARCHAR}
+        and modifydataid = #{example.modifydataid,jdbcType=VARCHAR}
       </if>
       <if test="example.modifydataidList != null  and  example.modifydataidList.size() > 0 " >
-         and modifydataid in 
+        and modifydataid in
         <foreach collection="example.modifydataidList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.progress != null" >
-         and progress = #{example.progress,jdbcType=VARCHAR}
+        and progress = #{example.progress,jdbcType=VARCHAR}
       </if>
       <if test="example.progressList != null  and  example.progressList.size() > 0 " >
-         and progress in 
+        and progress in
         <foreach collection="example.progressList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.member != null" >
-         and member = #{example.member,jdbcType=VARCHAR}
+        and member = #{example.member,jdbcType=VARCHAR}
       </if>
       <if test="example.memberList != null  and  example.memberList.size() > 0 " >
-         and member in 
+        and member in
         <foreach collection="example.memberList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.auditprogress != null" >
-         and auditprogress = #{example.auditprogress,jdbcType=VARCHAR}
+        and auditprogress = #{example.auditprogress,jdbcType=VARCHAR}
       </if>
       <if test="example.auditprogressList != null  and  example.auditprogressList.size() > 0 " >
-         and auditprogress in 
+        and auditprogress in
         <foreach collection="example.auditprogressList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.isdelete != null" >
-         and isdelete = #{example.isdelete,jdbcType=CHAR}
+        and isdelete = #{example.isdelete,jdbcType=CHAR}
       </if>
       <if test="example.isdeleteList != null  and  example.isdeleteList.size() > 0 " >
-         and isdelete in 
+        and isdelete in
         <foreach collection="example.isdeleteList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
@@ -237,12 +239,21 @@
           #{listItem}
         </foreach>
       </if>
+      <if test="example.price != null" >
+        and price = #{example.price,jdbcType=INTEGER}
+      </if>
+      <if test="example.priceList != null  and  example.priceList.size() > 0 " >
+        and price in
+        <foreach collection="example.priceList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    dataid, name, starttime, endtime, days, month, leaderid, leader, contect, state, 
-    finishtime, remark, creator, createtime, modify, modifytime, creatordataid, modifydataid, 
-    progress, member, auditprogress, isdelete, deletestate
+    dataid, name, starttime, endtime, days, month, leaderid, leader, contect, state,
+    finishtime, remark, creator, createtime, modify, modifytime, creatordataid, modifydataid,
+    progress, member, auditprogress, isdelete, deletestate,price
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="map" >
     select
@@ -262,7 +273,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from hrg_project
     where dataid = #{dataid,jdbcType=VARCHAR}
@@ -286,14 +297,14 @@
     <if test="example.orderByClause != null" >
       order by ${example.orderByClause}
     </if>
-     limit 0 , 1 
+    limit 0 , 1
   </select>
   <select id="selectMapByPrimaryKey" resultMap="HashMapBaseResultMap" parameterType="map" >
     select
     <include refid="Base_Column_List" />
     from hrg_project
     <where >
-       and dataid=#{dataid,jdbcType=VARCHAR}
+      and dataid=#{dataid,jdbcType=VARCHAR}
     </where>
   </select>
   <select id="selectMapByExampleForOne" resultMap="HashMapBaseResultMap" parameterType="map" >
@@ -309,7 +320,7 @@
     <if test="example.orderByClause != null" >
       order by ${example.orderByClause}
     </if>
-     limit 0 , 1 
+    limit 0 , 1
   </select>
   <select id="selectMapByExample" resultMap="HashMapBaseResultMap" parameterType="map" >
     select

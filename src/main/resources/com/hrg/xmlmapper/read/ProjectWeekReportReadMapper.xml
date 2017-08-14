@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hrg.javamapper.read.ProjectWeekReportReadMapper" >
+  <resultMap id="BaseResultMap" type="com.hrg.model.ProjectWeekReport" >
+    <id column="dataid" property="dataid" jdbcType="VARCHAR" />
+    <result column="projectid" property="projectid" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="DATE" />
+    <result column="context" property="context" jdbcType="VARCHAR" />
+    <result column="plan" property="plan" jdbcType="VARCHAR" />
+    <result column="target" property="target" jdbcType="VARCHAR" />
+    <result column="projectname" property="projectname" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="HashMapBaseResultMap" type="hashmap" >
+    <id column="dataid" property="dataid" jdbcType="VARCHAR" />
+    <result column="projectid" property="projectid" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="DATE" />
+    <result column="context" property="context" jdbcType="VARCHAR" />
+    <result column="plan" property="plan" jdbcType="VARCHAR" />
+    <result column="target" property="target" jdbcType="VARCHAR" />
+    <result column="projectname" property="projectname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <if test="example.dataid != null" >
+         and dataid = #{example.dataid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.dataidList != null  and  example.dataidList.size() > 0 " >
+         and dataid in 
+        <foreach collection="example.dataidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.projectid != null" >
+         and projectid = #{example.projectid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.projectidList != null  and  example.projectidList.size() > 0 " >
+         and projectid in 
+        <foreach collection="example.projectidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.date != null" >
+         and date = #{example.date,jdbcType=DATE}
+      </if>
+      <if test="example.context != null" >
+         and context = #{example.context,jdbcType=VARCHAR}
+      </if>
+      <if test="example.contextList != null  and  example.contextList.size() > 0 " >
+         and context in 
+        <foreach collection="example.contextList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.plan != null" >
+         and plan = #{example.plan,jdbcType=VARCHAR}
+      </if>
+      <if test="example.planList != null  and  example.planList.size() > 0 " >
+         and plan in 
+        <foreach collection="example.planList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.target != null" >
+         and target = #{example.target,jdbcType=VARCHAR}
+      </if>
+      <if test="example.targetList != null  and  example.targetList.size() > 0 " >
+         and target in 
+        <foreach collection="example.targetList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.projectname != null" >
+         and projectname = #{example.projectname,jdbcType=VARCHAR}
+      </if>
+      <if test="example.projectnameList != null  and  example.projectnameList.size() > 0 " >
+         and projectname in 
+        <foreach collection="example.projectnameList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    dataid, projectid, date, context, plan, target, projectname
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <if test="example.distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hrg_project_weekreport
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null" >
+      order by ${example.orderByClause}
+    </if>
+    <if test="example.limitStart >= 0 and example.pageSize > 0 " >
+      limit #{example.limitStart} , #{example.pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from hrg_project_weekreport
+    where dataid = #{dataid,jdbcType=VARCHAR}
+  </select>
+  <select id="countByExample" parameterType="map" resultType="java.lang.Integer" >
+    select count(*) from hrg_project_weekreport
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="selectByExampleForOne" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <if test="example.distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hrg_project_weekreport
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null" >
+      order by ${example.orderByClause}
+    </if>
+     limit 0 , 1 
+  </select>
+  <select id="selectMapByPrimaryKey" resultMap="HashMapBaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from hrg_project_weekreport
+    <where >
+       and dataid=#{dataid,jdbcType=VARCHAR}
+    </where>
+  </select>
+  <select id="selectMapByExampleForOne" resultMap="HashMapBaseResultMap" parameterType="map" >
+    select
+    <if test="example.distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hrg_project_weekreport
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null" >
+      order by ${example.orderByClause}
+    </if>
+     limit 0 , 1 
+  </select>
+  <select id="selectMapByExample" resultMap="HashMapBaseResultMap" parameterType="map" >
+    select
+    <if test="example.distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hrg_project_weekreport
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null" >
+      order by ${example.orderByClause}
+    </if>
+    <if test="example.limitStart >= 0 and example.pageSize > 0 " >
+      limit #{example.limitStart} , #{example.pageSize}
+    </if>
+  </select>
+</mapper>

@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -51,6 +52,11 @@ public class ProjectServiceImpl implements ProjectService {
     ProjectAuditDelWriteMapper projectAuditDelWriteMapper;
     @Autowired
     DataTableWriteMapper dataTableWriteMapper;
+    @Autowired
+    ProjectWeekReportReadMapper projectWeekReportReadMapper;
+    @Autowired
+    ProjectWeekReportWriteMapper projectWeekReportWriteMapper;
+
     @Override
     public void insertDataTable(Map map){
         dataTableWriteMapper.insertDataTable(map);
@@ -307,5 +313,118 @@ public class ProjectServiceImpl implements ProjectService {
         projectAuditDelWriteMapper.copy(prodataid);
 
         return 0;
-    };
+    }
+
+    /**
+     * 查询项目周报
+     *
+     * @param example
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<Project> selectProjectReport(ProjectCriteria example) throws Exception {
+        example.setState("1");
+        List<Project> projectList = projectReadMapper.selectByExample(example);
+        for (Project project : projectList){
+            ProjectWeekReportCriteria criteria = new ProjectWeekReportCriteria();
+            criteria.setDateMin(DateUtil.getLastWeekBegin());
+            criteria.setDateMax(new Date());
+            criteria.setProjectid(project.getDataid());
+            List<ProjectWeekReport> reports = projectWeekReportReadMapper.selectByExample(criteria);
+            String weekcontext = "";
+            String plan = "";
+            if (!ValidUtil.isNullOrEmpty(reports)){
+                for (ProjectWeekReport report : reports){
+                    weekcontext += report.getContext()+"<br>";
+                    plan += report.getPlan() + "<br>";
+                }
+                project.setWeekcontext(weekcontext);
+                project.setPlan(plan);
+            }
+
+        }
+        return projectList;
+    }
+
+    /**
+     * 新增项目周报
+     *
+     * @param projectid
+     * @param projectWeekReport
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public boolean insertReport(String projectid, ProjectWeekReport projectWeekReport) throws Exception {
+        projectWeekReport.setDate(new Date());
+        projectWeekReport.setDataid(UUIDGenerator.getUUID());
+        int x = projectWeekReportWriteMapper.insert(projectWeekReport);
+        return x > 0 ? true : false;
+    }
+
+    /**
+     * 修改项目周报
+     *
+     * @param projectWeekReport
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public boolean updateReport(ProjectWeekReport projectWeekReport) throws Exception {
+        int x = projectWeekReportWriteMapper.updateByPrimaryKeySelective(projectWeekReport);
+        return x > 0 ? true : false;
+    }
+
+    /**
+     * 查询个人项目进度列表
+     *
+     * @param workerdataid
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<ProjectWeekReport> selectReportList(String workerdataid) throws Exception {
+        ProjectCriteria projectCriteria = new ProjectCriteria();
+        projectCriteria.setLeaderid(workerdataid);
+        projectCriteria.setState("1");
+        List<Project> projectList = projectReadMapper.selectByExample(projectCriteria);
+        List<String> idList = new ArrayList<String>();
+        if (!ValidUtil.isNullOrEmpty(projectList)){
+            for (Project project : projectList){
+                idList.add(project.getDataid());
+            }
+        }
+        ProjectWeekReportCriteria reportCriteria = new ProjectWeekReportCriteria();
+        reportCriteria.setProjectidList(idList);
+        return projectWeekReportReadMapper.selectByExample(reportCriteria);
+    }
+
+    /**
+     * 查询周报详情
+     *
+     * @param dataid
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public ProjectWeekReport selectReportdetail(String dataid) throws Exception {
+        return projectWeekReportReadMapper.selectByPrimaryKey(dataid);
+    }
+
+    /**
+     * 查询员工有效项目
+     *
+     * @param workerdataid
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<Project> selectProjectListByworker(String workerdataid) throws Exception {
+        ProjectCriteria projectCriteria = new ProjectCriteria();
+        projectCriteria.setLeaderid(workerdataid);
+        projectCriteria.setState("1");
+        List<Project> projectList = projectReadMapper.selectByExample(projectCriteria);
+        return projectList;
+    }
 }

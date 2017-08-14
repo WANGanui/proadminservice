@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hrg.javamapper.write.ProjectWeekReportWriteMapper" >
+  <sql id="Example_Where_Clause" >
+    <where >
+      <if test="example.dataid != null" >
+         and dataid = #{example.dataid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.dataidList != null  and  example.dataidList.size() > 0 " >
+         and dataid in 
+        <foreach collection="example.dataidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.projectid != null" >
+         and projectid = #{example.projectid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.projectidList != null  and  example.projectidList.size() > 0 " >
+         and projectid in 
+        <foreach collection="example.projectidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.date != null" >
+         and date = #{example.date,jdbcType=DATE}
+      </if>
+      <if test="example.context != null" >
+         and context = #{example.context,jdbcType=VARCHAR}
+      </if>
+      <if test="example.contextList != null  and  example.contextList.size() > 0 " >
+         and context in 
+        <foreach collection="example.contextList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.plan != null" >
+         and plan = #{example.plan,jdbcType=VARCHAR}
+      </if>
+      <if test="example.planList != null  and  example.planList.size() > 0 " >
+         and plan in 
+        <foreach collection="example.planList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.target != null" >
+         and target = #{example.target,jdbcType=VARCHAR}
+      </if>
+      <if test="example.targetList != null  and  example.targetList.size() > 0 " >
+         and target in 
+        <foreach collection="example.targetList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.projectname != null" >
+         and projectname = #{example.projectname,jdbcType=VARCHAR}
+      </if>
+      <if test="example.projectnameList != null  and  example.projectnameList.size() > 0 " >
+         and projectname in 
+        <foreach collection="example.projectnameList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+    </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from hrg_project_weekreport
+    where dataid = #{dataid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="map" >
+    delete from hrg_project_weekreport
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="map" >
+    insert into hrg_project_weekreport (dataid, projectid, 
+      date, context, plan, 
+      target, projectname)
+    values (#{record.dataid,jdbcType=VARCHAR}, #{record.projectid,jdbcType=VARCHAR}, 
+      #{record.date,jdbcType=DATE}, #{record.context,jdbcType=VARCHAR}, #{record.plan,jdbcType=VARCHAR}, 
+      #{record.target,jdbcType=VARCHAR}, #{record.projectname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="map" >
+    insert into hrg_project_weekreport
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="record.dataid != null" >
+        dataid,
+      </if>
+      <if test="record.projectid != null" >
+        projectid,
+      </if>
+      <if test="record.date != null" >
+        date,
+      </if>
+      <if test="record.context != null" >
+        context,
+      </if>
+      <if test="record.plan != null" >
+        plan,
+      </if>
+      <if test="record.target != null" >
+        target,
+      </if>
+      <if test="record.projectname != null" >
+        projectname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="record.dataid != null" >
+        #{record.dataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectid != null" >
+        #{record.projectid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.date != null" >
+        #{record.date,jdbcType=DATE},
+      </if>
+      <if test="record.context != null" >
+        #{record.context,jdbcType=VARCHAR},
+      </if>
+      <if test="record.plan != null" >
+        #{record.plan,jdbcType=VARCHAR},
+      </if>
+      <if test="record.target != null" >
+        #{record.target,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectname != null" >
+        #{record.projectname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update hrg_project_weekreport
+    <set >
+      <if test="record.dataid != null" >
+        dataid = #{record.dataid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectid != null" >
+        projectid = #{record.projectid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.date != null" >
+        date = #{record.date,jdbcType=DATE},
+      </if>
+      <if test="record.context != null" >
+        context = #{record.context,jdbcType=VARCHAR},
+      </if>
+      <if test="record.plan != null" >
+        plan = #{record.plan,jdbcType=VARCHAR},
+      </if>
+      <if test="record.target != null" >
+        target = #{record.target,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectname != null" >
+        projectname = #{record.projectname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update hrg_project_weekreport
+    set dataid = #{record.dataid,jdbcType=VARCHAR},
+      projectid = #{record.projectid,jdbcType=VARCHAR},
+      date = #{record.date,jdbcType=DATE},
+      context = #{record.context,jdbcType=VARCHAR},
+      plan = #{record.plan,jdbcType=VARCHAR},
+      target = #{record.target,jdbcType=VARCHAR},
+      projectname = #{record.projectname,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="map" >
+    update hrg_project_weekreport
+    <set >
+      <if test="record.projectid != null" >
+        projectid = #{record.projectid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.date != null" >
+        date = #{record.date,jdbcType=DATE},
+      </if>
+      <if test="record.context != null" >
+        context = #{record.context,jdbcType=VARCHAR},
+      </if>
+      <if test="record.plan != null" >
+        plan = #{record.plan,jdbcType=VARCHAR},
+      </if>
+      <if test="record.target != null" >
+        target = #{record.target,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectname != null" >
+        projectname = #{record.projectname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where dataid = #{record.dataid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="map" >
+    update hrg_project_weekreport
+    set projectid = #{record.projectid,jdbcType=VARCHAR},
+      date = #{record.date,jdbcType=DATE},
+      context = #{record.context,jdbcType=VARCHAR},
+      plan = #{record.plan,jdbcType=VARCHAR},
+      target = #{record.target,jdbcType=VARCHAR},
+      projectname = #{record.projectname,jdbcType=VARCHAR}
+    where dataid = #{record.dataid,jdbcType=VARCHAR}
+  </update>
+</mapper>

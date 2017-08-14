@@ -4,179 +4,188 @@
   <sql id="Example_Where_Clause" >
     <where >
       <if test="example.dataid != null" >
-         and dataid = #{example.dataid,jdbcType=VARCHAR}
+        and dataid = #{example.dataid,jdbcType=VARCHAR}
       </if>
       <if test="example.dataidList != null  and  example.dataidList.size() > 0 " >
-         and dataid in 
+        and dataid in
         <foreach collection="example.dataidList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.name != null" >
-         and name = #{example.name,jdbcType=VARCHAR}
+        and name = #{example.name,jdbcType=VARCHAR}
       </if>
       <if test="example.nameList != null  and  example.nameList.size() > 0 " >
-         and name in 
+        and name in
         <foreach collection="example.nameList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.starttime != null" >
-         and starttime = #{example.starttime,jdbcType=TIMESTAMP}
+        and starttime = #{example.starttime,jdbcType=DATE}
       </if>
       <if test="example.endtime != null" >
-         and endtime = #{example.endtime,jdbcType=TIMESTAMP}
+        and endtime = #{example.endtime,jdbcType=DATE}
       </if>
       <if test="example.days != null" >
-         and days = #{example.days,jdbcType=INTEGER}
+        and days = #{example.days,jdbcType=INTEGER}
       </if>
       <if test="example.daysList != null  and  example.daysList.size() > 0 " >
-         and days in 
+        and days in
         <foreach collection="example.daysList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.month != null" >
-         and month = #{example.month,jdbcType=INTEGER}
+        and month = #{example.month,jdbcType=INTEGER}
       </if>
       <if test="example.monthList != null  and  example.monthList.size() > 0 " >
-         and month in 
+        and month in
         <foreach collection="example.monthList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.leaderid != null" >
-         and leaderid = #{example.leaderid,jdbcType=VARCHAR}
+        and leaderid = #{example.leaderid,jdbcType=VARCHAR}
       </if>
       <if test="example.leaderidList != null  and  example.leaderidList.size() > 0 " >
-         and leaderid in 
+        and leaderid in
         <foreach collection="example.leaderidList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.leader != null" >
-         and leader = #{example.leader,jdbcType=VARCHAR}
+        and leader = #{example.leader,jdbcType=VARCHAR}
       </if>
       <if test="example.leaderList != null  and  example.leaderList.size() > 0 " >
-         and leader in 
+        and leader in
         <foreach collection="example.leaderList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.contect != null" >
-         and contect = #{example.contect,jdbcType=VARCHAR}
+        and contect = #{example.contect,jdbcType=VARCHAR}
       </if>
       <if test="example.contectList != null  and  example.contectList.size() > 0 " >
-         and contect in 
+        and contect in
         <foreach collection="example.contectList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.state != null" >
-         and state = #{example.state,jdbcType=CHAR}
+        and state = #{example.state,jdbcType=CHAR}
       </if>
       <if test="example.stateList != null  and  example.stateList.size() > 0 " >
-         and state in 
+        and state in
         <foreach collection="example.stateList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.finishtime != null" >
-         and finishtime = #{example.finishtime,jdbcType=TIMESTAMP}
+        and finishtime = #{example.finishtime,jdbcType=DATE}
       </if>
       <if test="example.remark != null" >
-         and remark = #{example.remark,jdbcType=VARCHAR}
+        and remark = #{example.remark,jdbcType=VARCHAR}
       </if>
       <if test="example.remarkList != null  and  example.remarkList.size() > 0 " >
-         and remark in 
+        and remark in
         <foreach collection="example.remarkList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.creator != null" >
-         and creator = #{example.creator,jdbcType=VARCHAR}
+        and creator = #{example.creator,jdbcType=VARCHAR}
       </if>
       <if test="example.creatorList != null  and  example.creatorList.size() > 0 " >
-         and creator in 
+        and creator in
         <foreach collection="example.creatorList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.createtime != null" >
-         and createtime = #{example.createtime,jdbcType=TIMESTAMP}
+        and createtime = #{example.createtime,jdbcType=DATE}
       </if>
       <if test="example.modify != null" >
-         and modify = #{example.modify,jdbcType=VARCHAR}
+        and modify = #{example.modify,jdbcType=VARCHAR}
       </if>
       <if test="example.modifyList != null  and  example.modifyList.size() > 0 " >
-         and modify in 
+        and modify in
         <foreach collection="example.modifyList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.modifytime != null" >
-         and modifytime = #{example.modifytime,jdbcType=TIMESTAMP}
+        and modifytime = #{example.modifytime,jdbcType=DATE}
       </if>
       <if test="example.creatordataid != null" >
-         and creatordataid = #{example.creatordataid,jdbcType=VARCHAR}
+        and creatordataid = #{example.creatordataid,jdbcType=VARCHAR}
       </if>
       <if test="example.creatordataidList != null  and  example.creatordataidList.size() > 0 " >
-         and creatordataid in 
+        and creatordataid in
         <foreach collection="example.creatordataidList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.modifydataid != null" >
-         and modifydataid = #{example.modifydataid,jdbcType=VARCHAR}
+        and modifydataid = #{example.modifydataid,jdbcType=VARCHAR}
       </if>
       <if test="example.modifydataidList != null  and  example.modifydataidList.size() > 0 " >
-         and modifydataid in 
+        and modifydataid in
         <foreach collection="example.modifydataidList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.progress != null" >
-         and progress = #{example.progress,jdbcType=VARCHAR}
+        and progress = #{example.progress,jdbcType=VARCHAR}
       </if>
       <if test="example.progressList != null  and  example.progressList.size() > 0 " >
-         and progress in 
+        and progress in
         <foreach collection="example.progressList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.member != null" >
-         and member = #{example.member,jdbcType=VARCHAR}
+        and member = #{example.member,jdbcType=VARCHAR}
       </if>
       <if test="example.memberList != null  and  example.memberList.size() > 0 " >
-         and member in 
+        and member in
         <foreach collection="example.memberList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.auditprogress != null" >
-         and auditprogress = #{example.auditprogress,jdbcType=VARCHAR}
+        and auditprogress = #{example.auditprogress,jdbcType=VARCHAR}
       </if>
       <if test="example.auditprogressList != null  and  example.auditprogressList.size() > 0 " >
-         and auditprogress in 
+        and auditprogress in
         <foreach collection="example.auditprogressList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.isdelete != null" >
-         and isdelete = #{example.isdelete,jdbcType=CHAR}
+        and isdelete = #{example.isdelete,jdbcType=CHAR}
       </if>
       <if test="example.isdeleteList != null  and  example.isdeleteList.size() > 0 " >
-         and isdelete in 
+        and isdelete in
         <foreach collection="example.isdeleteList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
       <if test="example.deletestate != null" >
-         and deletestate = #{example.deletestate,jdbcType=CHAR}
+        and deletestate = #{example.deletestate,jdbcType=CHAR}
       </if>
       <if test="example.deletestateList != null  and  example.deletestateList.size() > 0 " >
-         and deletestate in 
+        and deletestate in
         <foreach collection="example.deletestateList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.price != null" >
+        and price = #{example.price,jdbcType=INTEGER}
+      </if>
+      <if test="example.priceList != null  and  example.priceList.size() > 0 " >
+        and price in
+        <foreach collection="example.priceList" item="listItem" open="(" close=")" separator="," >
           #{listItem}
         </foreach>
       </if>
@@ -193,24 +202,24 @@
     </if>
   </delete>
   <insert id="insert" parameterType="map" >
-    insert into hrg_project (dataid, name, starttime, 
-      endtime, days, month, 
-      leaderid, leader, contect, 
-      state, finishtime, remark, 
-      creator, createtime, modify, 
-      modifytime, creatordataid, 
-      modifydataid, progress, member, 
-      auditprogress, isdelete, deletestate
-      )
-    values (#{record.dataid,jdbcType=VARCHAR}, #{record.name,jdbcType=VARCHAR}, #{record.starttime,jdbcType=TIMESTAMP}, 
-      #{record.endtime,jdbcType=TIMESTAMP}, #{record.days,jdbcType=INTEGER}, #{record.month,jdbcType=INTEGER}, 
-      #{record.leaderid,jdbcType=VARCHAR}, #{record.leader,jdbcType=VARCHAR}, #{record.contect,jdbcType=VARCHAR}, 
-      #{record.state,jdbcType=CHAR}, #{record.finishtime,jdbcType=TIMESTAMP}, #{record.remark,jdbcType=VARCHAR}, 
-      #{record.creator,jdbcType=VARCHAR}, #{record.createtime,jdbcType=TIMESTAMP}, #{record.modify,jdbcType=VARCHAR}, 
-      #{record.modifytime,jdbcType=TIMESTAMP}, #{record.creatordataid,jdbcType=VARCHAR}, 
-      #{record.modifydataid,jdbcType=VARCHAR}, #{record.progress,jdbcType=VARCHAR}, #{record.member,jdbcType=VARCHAR}, 
-      #{record.auditprogress,jdbcType=VARCHAR}, #{record.isdelete,jdbcType=CHAR}, #{record.deletestate,jdbcType=CHAR}
-      )
+    insert into hrg_project (dataid, name, starttime,
+    endtime, days, month,
+    leaderid, leader, contect,
+    state, finishtime, remark,
+    creator, createtime, modify,
+    modifytime, creatordataid, modifydataid,
+    progress, member, auditprogress,
+    isdelete, deletestate, price
+    )
+    values (#{record.dataid,jdbcType=VARCHAR}, #{record.name,jdbcType=VARCHAR}, #{record.starttime,jdbcType=DATE},
+    #{record.endtime,jdbcType=DATE}, #{record.days,jdbcType=INTEGER}, #{record.month,jdbcType=INTEGER},
+    #{record.leaderid,jdbcType=VARCHAR}, #{record.leader,jdbcType=VARCHAR}, #{record.contect,jdbcType=VARCHAR},
+    #{record.state,jdbcType=CHAR}, #{record.finishtime,jdbcType=DATE}, #{record.remark,jdbcType=VARCHAR},
+    #{record.creator,jdbcType=VARCHAR}, #{record.createtime,jdbcType=DATE}, #{record.modify,jdbcType=VARCHAR},
+    #{record.modifytime,jdbcType=DATE}, #{record.creatordataid,jdbcType=VARCHAR}, #{record.modifydataid,jdbcType=VARCHAR},
+    #{record.progress,jdbcType=VARCHAR}, #{record.member,jdbcType=VARCHAR}, #{record.auditprogress,jdbcType=VARCHAR},
+    #{record.isdelete,jdbcType=CHAR}, #{record.deletestate,jdbcType=CHAR}, #{record.price,jdbcType=INTEGER}
+    )
   </insert>
   <insert id="insertSelective" parameterType="map" >
     insert into hrg_project
@@ -284,6 +293,9 @@
       <if test="record.deletestate != null" >
         deletestate,
       </if>
+      <if test="record.price != null" >
+        price,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="record.dataid != null" >
@@ -293,10 +305,10 @@
         #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.starttime != null" >
-        #{record.starttime,jdbcType=TIMESTAMP},
+        #{record.starttime,jdbcType=DATE},
       </if>
       <if test="record.endtime != null" >
-        #{record.endtime,jdbcType=TIMESTAMP},
+        #{record.endtime,jdbcType=DATE},
       </if>
       <if test="record.days != null" >
         #{record.days,jdbcType=INTEGER},
@@ -317,7 +329,7 @@
         #{record.state,jdbcType=CHAR},
       </if>
       <if test="record.finishtime != null" >
-        #{record.finishtime,jdbcType=TIMESTAMP},
+        #{record.finishtime,jdbcType=DATE},
       </if>
       <if test="record.remark != null" >
         #{record.remark,jdbcType=VARCHAR},
@@ -326,13 +338,13 @@
         #{record.creator,jdbcType=VARCHAR},
       </if>
       <if test="record.createtime != null" >
-        #{record.createtime,jdbcType=TIMESTAMP},
+        #{record.createtime,jdbcType=DATE},
       </if>
       <if test="record.modify != null" >
         #{record.modify,jdbcType=VARCHAR},
       </if>
       <if test="record.modifytime != null" >
-        #{record.modifytime,jdbcType=TIMESTAMP},
+        #{record.modifytime,jdbcType=DATE},
       </if>
       <if test="record.creatordataid != null" >
         #{record.creatordataid,jdbcType=VARCHAR},
@@ -355,6 +367,9 @@
       <if test="record.deletestate != null" >
         #{record.deletestate,jdbcType=CHAR},
       </if>
+      <if test="record.price != null" >
+        #{record.price,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
   <update id="updateByExampleSelective" parameterType="map" >
@@ -367,10 +382,10 @@
         name = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.starttime != null" >
-        starttime = #{record.starttime,jdbcType=TIMESTAMP},
+        starttime = #{record.starttime,jdbcType=DATE},
       </if>
       <if test="record.endtime != null" >
-        endtime = #{record.endtime,jdbcType=TIMESTAMP},
+        endtime = #{record.endtime,jdbcType=DATE},
       </if>
       <if test="record.days != null" >
         days = #{record.days,jdbcType=INTEGER},
@@ -391,7 +406,7 @@
         state = #{record.state,jdbcType=CHAR},
       </if>
       <if test="record.finishtime != null" >
-        finishtime = #{record.finishtime,jdbcType=TIMESTAMP},
+        finishtime = #{record.finishtime,jdbcType=DATE},
       </if>
       <if test="record.remark != null" >
         remark = #{record.remark,jdbcType=VARCHAR},
@@ -400,13 +415,13 @@
         creator = #{record.creator,jdbcType=VARCHAR},
       </if>
       <if test="record.createtime != null" >
-        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+        createtime = #{record.createtime,jdbcType=DATE},
       </if>
       <if test="record.modify != null" >
         modify = #{record.modify,jdbcType=VARCHAR},
       </if>
       <if test="record.modifytime != null" >
-        modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
+        modifytime = #{record.modifytime,jdbcType=DATE},
       </if>
       <if test="record.creatordataid != null" >
         creatordataid = #{record.creatordataid,jdbcType=VARCHAR},
@@ -429,6 +444,9 @@
       <if test="record.deletestate != null" >
         deletestate = #{record.deletestate,jdbcType=CHAR},
       </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -437,28 +455,29 @@
   <update id="updateByExample" parameterType="map" >
     update hrg_project
     set dataid = #{record.dataid,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR},
-      starttime = #{record.starttime,jdbcType=TIMESTAMP},
-      endtime = #{record.endtime,jdbcType=TIMESTAMP},
-      days = #{record.days,jdbcType=INTEGER},
-      month = #{record.month,jdbcType=INTEGER},
-      leaderid = #{record.leaderid,jdbcType=VARCHAR},
-      leader = #{record.leader,jdbcType=VARCHAR},
-      contect = #{record.contect,jdbcType=VARCHAR},
-      state = #{record.state,jdbcType=CHAR},
-      finishtime = #{record.finishtime,jdbcType=TIMESTAMP},
-      remark = #{record.remark,jdbcType=VARCHAR},
-      creator = #{record.creator,jdbcType=VARCHAR},
-      createtime = #{record.createtime,jdbcType=TIMESTAMP},
-      modify = #{record.modify,jdbcType=VARCHAR},
-      modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
-      creatordataid = #{record.creatordataid,jdbcType=VARCHAR},
-      modifydataid = #{record.modifydataid,jdbcType=VARCHAR},
-      progress = #{record.progress,jdbcType=VARCHAR},
-      member = #{record.member,jdbcType=VARCHAR},
-      auditprogress = #{record.auditprogress,jdbcType=VARCHAR},
-      isdelete = #{record.isdelete,jdbcType=CHAR},
-      deletestate = #{record.deletestate,jdbcType=CHAR}
+    name = #{record.name,jdbcType=VARCHAR},
+    starttime = #{record.starttime,jdbcType=DATE},
+    endtime = #{record.endtime,jdbcType=DATE},
+    days = #{record.days,jdbcType=INTEGER},
+    month = #{record.month,jdbcType=INTEGER},
+    leaderid = #{record.leaderid,jdbcType=VARCHAR},
+    leader = #{record.leader,jdbcType=VARCHAR},
+    contect = #{record.contect,jdbcType=VARCHAR},
+    state = #{record.state,jdbcType=CHAR},
+    finishtime = #{record.finishtime,jdbcType=DATE},
+    remark = #{record.remark,jdbcType=VARCHAR},
+    creator = #{record.creator,jdbcType=VARCHAR},
+    createtime = #{record.createtime,jdbcType=DATE},
+    modify = #{record.modify,jdbcType=VARCHAR},
+    modifytime = #{record.modifytime,jdbcType=DATE},
+    creatordataid = #{record.creatordataid,jdbcType=VARCHAR},
+    modifydataid = #{record.modifydataid,jdbcType=VARCHAR},
+    progress = #{record.progress,jdbcType=VARCHAR},
+    member = #{record.member,jdbcType=VARCHAR},
+    auditprogress = #{record.auditprogress,jdbcType=VARCHAR},
+    isdelete = #{record.isdelete,jdbcType=CHAR},
+    deletestate = #{record.deletestate,jdbcType=CHAR},
+    price = #{record.price,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -470,10 +489,10 @@
         name = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.starttime != null" >
-        starttime = #{record.starttime,jdbcType=TIMESTAMP},
+        starttime = #{record.starttime,jdbcType=DATE},
       </if>
       <if test="record.endtime != null" >
-        endtime = #{record.endtime,jdbcType=TIMESTAMP},
+        endtime = #{record.endtime,jdbcType=DATE},
       </if>
       <if test="record.days != null" >
         days = #{record.days,jdbcType=INTEGER},
@@ -494,7 +513,7 @@
         state = #{record.state,jdbcType=CHAR},
       </if>
       <if test="record.finishtime != null" >
-        finishtime = #{record.finishtime,jdbcType=TIMESTAMP},
+        finishtime = #{record.finishtime,jdbcType=DATE},
       </if>
       <if test="record.remark != null" >
         remark = #{record.remark,jdbcType=VARCHAR},
@@ -503,13 +522,13 @@
         creator = #{record.creator,jdbcType=VARCHAR},
       </if>
       <if test="record.createtime != null" >
-        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+        createtime = #{record.createtime,jdbcType=DATE},
       </if>
       <if test="record.modify != null" >
         modify = #{record.modify,jdbcType=VARCHAR},
       </if>
       <if test="record.modifytime != null" >
-        modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
+        modifytime = #{record.modifytime,jdbcType=DATE},
       </if>
       <if test="record.creatordataid != null" >
         creatordataid = #{record.creatordataid,jdbcType=VARCHAR},
@@ -532,33 +551,37 @@
       <if test="record.deletestate != null" >
         deletestate = #{record.deletestate,jdbcType=CHAR},
       </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=INTEGER},
+      </if>
     </set>
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="map" >
     update hrg_project
     set name = #{record.name,jdbcType=VARCHAR},
-      starttime = #{record.starttime,jdbcType=TIMESTAMP},
-      endtime = #{record.endtime,jdbcType=TIMESTAMP},
+      starttime = #{record.starttime,jdbcType=DATE},
+      endtime = #{record.endtime,jdbcType=DATE},
       days = #{record.days,jdbcType=INTEGER},
       month = #{record.month,jdbcType=INTEGER},
       leaderid = #{record.leaderid,jdbcType=VARCHAR},
       leader = #{record.leader,jdbcType=VARCHAR},
       contect = #{record.contect,jdbcType=VARCHAR},
       state = #{record.state,jdbcType=CHAR},
-      finishtime = #{record.finishtime,jdbcType=TIMESTAMP},
+      finishtime = #{record.finishtime,jdbcType=DATE},
       remark = #{record.remark,jdbcType=VARCHAR},
       creator = #{record.creator,jdbcType=VARCHAR},
-      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      createtime = #{record.createtime,jdbcType=DATE},
       modify = #{record.modify,jdbcType=VARCHAR},
-      modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
+      modifytime = #{record.modifytime,jdbcType=DATE},
       creatordataid = #{record.creatordataid,jdbcType=VARCHAR},
       modifydataid = #{record.modifydataid,jdbcType=VARCHAR},
       progress = #{record.progress,jdbcType=VARCHAR},
       member = #{record.member,jdbcType=VARCHAR},
       auditprogress = #{record.auditprogress,jdbcType=VARCHAR},
       isdelete = #{record.isdelete,jdbcType=CHAR},
-      deletestate = #{record.deletestate,jdbcType=CHAR}
+      deletestate = #{record.deletestate,jdbcType=CHAR},
+      price = #{record.price,jdbcType=INTEGER}
     where dataid = #{record.dataid,jdbcType=VARCHAR}
   </update>
 </mapper>
