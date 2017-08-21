@@ -42,6 +42,12 @@
       <if test="example.date != null" >
          and date = #{example.date,jdbcType=DATE}
       </if>
+      <if test="example.dateMin != null" >
+        and date &gt;= #{example.dateMin,jdbcType=TIMESTAMP}
+      </if>
+      <if test="example.dateMax != null" >
+        and date &lt;= #{example.dateMax,jdbcType=TIMESTAMP}
+      </if>
       <if test="example.context != null" >
          and context = #{example.context,jdbcType=VARCHAR}
       </if>

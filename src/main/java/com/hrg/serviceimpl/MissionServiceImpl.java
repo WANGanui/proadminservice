@@ -222,6 +222,22 @@ public class MissionServiceImpl implements MissionService {
 
 
     @Override
+    public List<Mission> selectList1(MissionCriteria example,Worker worker) throws Exception {
+        WorkerCriteria workerCriteria = new WorkerCriteria();
+        workerCriteria.setDepartmentdataid(worker.getDepartmentdataid());
+        List<Worker> workers = workerReadMapper.selectByExample(workerCriteria);
+        List workerids = new ArrayList();
+        if (!ValidUtil.isNullOrEmpty(workers)){
+            for (Worker worker1 : workers){
+                workerids.add(worker1.getDataid());
+            }
+        }
+        example.setHeaderidList(workerids);
+        example.setOrderByClause("modifytime desc,proportion desc");
+        return missionReadMapper.selectByExample(example);
+    }
+
+    @Override
     public List<Mission> selectList(MissionCriteria example) throws Exception {
         example.setOrderByClause("modifytime desc,proportion desc");
         return missionReadMapper.selectByExample(example);

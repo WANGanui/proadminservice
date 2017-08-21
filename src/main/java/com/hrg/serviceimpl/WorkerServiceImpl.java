@@ -464,7 +464,18 @@ public class WorkerServiceImpl implements WorkerService {
         missionCriteria.setLimitStart(0);
         missionCriteria.setPageSize(7);
         List<Mission> missionList = missionReadMapper.selectByExample(missionCriteria);
-        int y = missionReadMapper.countByExample(new MissionCriteria());
+        WorkerCriteria workerCriteria = new WorkerCriteria();
+        workerCriteria.setDepartmentdataid(worker.getDepartmentdataid());
+        List<Worker> workers = workerReadMapper.selectByExample(workerCriteria);
+        List workerids = new ArrayList();
+        if (!ValidUtil.isNullOrEmpty(workers)){
+            for (Worker worker1 : workers){
+                workerids.add(worker1.getDataid());
+            }
+        }
+        MissionCriteria missionCriteria1 = new MissionCriteria();
+        missionCriteria1.setHeaderidList(workerids);
+        int y = missionReadMapper.countByExample(missionCriteria1);
         map.put("missionNum",y);
         map.put("mission",missionList);
 

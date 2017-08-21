@@ -323,13 +323,18 @@ public class ProjectServiceImpl implements ProjectService {
      * @throws Exception
      */
     @Override
-    public List<Project> selectProjectReport(ProjectCriteria example) throws Exception {
+    public List<Project> selectProjectReport(ProjectCriteria example,String lastweek) throws Exception {
         example.setState("1");
         List<Project> projectList = projectReadMapper.selectByExample(example);
         for (Project project : projectList){
             ProjectWeekReportCriteria criteria = new ProjectWeekReportCriteria();
-            criteria.setDateMin(DateUtil.getLastWeekBegin());
-            criteria.setDateMax(new Date());
+            if (ValidUtil.isNullOrEmpty(lastweek)){
+                criteria.setDateMin(DateUtil.getWeekBegin());
+                criteria.setDateMax(DateUtil.getWeekEnd());
+            }else {
+                criteria.setDateMin(DateUtil.getLastWeekBegin());
+                criteria.setDateMax(DateUtil.getLastWeekend());
+            }
             criteria.setProjectid(project.getDataid());
             List<ProjectWeekReport> reports = projectWeekReportReadMapper.selectByExample(criteria);
             String weekcontext = "";
@@ -342,7 +347,6 @@ public class ProjectServiceImpl implements ProjectService {
                 project.setWeekcontext(weekcontext);
                 project.setPlan(plan);
             }
-
         }
         return projectList;
     }
@@ -357,10 +361,18 @@ public class ProjectServiceImpl implements ProjectService {
      */
     @Override
     public boolean insertReport(String projectid, ProjectWeekReport projectWeekReport) throws Exception {
-        projectWeekReport.setDate(new Date());
-        projectWeekReport.setDataid(UUIDGenerator.getUUID());
-        int x = projectWeekReportWriteMapper.insert(projectWeekReport);
-        return x > 0 ? true : false;
+        ProjectWeekReportCriteria reportCriteria = new ProjectWeekReportCriteria();
+        reportCriteria.setDateMin(DateUtil.getWeekBegin());
+        reportCriteria.setDateMax(DateUtil.getWeekEnd());
+        int count = projectWeekReportReadMapper.countByExample(reportCriteria);
+        if (count<=0){
+            projectWeekReport.setDate(new Date());
+            projectWeekReport.setDataid(UUIDGenerator.getUUID());
+            int x = projectWeekReportWriteMapper.insert(projectWeekReport);
+            if (x>0)
+                return true;
+        }
+        return false;
     }
 
     /**
