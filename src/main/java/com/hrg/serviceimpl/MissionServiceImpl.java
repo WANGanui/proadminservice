@@ -3,10 +3,7 @@ package com.hrg.serviceimpl;
 import com.hrg.enums.ErrorCode;
 import com.hrg.exception.ValidatorException;
 import com.hrg.javamapper.read.*;
-import com.hrg.javamapper.write.MissionAuditWriteMapper;
-import com.hrg.javamapper.write.MissionFileWriteMapper;
-import com.hrg.javamapper.write.MissionWriteMapper;
-import com.hrg.javamapper.write.WorkerRelMissionWriteMapper;
+import com.hrg.javamapper.write.*;
 import com.hrg.model.*;
 import com.hrg.service.MissionService;
 import com.hrg.util.DateUtil;
@@ -50,6 +47,10 @@ public class MissionServiceImpl implements MissionService {
     MissionFileReadMapper missionFileReadMapper;
     @Autowired
     MissionFileWriteMapper missionFileWriteMapper;
+    @Autowired
+    FileOptionReadMapper fileOptionReadMapper;
+    @Autowired
+    FileOptionWriteMapper fileOptionWriteMapper;
 
     /**
      * 条件查询任务列表
@@ -438,6 +439,18 @@ public class MissionServiceImpl implements MissionService {
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
         missionFile.setDataid(UUIDGenerator.getUUID());
         int x = missionFileWriteMapper.insert(missionFile);
+        List<Worker> workerList = workerReadMapper.selectByExample(new WorkerCriteria());
+        for (Worker worker : workerList){
+            FileOption option = new FileOption();
+            option.setDataid(UUIDGenerator.getUUID());
+            option.setFileid(missionFile.getDataid());
+            option.setIsread("0");
+            option.setWorkerid(worker.getDataid());
+            option.setWorkername(worker.getName());
+            int y = fileOptionWriteMapper.insert(option);
+            if (y < 0)
+                return false;
+        }
         return x > 0 ? true : false;
     }
 
@@ -519,5 +532,44 @@ public class MissionServiceImpl implements MissionService {
     @Override
     public List<MissionFile> selectFileList(MissionFileCriteria example) throws Exception {
         return missionFileReadMapper.selectByExample(example);
+    }
+
+    /**
+     * 是否已浏览
+     *
+     * @param worker
+     * @param fileid
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public boolean isread(Worker worker, String fileid) throws Exception {
+        if (ValidUtil.isNullOrEmpty(fileid))
+            throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
+        FileOptionCriteria criteria = new FileOptionCriteria();
+        criteria.setWorkerid(worker.getDataid());
+        criteria.setFileid(fileid);
+        FileOption option = fileOptionReadMapper.selectByExampleForOne(criteria);
+        if (!ValidUtil.isNullOrEmpty(option)){
+            if (option.getIsread().equals("0")){
+                option.setIsread("1");
+                int x = fileOptionWriteMapper.updateByPrimaryKeySelective(option);
+                return x > 0 ? true : false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 查询已读人员
+     *
+     * @param example
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<FileOption> selectFileoption(FileOptionCriteria example) throws Exception {
+        example.setOrderByClause("isread desc");
+        return fileOptionReadMapper.selectByExample(example);
     }
 }

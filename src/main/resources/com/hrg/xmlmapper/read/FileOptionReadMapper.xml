@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hrg.javamapper.read.FileOptionReadMapper" >
+  <resultMap id="BaseResultMap" type="com.hrg.model.FileOption" >
+    <id column="dataid" property="dataid" jdbcType="VARCHAR" />
+    <result column="fileid" property="fileid" jdbcType="VARCHAR" />
+    <result column="isread" property="isread" jdbcType="CHAR" />
+    <result column="workerid" property="workerid" jdbcType="VARCHAR" />
+    <result column="workername" property="workername" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="HashMapBaseResultMap" type="hashmap" >
+    <id column="dataid" property="dataid" jdbcType="VARCHAR" />
+    <result column="fileid" property="fileid" jdbcType="VARCHAR" />
+    <result column="isread" property="isread" jdbcType="CHAR" />
+    <result column="workerid" property="workerid" jdbcType="VARCHAR" />
+    <result column="workername" property="workername" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <if test="example.dataid != null" >
+         and dataid = #{example.dataid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.dataidList != null  and  example.dataidList.size() > 0 " >
+         and dataid in 
+        <foreach collection="example.dataidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.fileid != null" >
+         and fileid = #{example.fileid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.fileidList != null  and  example.fileidList.size() > 0 " >
+         and fileid in 
+        <foreach collection="example.fileidList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.isread != null" >
+         and isread = #{example.isread,jdbcType=CHAR}
+      </if>
+      <if test="example.isreadList != null  and  example.isreadList.size() > 0 " >
+         and isread in 
+        <foreach collection="example.isreadList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.workerid != null" >
+         and workerid = #{example.workerid,jdbcType=VARCHAR}
+      </if>
+      <if test="example.workeridList != null  and  example.workeridList.size() > 0 " >
+         and workerid in 
+        <foreach collection="example.workeridList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+      <if test="example.workername != null" >
+         and workername = #{example.workername,jdbcType=VARCHAR}
+      </if>
+      <if test="example.workernameList != null  and  example.workernameList.size() > 0 " >
+         and workername in 
+        <foreach collection="example.workernameList" item="listItem" open="(" close=")" separator="," >
+          #{listItem}
+        </foreach>
+      </if>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    dataid, fileid, isread, workerid, workername
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <if test="example.distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hrg_file_option
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null" >
+      order by ${example.orderByClause}
+    </if>
+    <if test="example.limitStart >= 0 and example.pageSize > 0 " >
+      limit #{example.limitStart} , #{example.pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from hrg_file_option
+    where dataid = #{dataid,jdbcType=VARCHAR}
+  </select>
+  <select id="countByExample" parameterType="map" resultType="java.lang.Integer" >
+    select count(*) from hrg_file_option
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="selectByExampleForOne" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <if test="example.distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hrg_file_option
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null" >
+      order by ${example.orderByClause}
+    </if>
+     limit 0 , 1 
+  </select>
+  <select id="selectMapByPrimaryKey" resultMap="HashMapBaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from hrg_file_option
+    <where >
+       and dataid=#{dataid,jdbcType=VARCHAR}
+    </where>
+  </select>
+  <select id="selectMapByExampleForOne" resultMap="HashMapBaseResultMap" parameterType="map" >
+    select
+    <if test="example.distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hrg_file_option
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null" >
+      order by ${example.orderByClause}
+    </if>
+     limit 0 , 1 
+  </select>
+  <select id="selectMapByExample" resultMap="HashMapBaseResultMap" parameterType="map" >
+    select
+    <if test="example.distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hrg_file_option
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null" >
+      order by ${example.orderByClause}
+    </if>
+    <if test="example.limitStart >= 0 and example.pageSize > 0 " >
+      limit #{example.limitStart} , #{example.pageSize}
+    </if>
+  </select>
+</mapper>
