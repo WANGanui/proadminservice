@@ -423,6 +423,7 @@ public class MissionServiceImpl implements MissionService {
      */
     @Override
     public List<MissionFile> selectMissionFileList(MissionFileCriteria example) throws Exception {
+        example.setOrderByClause("orderid asc");
         return missionFileReadMapper.selectByExample(example);
     }
 
@@ -530,7 +531,11 @@ public class MissionServiceImpl implements MissionService {
      * @throws Exception
      */
     @Override
-    public List<MissionFile> selectFileList(MissionFileCriteria example) throws Exception {
+    public List<MissionFile> selectFileList(MissionFileCriteria example,Worker worker) throws Exception {
+        example.setOrderByClause("orderid asc");
+        if (!worker.getDataid().equals("1")){
+            example.setShow(1);
+        }
         return missionFileReadMapper.selectByExample(example);
     }
 
