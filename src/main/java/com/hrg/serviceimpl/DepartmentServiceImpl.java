@@ -67,7 +67,6 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     /**
      * 分页查询
-     *
      * @param example  条件实体
      * @param pageUtil 分页条件
      * @return
@@ -98,7 +97,6 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     /**
      * 查询集合
-     *
      * @param example 条件实体
      * @return
      * @throws Exception
@@ -107,7 +105,6 @@ public class DepartmentServiceImpl implements DepartmentService {
     public List<Department> selectList(DepartmentCriteria example) throws Exception {
         if (ValidUtil.isNullOrEmpty(example))
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
-
         return departmentReadMapper.selectByExample(example);
     }
 
@@ -122,7 +119,6 @@ public class DepartmentServiceImpl implements DepartmentService {
     public Department selectDetail(String dataid) throws Exception {
         if (ValidUtil.isNullOrEmpty(dataid))
             throw new ValidatorException(ErrorCode.INCOMPLETE_REQ_PARAM.getCode());
-
         return departmentReadMapper.selectByPrimaryKey(dataid);
     }
 
