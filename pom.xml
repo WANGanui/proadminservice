@@ -10,7 +10,7 @@
 
     <properties>
         <project.version>1.0</project.version>
-        <spring>4.2.5.RELEASE</spring>
+        <spring>5.2.2.RELEASE</spring>
         <aspectj>1.8.9</aspectj>
         <servlet>3.0.1</servlet>
         <jackson>2.7.3</jackson>
