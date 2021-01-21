@@ -13,7 +13,7 @@
         <spring>4.2.5.RELEASE</spring>
         <aspectj>1.8.9</aspectj>
         <servlet>3.0.1</servlet>
-        <jackson>2.7.3</jackson>
+        <jackson>2.9.10.7</jackson>
         <shiro>1.2.4</shiro>
     </properties>
     <profiles>
